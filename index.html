@@ -3,11 +3,25 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ap Mara - Guia de Boas-Vindas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Ap Mara - Guia do Hóspede</title>
+    
+    <!-- Meta Tags de Produção / SEO -->
+    <meta name="description" content="Guia completo para hóspedes do Ap Mara no Setor Bueno, Goiânia. Informações de check-in, wifi e guia local.">
+    <meta name="theme-color" content="#5C4023">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    
+    <!-- Open Graph / Redes Sociais -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Ap Mara - Guia do Hóspede">
+    <meta property="og:description" content="Tudo o que você precisa para uma estadia perfeita em Goiânia.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=1000">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KICA8Y2lyY2xlIGN4PSI1MCIgY3k9IjI4IiByPSIxNyIgZmlsbD0iI2YxYjMxYyIvPgogIDxjaXJjbGUgY3g9IjI0IiBjeT0iNTUiIHI9IjE0IiBmaWxsPSIjRjFCMzFDIi8+CiAgPGNpcmNsZSBjeD0iNzYiIGN5PSI1NSIgcj0iMTQiIGZpbGw9IiNGMUIzMUMiLz4KICA8cGF0aCBkPSJNNTAgODggVjQyIE01MCA3MiBMMjggNTkgTTUwIDcyIEw3MiA1OSIgc3Ryb2tlPSIjNUM0MDIzIiBzdHJva2Utd2lkdGg9IjYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4=">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = {
             theme: {
@@ -17,41 +31,70 @@
                             yellow: '#F1B31C',
                             brown: '#5C4023',
                             lightYellow: '#FEF9C3',
-                            darkBrown: '#3D2B17'
+                            darkBrown: '#3D2B17',
+                            teal: '#0D9488'
                         }
                     },
                     fontFamily: {
                         sans: ['Montserrat', 'sans-serif'],
                         serif: ['Playfair Display', 'serif'],
+                    },
+                    animation: {
+                        'slide-up': 'slideUp 0.5s ease-out forwards',
+                        'fade-in': 'fadeIn 0.3s ease-out forwards',
+                    },
+                    keyframes: {
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        }
                     }
                 }
             }
         }
     </script>
     <style>
+        /* Oculta o conteúdo até que o Tailwind processe as classes (Evita FOUC) */
+        [v-cloak] { display: none; }
+        
         body {
             background-color: #FDFCF7;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
+            opacity: 0;
+            animation: fadeInBody 0.4s ease-in forwards;
         }
+
+        @keyframes fadeInBody {
+            to { opacity: 1; }
+        }
+
         .bg-pattern {
             background-color: #FDFCF7;
             background-image: radial-gradient(#F1B31C1A 1px, transparent 1px);
             background-size: 20px 20px;
         }
-        .animate-fadeIn {
-            animation: fadeIn 0.4s ease-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+
         .scrollbar-hide::-webkit-scrollbar {
             display: none;
         }
+        
         .scrollbar-hide {
             -ms-overflow-style: none;
             scrollbar-width: none;
+        }
+
+        /* Melhorias de toque para mobile */
+        @media (max-width: 768px) {
+            button, a {
+                min-height: 44px;
+                min-width: 44px;
+            }
         }
     </style>
 <script type="importmap">
@@ -67,7 +110,8 @@
 }
 </script>
 </head>
-<body>
+<body class="bg-pattern">
+    <noscript>Você precisa ativar o JavaScript para visualizar este guia.</noscript>
     <div id="root"></div>
 </body>
 </html>

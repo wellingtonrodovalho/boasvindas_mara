@@ -52,42 +52,43 @@ import {
   EMERGENCY_CONTACTS
 } from './constants.tsx';
 
-// Componente Wrapper para as seções
+// Componente Wrapper para as seções com melhorias de acessibilidade
 const SectionWrapper: React.FC<{ 
   title: string; 
   subtitle?: string; 
   children: React.ReactNode; 
   onBack: () => void;
 }> = ({ title, subtitle, children, onBack }) => (
-  <div className="flex flex-col gap-6 pb-20 animate-fadeIn max-w-6xl mx-auto w-full">
+  <div className="flex flex-col gap-6 pb-20 animate-fade-in max-w-6xl mx-auto w-full px-2 md:px-0">
     <button 
       onClick={onBack}
-      className="flex items-center gap-2 text-brand-brown font-semibold hover:text-brand-yellow transition-colors group w-fit mb-2"
+      aria-label="Voltar para o menu principal"
+      className="flex items-center gap-2 text-brand-brown font-semibold hover:text-brand-yellow transition-colors group w-fit mb-2 py-2"
     >
       <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" /> Retornar ao Menu
     </button>
     
     <div className="flex flex-col gap-1 mb-2">
-      <div className="flex flex-col">
-        <h2 className="text-4xl font-bold text-brand-brown font-serif tracking-tight">{title}</h2>
-        <div className="h-1 w-24 bg-gradient-to-r from-[#0D9488] to-orange-500 mt-1 rounded-full"></div>
-      </div>
+      <header className="flex flex-col">
+        <h2 className="text-3xl md:text-4xl font-bold text-brand-brown font-serif tracking-tight">{title}</h2>
+        <div className="h-1 w-24 bg-gradient-to-r from-brand-teal to-orange-500 mt-1 rounded-full"></div>
+      </header>
       {subtitle && <p className="text-gray-500 font-medium mt-2">{subtitle}</p>}
     </div>
 
-    <div className="w-full">
+    <section className="w-full">
       {children}
-    </div>
+    </section>
   </div>
 );
 
 const AmenityIcon: React.FC<{ name: string; className?: string }> = ({ name, className }) => {
   switch (name) {
-    case 'bed': return <Bed className={className} size={20} />;
-    case 'sofa': return <LayoutGrid className={className} size={20} />;
-    case 'utensils': return <Utensils className={className} size={20} />;
-    case 'wind': return <Wind className={className} size={20} />;
-    default: return <Info className={className} size={20} />;
+    case 'bed': return <Bed className={className} size={20} aria-hidden="true" />;
+    case 'sofa': return <LayoutGrid className={className} size={20} aria-hidden="true" />;
+    case 'utensils': return <Utensils className={className} size={20} aria-hidden="true" />;
+    case 'wind': return <Wind className={className} size={20} aria-hidden="true" />;
+    default: return <Info className={className} size={20} aria-hidden="true" />;
   }
 };
 
@@ -97,20 +98,21 @@ const App: React.FC = () => {
   const [activeLocalCategory, setActiveLocalCategory] = useState(LOCAL_GUIDE_CATEGORIES?.[0]?.id || 'restaurantes');
   const [copiedWifi, setCopiedWifi] = useState(false);
 
+  // Scroll to top quando troca de seção
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentSection]);
 
   const handleBack = () => setCurrentSection(AppSection.HOME);
 
   const renderHeader = () => (
-    <header className="bg-white border-b border-brand-yellow/20 sticky top-0 z-50 py-3 px-4 shadow-sm">
+    <header className="bg-white/95 backdrop-blur-md border-b border-brand-yellow/10 sticky top-0 z-50 py-3 px-4 shadow-sm">
       <div className="max-w-6xl mx-auto flex items-center justify-between w-full">
-        <div className="flex items-center gap-2 cursor-pointer" onClick={handleBack}>
+        <div className="flex items-center gap-3 cursor-pointer select-none" onClick={handleBack} role="button" aria-label="Home Ap Mara">
           <img src={LOGO_URL} alt="Logo Ap Mara" className="h-10 w-10 object-contain" />
           <div>
-            <h1 className="font-serif text-brand-brown text-lg md:text-xl leading-tight">Ap Mara</h1>
-            <p className="text-[10px] md:text-xs text-brand-yellow font-bold uppercase tracking-wider">Guia do Hóspede</p>
+            <h1 className="font-serif text-brand-brown text-lg md:text-xl leading-tight font-bold">Ap Mara</h1>
+            <p className="text-[10px] md:text-xs text-brand-yellow font-bold uppercase tracking-widest">Guia Digital</p>
           </div>
         </div>
         <div className="flex items-center gap-4">
@@ -118,17 +120,18 @@ const App: React.FC = () => {
             href={WELLINGTON_WHATSAPP} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="md:flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full shadow-md transition-all font-bold text-sm hidden"
+            aria-label="Falar com Wellington no WhatsApp"
+            className="md:flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-5 py-2.5 rounded-full shadow-md hover:shadow-green-500/20 transition-all font-bold text-sm hidden"
           >
-            <MessageSquare size={18} /> Falar com Anfitrião
+            <MessageSquare size={18} /> Contato do Anfitrião
           </a>
           <a 
             href={WELLINGTON_WHATSAPP} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="md:hidden bg-green-500 hover:bg-green-600 text-white p-2 rounded-full shadow-lg transition-transform"
+            className="md:hidden bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg transition-transform active:scale-95"
           >
-            <MessageSquare size={20} />
+            <MessageSquare size={22} />
           </a>
         </div>
       </div>
@@ -136,54 +139,61 @@ const App: React.FC = () => {
   );
 
   const renderHome = () => (
-    <div className="flex flex-col gap-6 animate-fadeIn max-w-6xl mx-auto w-full">
-      <div className="relative h-64 md:h-80 w-full rounded-3xl overflow-hidden shadow-xl mb-2 bg-brand-brown flex items-center justify-center text-center p-8">
+    <div className="flex flex-col gap-6 animate-fade-in max-w-6xl mx-auto w-full">
+      {/* Hero Section */}
+      <div className="relative h-64 md:h-96 w-full rounded-[2rem] overflow-hidden shadow-2xl mb-2 bg-brand-brown flex items-center justify-center text-center p-8">
         <div className="absolute inset-0 bg-gradient-to-br from-brand-brown via-brand-darkBrown to-brand-brown opacity-95"></div>
         <div className="absolute inset-0 bg-pattern opacity-10"></div>
-        <div className="relative z-10 space-y-4">
-          <div className="bg-white/10 p-4 rounded-full inline-block backdrop-blur-sm shadow-inner mb-2">
-            <img src={LOGO_URL} alt="Logo Ap Mara" className="h-20 w-20 md:h-24 mx-auto drop-shadow-[0_5px_15px_rgba(241,179,28,0.4)]" />
+        <div className="relative z-10 space-y-6">
+          <div className="bg-white/10 p-5 rounded-3xl inline-block backdrop-blur-md shadow-inner border border-white/10">
+            <img src={LOGO_URL} alt="Bem-vindo ao Ap Mara" className="h-24 w-24 md:h-32 mx-auto drop-shadow-2xl" />
           </div>
-          <h2 className="text-white text-4xl md:text-6xl font-serif leading-tight drop-shadow-lg">Bem-vindo ao Ap Mara</h2>
-          <p className="text-brand-yellow text-xl md:text-2xl font-medium italic drop-shadow-md">Sua estadia com conforto no Setor Bueno.</p>
+          <div className="space-y-2">
+            <h2 className="text-white text-4xl md:text-7xl font-serif leading-tight drop-shadow-lg font-bold">Seja bem-vindo!</h2>
+            <p className="text-brand-yellow text-xl md:text-3xl font-medium italic opacity-90">Sua melhor estadia no Setor Bueno.</p>
+          </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-3">
+      {/* Grid de Navegação Principal */}
+      <nav className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4">
         {NAV_ITEMS.map((item) => (
           <button
             key={item.id}
             onClick={() => setCurrentSection(item.id)}
-            className="flex flex-col items-center justify-center p-5 bg-white border border-brand-yellow/10 rounded-2xl shadow-sm hover:shadow-xl hover:border-brand-yellow/40 transition-all group aspect-square lg:aspect-auto lg:py-8"
+            aria-label={`Abrir seção: ${item.label}`}
+            className="flex flex-col items-center justify-center p-6 bg-white border border-brand-yellow/5 rounded-3xl shadow-sm hover:shadow-2xl hover:border-brand-yellow/40 transition-all group aspect-square lg:aspect-auto lg:py-10"
           >
-            <div className="w-10 h-10 md:w-12 md:h-12 bg-brand-lightYellow rounded-xl flex items-center justify-center text-brand-yellow mb-3 group-hover:scale-110 transition-transform">
-              {item.icon}
+            <div className="w-12 h-12 md:w-14 md:h-14 bg-brand-lightYellow/50 rounded-2xl flex items-center justify-center text-brand-yellow mb-4 group-hover:scale-110 transition-transform group-hover:bg-brand-yellow group-hover:text-white">
+              {/* Fix: Added <any> to React.ReactElement cast to resolve 'size' prop type error */}
+              {React.cloneElement(item.icon as React.ReactElement<any>, { size: 28 })}
             </div>
-            <span className="text-xs md:text-sm font-semibold text-brand-brown text-center leading-tight">
+            <span className="text-xs md:text-sm font-bold text-brand-brown text-center leading-tight uppercase tracking-wider">
               {item.label}
             </span>
           </button>
         ))}
-      </div>
+      </nav>
 
-      <div className="mt-4 p-6 md:p-8 bg-brand-brown text-white rounded-3xl shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="flex-1">
-          <h3 className="text-brand-yellow font-bold mb-2 flex items-center gap-2 text-lg">
-            <MapPin size={22} /> Localização Premium
+      {/* Endereço Rápido */}
+      <footer className="mt-4 p-8 bg-brand-brown text-white rounded-[2rem] shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6 border border-white/5">
+        <div className="flex-1 space-y-3">
+          <h3 className="text-brand-yellow font-bold flex items-center gap-3 text-xl uppercase tracking-widest">
+            <MapPin size={24} /> Onde estamos
           </h3>
-          <p className="text-sm md:text-base opacity-90 leading-relaxed">{APARTMENT_CONTENT.address}</p>
+          <p className="text-lg md:text-xl opacity-90 leading-relaxed font-medium">{APARTMENT_CONTENT.address}</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-3">
            <a 
             href={APARTMENT_CONTENT.googleMapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 transition-all border border-white/20"
+            className="bg-white text-brand-brown px-8 py-4 rounded-2xl text-base font-bold flex items-center gap-2 hover:bg-brand-yellow hover:text-white transition-all shadow-lg active:scale-95"
           >
-            <ExternalLink size={16} /> Ver no Mapa
+            <ExternalLink size={20} /> Abrir no Mapa
           </a>
         </div>
-      </div>
+      </footer>
     </div>
   );
 
@@ -192,65 +202,81 @@ const App: React.FC = () => {
     return (
       <SectionWrapper 
         title="Guia da Casa" 
-        subtitle="Tudo que você precisa saber sobre os equipamentos e facilidades"
+        subtitle="Manual prático dos equipamentos e facilidades"
         onBack={handleBack}
       >
         <div className="flex flex-col gap-8">
-          <div className="flex items-center gap-2 overflow-x-auto pb-4 scrollbar-hide no-scrollbar">
+          {/* Tabs horizontais */}
+          <nav className="flex items-center gap-3 overflow-x-auto pb-6 scrollbar-hide no-scrollbar -mx-2 px-2" role="tablist">
             {HOUSE_GUIDE_CONTENT.map((tab) => (
               <button
                 key={tab.id}
+                role="tab"
+                aria-selected={activeGuideTab === tab.id}
                 onClick={() => setActiveGuideTab(tab.id)}
-                className={`flex flex-col items-center justify-center min-w-[100px] md:min-w-[140px] p-4 rounded-xl border-2 transition-all shrink-0 ${
+                className={`flex flex-col items-center justify-center min-w-[110px] md:min-w-[150px] p-5 rounded-3xl border-2 transition-all shrink-0 select-none ${
                   activeGuideTab === tab.id 
-                  ? 'bg-white border-teal-400 text-teal-600 shadow-md ring-1 ring-teal-400/20' 
-                  : 'bg-white/50 border-gray-200 text-gray-500 hover:border-gray-300'
+                  ? 'bg-white border-brand-teal text-brand-teal shadow-xl ring-4 ring-brand-teal/5' 
+                  : 'bg-white/40 border-transparent text-gray-400 hover:border-gray-200'
                 }`}
               >
-                <div className={`mb-2 transition-colors ${activeGuideTab === tab.id ? 'text-teal-500' : 'text-gray-400'}`}>
-                  {tab.icon}
+                <div className={`mb-2 transition-colors ${activeGuideTab === tab.id ? 'text-brand-teal' : 'text-gray-300'}`}>
+                  {/* Fix: Added <any> to React.ReactElement cast to resolve 'size' prop type error */}
+                  {React.cloneElement(tab.icon as React.ReactElement<any>, { size: 24 })}
                 </div>
-                <span className="text-xs font-bold uppercase tracking-wide">{tab.label}</span>
+                <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest">{tab.label}</span>
               </button>
             ))}
-          </div>
-          <div className="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden animate-fadeIn">
-            <div className={`h-2 w-full ${activeContent.id === 'outros' ? 'bg-[#0D9488]' : 'bg-blue-600'}`} />
-            <div className="p-6 md:p-10 space-y-8">
-              <div className="flex items-center gap-4">
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-lg ${activeContent.id === 'outros' ? 'bg-[#0D9488]' : 'bg-blue-600'}`}>
-                  {activeContent.icon}
+          </nav>
+
+          {/* Conteúdo da Tab */}
+          <div className="bg-white rounded-[2.5rem] shadow-2xl border border-gray-100 overflow-hidden animate-slide-up">
+            <div className={`h-3 w-full ${activeContent.id === 'outros' ? 'bg-brand-teal' : 'bg-blue-600'}`} />
+            <div className="p-8 md:p-12 space-y-10">
+              <header className="flex items-center gap-5">
+                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center text-white shadow-xl ${activeContent.id === 'outros' ? 'bg-brand-teal' : 'bg-blue-600'}`}>
+                  {/* Fix: Added <any> to React.ReactElement cast to resolve 'size' prop type error */}
+                  {React.cloneElement(activeContent.icon as React.ReactElement<any>, { size: 32 })}
                 </div>
-                <h3 className="text-2xl font-bold text-gray-800">{activeContent.title}</h3>
-              </div>
+                <h3 className="text-3xl font-bold text-gray-800 font-serif">{activeContent.title}</h3>
+              </header>
+
               {(activeContent as any).isSpecial ? (
-                <div className="grid grid-cols-1 gap-4">
+                <div className="grid grid-cols-1 gap-6">
                   {(activeContent as any).subCards?.map((sub: any, sIdx: number) => (
-                    <div key={sIdx} className={`p-6 rounded-2xl border ${sub.variant === 'red' ? 'bg-red-50 border-red-100' : 'bg-[#F0FDF9] border-[#DCFCE7]'}`}>
-                      <h4 className={`font-bold flex items-center gap-2 mb-2 ${sub.variant === 'red' ? 'text-red-800' : 'text-[#0D9488]'}`}>
-                        <span className="text-lg">{sub.icon}</span> {sub.title}
+                    <div key={sIdx} className={`p-8 rounded-3xl border-2 ${sub.variant === 'red' ? 'bg-red-50 border-red-100' : 'bg-teal-50/50 border-teal-100'}`}>
+                      <h4 className={`text-xl font-bold flex items-center gap-3 mb-3 ${sub.variant === 'red' ? 'text-red-800' : 'text-brand-teal'}`}>
+                        <span className="text-2xl">{sub.icon}</span> {sub.title}
                       </h4>
-                      <p className={`text-sm md:text-base leading-relaxed ${sub.variant === 'red' ? 'text-red-700' : 'text-gray-600'}`}>{sub.description}</p>
-                      {sub.extra && <p className="mt-2 text-sm font-bold text-gray-700">{sub.extra}</p>}
+                      <p className={`text-lg leading-relaxed ${sub.variant === 'red' ? 'text-red-700' : 'text-gray-600'}`}>{sub.description}</p>
+                      {sub.extra && <p className="mt-4 p-3 bg-white/60 rounded-xl text-sm font-bold text-gray-700 border border-black/5">{sub.extra}</p>}
                     </div>
                   ))}
                 </div>
               ) : (
                 <div className="grid grid-cols-1 gap-6">
                   {activeContent.fields.map((field, idx) => (
-                    <div key={idx} className="bg-blue-50/50 p-6 rounded-2xl border border-blue-100/50">
-                      <p className="text-blue-500 font-semibold text-xs uppercase tracking-widest mb-2">{field.label}</p>
-                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <p className="text-brand-brown text-lg md:text-xl font-bold tracking-tight">{field.value}</p>
-                        <div className="flex gap-2">
+                    <div key={idx} className="bg-gray-50/50 p-8 rounded-3xl border border-gray-100 group transition-all hover:bg-white hover:shadow-lg">
+                      <p className="text-gray-400 font-bold text-xs uppercase tracking-widest mb-3">{field.label}</p>
+                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                        <p className="text-brand-brown text-xl md:text-2xl font-bold tracking-tight">{field.value}</p>
+                        <div className="flex gap-3">
                           {(field as any).url && (
-                            <a href={(field as any).url} target="_blank" rel="noopener noreferrer" className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 shadow-md hover:bg-blue-700 transition-all active:scale-95">
-                              <ExternalLink size={16} /> Ver Tutorial
+                            <a href={(field as any).url} target="_blank" rel="noopener noreferrer" className="bg-blue-600 text-white px-6 py-3 rounded-2xl text-sm font-bold flex items-center gap-2 shadow-lg hover:bg-blue-700 transition-all active:scale-95">
+                              <ExternalLink size={18} /> Ver Vídeo Tutorial
                             </a>
                           )}
                           {activeContent.id === 'wifi' && (
-                            <button onClick={() => { navigator.clipboard.writeText(field.value); setCopiedWifi(true); setTimeout(() => setCopiedWifi(false), 2000); }} className="bg-white text-blue-600 p-2 rounded-lg shadow-sm hover:shadow transition-all active:scale-95">
-                              {copiedWifi ? <Check size={18} /> : <Copy size={18} />}
+                            <button 
+                              onClick={() => { 
+                                navigator.clipboard.writeText(field.value); 
+                                setCopiedWifi(true); 
+                                setTimeout(() => setCopiedWifi(false), 2000); 
+                              }} 
+                              aria-label="Copiar senha do Wifi"
+                              className="bg-brand-lightYellow text-brand-yellow px-6 py-3 rounded-2xl text-sm font-bold flex items-center gap-2 hover:bg-brand-yellow hover:text-white transition-all active:scale-95 shadow-sm"
+                            >
+                              {copiedWifi ? <><Check size={18} /> Copiado</> : <><Copy size={18} /> Copiar Senha</>}
                             </button>
                           )}
                         </div>
@@ -259,10 +285,15 @@ const App: React.FC = () => {
                   ))}
                 </div>
               )}
-              <div className="flex items-start gap-3 pt-4 text-gray-500 border-t border-gray-100">
-                <Lightbulb size={20} className="text-yellow-500 shrink-0 mt-0.5" />
-                <p className="text-sm font-medium italic">{activeContent.footer}</p>
-              </div>
+              
+              <footer className="flex items-start gap-4 pt-6 text-gray-500 border-t border-gray-100 bg-gray-50/30 -mx-8 -mb-8 p-8 md:-mx-12 md:-mb-12 md:p-12">
+                <div className="bg-brand-yellow/10 p-3 rounded-full text-brand-yellow">
+                  <Lightbulb size={24} className="shrink-0" />
+                </div>
+                <div>
+                  <p className="text-base font-medium italic leading-relaxed text-gray-600">{activeContent.footer}</p>
+                </div>
+              </footer>
             </div>
           </div>
         </div>
@@ -275,43 +306,58 @@ const App: React.FC = () => {
     return (
       <SectionWrapper title="Guia Local" subtitle="Explore o melhor de Goiânia pertinho de você" onBack={handleBack}>
         <div className="flex flex-col gap-10 w-full">
-          <div className="flex flex-col items-center text-center gap-3">
-             <div className="bg-brand-yellow p-4 rounded-2xl shadow-xl -mb-6 z-10 text-brand-brown">
-              <MapPin size={32} />
-            </div>
-            <div className="pt-6">
-              <h3 className="text-4xl font-bold text-brand-brown font-serif">Guia Local</h3>
-              <p className="text-gray-500 font-medium italic">Selecione uma categoria para ver as opções</p>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+          {/* Seletor de Categorias Estilizado */}
+          <nav className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3" aria-label="Categorias de locais">
             {LOCAL_GUIDE_CATEGORIES.map((cat) => (
-              <button key={cat.id} onClick={() => setActiveLocalCategory(cat.id)} className={`flex flex-col items-center justify-center p-4 rounded-2xl border-2 transition-all ${activeLocalCategory === cat.id ? 'bg-brand-lightYellow border-brand-yellow text-brand-brown shadow-md scale-105 z-10 font-bold' : 'bg-white border-transparent text-gray-400 hover:border-brand-yellow/20 hover:text-brand-brown shadow-sm'}`}>
-                <div className={`mb-2 ${activeLocalCategory === cat.id ? 'text-brand-yellow' : 'text-gray-300'}`}>{cat.icon}</div>
-                <span className="text-[10px] md:text-xs uppercase tracking-wider">{cat.title}</span>
+              <button 
+                key={cat.id} 
+                onClick={() => setActiveLocalCategory(cat.id)} 
+                aria-current={activeLocalCategory === cat.id}
+                className={`flex flex-col items-center justify-center p-5 rounded-3xl border-2 transition-all ${activeLocalCategory === cat.id ? 'bg-brand-lightYellow border-brand-yellow text-brand-brown shadow-xl scale-105 z-10 font-bold' : 'bg-white border-transparent text-gray-400 hover:border-brand-yellow/20 hover:text-brand-brown shadow-sm'}`}
+              >
+                <div className={`mb-3 ${activeLocalCategory === cat.id ? 'text-brand-yellow' : 'text-gray-300'}`}>
+                  {/* Fix: Added <any> to React.ReactElement cast to resolve 'size' prop type error */}
+                  {React.cloneElement(cat.icon as React.ReactElement<any>, { size: 24 })}
+                </div>
+                <span className="text-[10px] md:text-xs uppercase tracking-widest text-center">{cat.title}</span>
               </button>
             ))}
-          </div>
-          <div className="space-y-6">
-            <div className="flex items-center gap-3 border-l-4 border-brand-yellow pl-4">
-               <h4 className="text-xl font-bold text-brand-brown">{activeCategory.headerLabel}</h4>
-               <span className="bg-brand-lightYellow text-brand-yellow text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">{activeCategory.places.length} locais</span>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-fadeIn">
+          </nav>
+
+          {/* Listagem em 3 Colunas */}
+          <div className="space-y-8">
+            <header className="flex items-center gap-4 border-l-8 border-brand-yellow pl-6 py-2">
+               <h4 className="text-2xl font-bold text-brand-brown font-serif">{activeCategory.headerLabel}</h4>
+               <span className="bg-brand-yellow text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-tighter shadow-sm">{activeCategory.places.length} locais</span>
+            </header>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-slide-up">
               {activeCategory.places.map((place, idx) => (
-                <a key={idx} href={place.url} target="_blank" rel="noopener noreferrer" className="group bg-white rounded-3xl p-6 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="bg-brand-lightYellow/50 p-3 rounded-2xl text-brand-yellow group-hover:scale-110 transition-transform">{activeCategory.icon}</div>
-                      <ExternalLink size={16} className="text-gray-300 group-hover:text-brand-yellow transition-colors" />
+                <a 
+                  key={idx} 
+                  href={place.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  aria-label={`Ver ${place.name} no Google Maps`}
+                  className="group bg-white rounded-[2rem] p-8 border border-gray-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all flex flex-col justify-between"
+                >
+                  <div className="space-y-4">
+                    <header className="flex items-center justify-between">
+                      <div className="bg-brand-lightYellow/50 p-4 rounded-2xl text-brand-yellow group-hover:bg-brand-yellow group-hover:text-white transition-all">
+                        {/* Fix: Added <any> to React.ReactElement cast to resolve 'size' prop type error */}
+                        {React.cloneElement(activeCategory.icon as React.ReactElement<any>, { size: 24 })}
+                      </div>
+                      <ExternalLink size={20} className="text-gray-200 group-hover:text-brand-yellow transition-colors" />
+                    </header>
+                    <div className="space-y-2">
+                      <h5 className="font-bold text-brand-brown text-xl leading-tight group-hover:text-brand-yellow transition-colors">{place.name}</h5>
+                      <p className="text-gray-500 text-sm leading-relaxed line-clamp-2">{(place as any).description}</p>
                     </div>
-                    <h5 className="font-bold text-brand-brown text-lg leading-tight mb-2 group-hover:text-brand-yellow transition-colors">{place.name}</h5>
-                    <p className="text-gray-500 text-sm leading-relaxed line-clamp-2">{(place as any).description}</p>
                   </div>
-                  <div className="mt-6 pt-4 border-t border-gray-50 flex items-center justify-between">
-                    <span className="text-[10px] font-bold text-brand-yellow uppercase tracking-widest">Abrir no Maps</span>
-                    <ChevronRight size={14} className="text-brand-yellow group-hover:translate-x-1 transition-transform" />
-                  </div>
+                  <footer className="mt-8 pt-5 border-t border-gray-50 flex items-center justify-between">
+                    <span className="text-[10px] font-extrabold text-brand-yellow uppercase tracking-[0.2em]">Traçar Rota</span>
+                    <ChevronRight size={18} className="text-brand-yellow group-hover:translate-x-2 transition-transform" />
+                  </footer>
                 </a>
               ))}
             </div>
@@ -327,9 +373,9 @@ const App: React.FC = () => {
         title: "Recolha as toalhas usadas",
         desc: "Por gentileza, deixar as toalhas estendidas",
         icon: <CheckCircle2 size={24} />,
-        color: "text-[#0D9488]",
-        bg: "bg-[#0D9488]",
-        border: "border-[#0D9488]"
+        color: "text-brand-teal",
+        bg: "bg-brand-teal",
+        border: "border-brand-teal"
       },
       {
         title: "Tire o lixo",
@@ -366,62 +412,57 @@ const App: React.FC = () => {
     ];
 
     return (
-      <SectionWrapper title="Check-out" onBack={handleBack}>
-        <div className="flex flex-col gap-6 max-w-2xl mx-auto w-full animate-fadeIn">
+      <SectionWrapper title="Check-out" subtitle="Obrigado por escolher o Ap Mara" onBack={handleBack}>
+        <div className="flex flex-col gap-8 max-w-2xl mx-auto w-full animate-fade-in px-2 md:px-0">
           {/* Banner Horário */}
-          <div className="bg-[#0D9488] rounded-2xl p-6 flex items-center gap-6 shadow-md text-white">
-            <div className="bg-white/20 p-4 rounded-xl backdrop-blur-sm">
-              <Clock size={40} />
+          <div className="bg-brand-teal rounded-3xl p-8 flex items-center gap-6 shadow-xl text-white border border-white/10">
+            <div className="bg-white/20 p-5 rounded-2xl backdrop-blur-md shadow-inner">
+              <Clock size={48} />
             </div>
-            <div>
-              <h3 className="text-3xl font-bold">Até às 11:00</h3>
-              <p className="text-white/80 font-medium">Horário máximo para check-out</p>
+            <div className="space-y-1">
+              <h3 className="text-4xl font-bold font-serif tracking-tight">Até às 11:00</h3>
+              <p className="text-white/80 font-bold uppercase tracking-widest text-xs">Horário máximo de saída</p>
             </div>
           </div>
 
-          {/* Intro Text */}
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 text-center">
-            <p className="text-gray-600 leading-relaxed">
-              Esperamos que sua estadia tenha sido agradável! 🏠<br/>
-              Aqui estão alguns passos simples para facilitar sua saída:
-            </p>
+          <div className="bg-white/60 rounded-3xl p-8 shadow-sm border border-brand-yellow/10 text-center italic text-lg leading-relaxed text-gray-700">
+            "Esperamos que sua estadia tenha sido incrível! 🏠"
           </div>
 
-          {/* Checklist */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-5" role="list">
             {checklist.map((item, idx) => (
               <div 
                 key={idx} 
-                className={`bg-white rounded-2xl border-t-4 ${item.border} shadow-sm p-5 flex items-center justify-between group transition-all hover:shadow-md hover:-translate-y-0.5`}
+                role="listitem"
+                className={`bg-white rounded-[2rem] border-t-8 ${item.border} shadow-lg p-6 flex items-center justify-between group transition-all hover:-translate-y-1`}
               >
-                <div className="flex items-center gap-5">
-                  <div className={`${item.bg} text-white p-3 rounded-xl shadow-inner group-hover:scale-110 transition-transform`}>
+                <div className="flex items-center gap-6">
+                  <div className={`${item.bg} text-white p-4 rounded-2xl shadow-lg group-hover:rotate-6 transition-transform`}>
                     {item.icon}
                   </div>
                   <div>
-                    <h4 className="font-bold text-brand-brown text-lg">{item.title}</h4>
-                    <p className="text-gray-500 text-sm">{item.desc}</p>
+                    <h4 className="font-bold text-brand-brown text-xl">{item.title}</h4>
+                    <p className="text-gray-500 text-base">{item.desc}</p>
                   </div>
                 </div>
-                <div className="text-gray-200">
-                   <CheckCircle2 size={28} />
+                <div className="text-gray-100 hidden sm:block">
+                   <CheckCircle2 size={32} />
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Limpeza Section */}
-          <div className="bg-orange-50 rounded-2xl p-6 border border-orange-100/50">
-            <h5 className="text-orange-800 font-bold text-sm uppercase tracking-wider mb-2">Limpeza</h5>
-            <p className="text-orange-700/80 text-sm leading-relaxed">
-              O apartamento sempre é entregue limpo e higienizado de acordo com as regras de higienização. Solicitamos cordialmente que deixe-o como encontrou: ambiente e louças limpos, lixo recolhido e organizado.
+          <div className="bg-orange-50 rounded-3xl p-8 border border-orange-100 shadow-sm">
+            <h5 className="text-orange-800 font-extrabold text-xs uppercase tracking-[0.25em] mb-3">Compromisso com Limpeza</h5>
+            <p className="text-orange-700/80 text-lg leading-relaxed font-medium">
+              Sua avaliação de limpeza é fundamental para nós. Solicitamos cordialmente que deixe o apartamento organizado para facilitar a próxima higienização.
             </p>
           </div>
 
-          {/* Final Message */}
-          <div className="bg-[#0D9488] rounded-3xl p-8 text-center text-white shadow-xl mt-4">
-             <h4 className="text-2xl font-bold mb-1">Obrigado por sua estadia!</h4>
-             <p className="text-white/90 font-medium">Esperamos recebê-lo novamente em breve 💚</p>
+          <div className="bg-brand-teal rounded-[2.5rem] p-10 text-center text-white shadow-2xl mt-4 border border-white/10">
+             <Heart size={40} className="mx-auto mb-4 text-brand-yellow animate-pulse" />
+             <h4 className="text-3xl font-serif font-bold mb-2">Foi um prazer receber você!</h4>
+             <p className="text-white/80 text-lg font-medium">Até a próxima estadia 💚</p>
           </div>
         </div>
       </SectionWrapper>
@@ -429,39 +470,43 @@ const App: React.FC = () => {
   };
 
   const renderEmergencia = () => (
-    <SectionWrapper title="EMERGÊNCIAS" onBack={handleBack}>
-      <div className="bg-white/40 rounded-3xl p-8 md:p-12 shadow-sm border border-brand-yellow/5 animate-fadeIn max-w-3xl mx-auto w-full">
-        <div className="flex flex-col gap-6">
-          <ul className="space-y-6">
+    <SectionWrapper title="EMERGÊNCIAS" subtitle="Contatos úteis e suporte imediato" onBack={handleBack}>
+      <div className="bg-white rounded-[2.5rem] p-8 md:p-14 shadow-2xl border border-brand-yellow/5 animate-fade-in max-w-3xl mx-auto w-full">
+        <div className="flex flex-col gap-10">
+          <ul className="space-y-8" aria-label="Lista de telefones de emergência">
             {EMERGENCY_CONTACTS.map((contact, idx) => (
-              <li key={idx} className="flex items-start gap-4 group">
-                <div className="w-2 h-2 rounded-full bg-brand-brown/30 mt-2.5 shrink-0 group-hover:bg-brand-yellow transition-colors"></div>
-                <p className="text-gray-700 text-lg md:text-xl leading-snug">
-                  {contact.label} –{' '}
+              <li key={idx} className="flex items-center gap-5 group border-b border-gray-50 pb-6 last:border-0">
+                <div className="w-12 h-12 rounded-2xl bg-brand-lightYellow flex items-center justify-center text-brand-yellow shrink-0 group-hover:bg-brand-yellow group-hover:text-white transition-all">
+                  <Phone size={24} />
+                </div>
+                <div className="flex-1">
+                  <p className="text-gray-400 font-bold text-[10px] uppercase tracking-widest mb-1">{contact.label}</p>
                   <a 
                     href={`tel:${contact.phone.replace(/[^\d]/g, '')}`} 
-                    className="font-bold text-brand-brown hover:text-brand-yellow transition-colors decoration-brand-yellow/30 underline underline-offset-4"
+                    className="text-2xl md:text-3xl font-bold text-brand-brown hover:text-brand-yellow transition-all flex items-center gap-3 decoration-brand-yellow/30 underline underline-offset-8"
                   >
                     {contact.phone}
+                    <ChevronRight size={24} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all" />
                   </a>
-                </p>
+                </div>
               </li>
             ))}
           </ul>
         </div>
         
-        <div className="mt-12 pt-8 border-t border-brand-yellow/10 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div>
-            <h4 className="font-bold text-brand-brown text-xl mb-1">Dúvidas sobre a estadia?</h4>
-            <p className="text-gray-500 italic">Fale diretamente com o anfitrião Wellington</p>
+        <div className="mt-14 pt-10 border-t border-brand-yellow/10 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="text-center md:text-left">
+            <h4 className="font-bold text-brand-brown text-2xl mb-2 font-serif">Algum problema no Ap?</h4>
+            <p className="text-gray-500 font-medium">Estamos prontos para ajudar a qualquer hora.</p>
           </div>
           <a 
             href={WELLINGTON_WHATSAPP} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-lg hover:shadow-green-500/20 transition-all active:scale-95"
+            aria-label="Pedir ajuda no WhatsApp"
+            className="inline-flex items-center gap-4 bg-green-500 hover:bg-green-600 text-white px-10 py-5 rounded-3xl font-extrabold text-xl shadow-xl hover:shadow-green-500/30 transition-all active:scale-95"
           >
-            <MessageSquare size={24} /> Chamar no WhatsApp
+            <MessageSquare size={28} /> Suporte via WhatsApp
           </a>
         </div>
       </div>
@@ -472,31 +517,35 @@ const App: React.FC = () => {
     switch (currentSection) {
       case AppSection.APARTAMENTO:
         return (
-          <SectionWrapper title="Nosso Apartamento" onBack={handleBack}>
-             <div className="space-y-8">
-              <div className="bg-white p-8 rounded-3xl shadow-sm border border-brand-yellow/10">
-                <p className="text-brand-brown/80 text-lg leading-relaxed">{APARTMENT_CONTENT.description}</p>
+          <SectionWrapper title="Nosso Apartamento" subtitle="Conheça cada detalhe do seu novo lar" onBack={handleBack}>
+             <div className="space-y-10">
+              <div className="bg-white p-10 rounded-[2.5rem] shadow-xl border border-brand-yellow/5">
+                <p className="text-brand-brown/80 text-xl md:text-2xl leading-relaxed font-medium italic">"{APARTMENT_CONTENT.description}"</p>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {APARTMENT_CONTENT.amenities.map((amenity, idx) => {
                   const palette: any = {
-                    teal: { bg: 'bg-teal-50', text: 'text-teal-700', bullet: 'bg-teal-400' },
+                    teal: { bg: 'bg-teal-50', text: 'text-brand-teal', bullet: 'bg-brand-teal' },
                     orange: { bg: 'bg-orange-50', text: 'text-orange-700', bullet: 'bg-orange-400' },
                     blue: { bg: 'bg-blue-50', text: 'text-blue-700', bullet: 'bg-blue-400' },
                     purple: { bg: 'bg-purple-50', text: 'text-purple-700', bullet: 'bg-purple-400' },
                   };
                   const colorClasses = palette[amenity.color] || palette.teal;
                   return (
-                    <div key={idx} className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
-                      <div className={`${colorClasses.bg} p-5 flex items-center gap-3 border-b border-black/5`}>
-                        <AmenityIcon name={amenity.icon} className={colorClasses.text} />
-                        <h4 className={`font-bold text-lg ${colorClasses.text}`}>{amenity.title}</h4>
+                    <div key={idx} className="bg-white rounded-[2rem] shadow-md border border-gray-100 overflow-hidden hover:shadow-2xl transition-all">
+                      <div className={`${colorClasses.bg} p-8 flex items-center gap-5 border-b border-black/5`}>
+                        <div className="bg-white p-4 rounded-2xl shadow-sm">
+                           <AmenityIcon name={amenity.icon} className={colorClasses.text} />
+                        </div>
+                        <h4 className={`font-bold text-2xl font-serif ${colorClasses.text}`}>{amenity.title}</h4>
                       </div>
-                      <div className="p-6 space-y-4">
+                      <div className="p-8 space-y-5">
                         {amenity.items.map((item, iIdx) => (
-                          <div key={iIdx} className="flex gap-3 items-start">
-                            <span className={`w-2 h-2 rounded-full mt-2 shrink-0 ${colorClasses.bullet}`}></span>
-                            <p className="text-base text-gray-700 leading-snug">{typeof item === 'string' ? item : <><span className="font-bold">{item.label}:</span> {item.value}</>}</p>
+                          <div key={iIdx} className="flex gap-4 items-start">
+                            <span className={`w-2.5 h-2.5 rounded-full mt-2 shrink-0 ${colorClasses.bullet}`}></span>
+                            <p className="text-lg text-gray-700 leading-snug font-medium">
+                              {typeof item === 'string' ? item : <><span className="font-extrabold text-brand-brown">{item.label}:</span> {item.value}</>}
+                            </p>
                           </div>
                         ))}
                       </div>
@@ -508,49 +557,98 @@ const App: React.FC = () => {
           </SectionWrapper>
         );
       case AppSection.CHECKIN:
-        return <SectionWrapper title="Check-in" onBack={handleBack}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="flex flex-col gap-8">
-              <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden h-fit">
-                <div className="bg-[#F0FDF4] p-4 px-6 flex items-center gap-3 border-b border-[#DCFCE7]">
-                  <MapPin className="text-[#0D9488]" size={20} />
-                  <h3 className="font-bold text-gray-800">Localização</h3>
+        return (
+          <SectionWrapper title="Check-in" subtitle="Como entrar e se instalar com facilidade" onBack={handleBack}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+              <div className="flex flex-col gap-10">
+                <div className="bg-white rounded-[2rem] shadow-xl border border-gray-100 overflow-hidden h-fit">
+                  <header className="bg-teal-50 p-6 px-10 flex items-center gap-4 border-b border-teal-100">
+                    <MapPin className="text-brand-teal" size={24} />
+                    <h3 className="font-bold text-gray-800 text-xl font-serif">Localização Exata</h3>
+                  </header>
+                  <div className="p-10 text-center space-y-6">
+                    <p className="text-brand-brown leading-relaxed font-bold text-2xl md:text-3xl">
+                      Rua T-47, 173, Apto 410<br/>Bloco C, Setor Bueno
+                    </p>
+                    <a 
+                      href={APARTMENT_CONTENT.googleMapsUrl} 
+                      target="_blank" 
+                      className="inline-flex items-center gap-2 bg-brand-yellow text-white px-8 py-4 rounded-2xl font-extrabold shadow-lg hover:shadow-brand-yellow/20 transition-all"
+                    >
+                      <MapPin size={20} /> Rotas do Waze/Maps
+                    </a>
+                  </div>
                 </div>
-                <div className="p-8 text-center space-y-4">
-                  <p className="text-gray-600 leading-relaxed font-medium md:text-lg">Rua T-47, 173, Apto 410 - Bloco C<br/>Setor Bueno, Goiânia-GO</p>
-                  <a href={APARTMENT_CONTENT.googleMapsUrl} target="_blank" className="text-blue-600 font-bold underline">Ver no Google Maps</a>
+                <div className="bg-brand-lightYellow/50 border-4 border-brand-yellow p-10 rounded-[2rem] shadow-inner space-y-4">
+                  <h4 className="font-bold text-brand-brown text-3xl flex items-center gap-4 font-serif"><Lock size={32} className="text-brand-yellow" /> Senha da Porta</h4>
+                  <div className="bg-white p-6 rounded-2xl shadow-sm border border-brand-yellow/20">
+                    <p className="text-brand-brown/70 text-lg font-medium">Formato da senha:</p>
+                    <p className="text-2xl font-extrabold text-brand-brown mt-2">* + DDD + Telefone + #</p>
+                  </div>
                 </div>
               </div>
-              <div className="bg-brand-lightYellow border-2 border-brand-yellow p-8 rounded-3xl shadow-sm space-y-4">
-                <h4 className="font-bold text-brand-brown text-2xl flex items-center gap-2"><Lock size={24} /> Senha da Porta</h4>
-                <p className="text-brand-brown/70">Digite: * (asterisco) + DDD + Prefixo do Telefone + # (jogo da velha)</p>
+              <div className="bg-white rounded-[2rem] p-10 shadow-xl border border-gray-100">
+                 <h3 className="font-bold text-3xl mb-10 font-serif border-b pb-6">Passo a Passo</h3>
+                 <ol className="space-y-10" role="list">
+                   <li className="flex gap-6 group">
+                    <span className="w-12 h-12 rounded-2xl bg-brand-yellow flex items-center justify-center font-black text-brand-brown text-xl shadow-lg shrink-0 group-hover:scale-110 transition-transform">1</span> 
+                    <div>
+                      <h4 className="font-bold text-xl mb-1">Portaria</h4>
+                      <p className="text-gray-500 text-lg">Identifique-se pelo interfone. A portaria é remota e solicitará seus dados.</p>
+                    </div>
+                   </li>
+                   <li className="flex gap-6 group">
+                    <span className="w-12 h-12 rounded-2xl bg-brand-yellow flex items-center justify-center font-black text-brand-brown text-xl shadow-lg shrink-0 group-hover:scale-110 transition-transform">2</span> 
+                    <div>
+                      <h4 className="font-bold text-xl mb-1">Acesso ao Prédio</h4>
+                      <p className="text-gray-500 text-lg">Vá até o Bloco C e suba até o 4º andar no Apartamento 410.</p>
+                    </div>
+                   </li>
+                 </ol>
               </div>
             </div>
-            <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
-               <h3 className="font-bold text-2xl mb-6">Instruções de Acesso</h3>
-               <ol className="space-y-6">
-                 <li className="flex gap-4"><span className="w-8 h-8 rounded-full bg-brand-yellow flex items-center justify-center font-bold text-brand-brown">1</span> <p>Identifique-se na portaria remota pelo interfone.</p></li>
-                 <li className="flex gap-4"><span className="w-8 h-8 rounded-full bg-brand-yellow flex items-center justify-center font-bold text-brand-brown">2</span> <p>Dirija-se ao Bloco C, Apartamento 410.</p></li>
-               </ol>
-            </div>
-          </div>
-        </SectionWrapper>;
+          </SectionWrapper>
+        );
       case AppSection.GUIA_CASA: return renderGuiaCasa();
       case AppSection.GUIA_LOCAL: return renderGuiaLocal();
       case AppSection.REGRAS: 
-        return <SectionWrapper title="Regras da Casa" onBack={handleBack}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-red-50 border-2 border-red-100 p-8 rounded-3xl text-center space-y-4">
-              <AlertTriangle className="mx-auto text-red-600" size={48} />
-              <h3 className="text-2xl font-bold text-red-800">Silêncio Absoluto</h3>
-              <p className="text-red-700 text-xl font-bold">22:00 às 08:00</p>
+        return (
+          <SectionWrapper title="Regras da Casa" subtitle="Para uma convivência harmoniosa" onBack={handleBack}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="bg-red-50 border-4 border-red-100 p-10 rounded-[2.5rem] text-center space-y-6 shadow-sm">
+                <div className="bg-red-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto shadow-xl">
+                  <AlertTriangle className="text-white" size={40} />
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-3xl font-bold text-red-800 font-serif">Lei do Silêncio</h3>
+                  <p className="text-red-600 text-2xl font-black">22:00 às 08:00</p>
+                </div>
+                <p className="text-red-700/70 text-sm font-medium">Multas aplicadas pelo condomínio são de responsabilidade do hóspede.</p>
+              </div>
+              <div className="bg-white p-10 rounded-[2.5rem] border border-gray-100 shadow-xl space-y-8">
+                <h4 className="text-2xl font-bold font-serif mb-4">Outras Normas</h4>
+                <div className="flex items-center gap-5 group">
+                  <div className="bg-gray-100 p-4 rounded-2xl text-gray-500 group-hover:bg-red-50 group-hover:text-red-500 transition-all">
+                    <Wind size={24} />
+                  </div>
+                  <span className="text-lg font-bold text-gray-700 uppercase tracking-wide">Proibido fumar.</span>
+                </div>
+                <div className="flex items-center gap-5 group">
+                  <div className="bg-gray-100 p-4 rounded-2xl text-gray-500 group-hover:bg-blue-50 group-hover:text-blue-500 transition-all">
+                    <Home size={24} />
+                  </div>
+                  <span className="text-lg font-bold text-gray-700 uppercase tracking-wide">Janelas fechadas ao sair.</span>
+                </div>
+                <div className="flex items-center gap-5 group">
+                  <div className="bg-gray-100 p-4 rounded-2xl text-gray-500 group-hover:bg-teal-50 group-hover:text-teal-500 transition-all">
+                    <Lock size={24} />
+                  </div>
+                  <span className="text-lg font-bold text-gray-700 uppercase tracking-wide">Segurança em 1º lugar.</span>
+                </div>
+              </div>
             </div>
-            <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-4">
-              <div className="flex items-center gap-3"><Wind className="text-brand-yellow" /> <span>Proibido fumar.</span></div>
-              <div className="flex items-center gap-3"><Home className="text-brand-yellow" /> <span>Mantenha as janelas fechadas ao sair.</span></div>
-            </div>
-          </div>
-        </SectionWrapper>;
+          </SectionWrapper>
+        );
       case AppSection.CHECKOUT: return renderCheckout();
       case AppSection.EMERGENCIA: return renderEmergencia();
       default:
@@ -559,22 +657,32 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-pattern font-sans pb-10">
+    <div className="min-h-screen w-full font-sans pb-10">
       {renderHeader()}
-      <main className="p-4 md:p-8 md:pt-10">
+      <main className="p-4 md:p-12 md:pt-16">
         {currentSection === AppSection.HOME ? renderHome() : renderSection()}
       </main>
       
+      {/* Tab bar inferior para mobile em seções internas */}
       {currentSection !== AppSection.HOME && (
-        <div className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-xl p-3 border-t border-brand-yellow/10 flex justify-around items-center z-50 md:hidden">
-          <button onClick={handleBack} className="flex flex-col items-center gap-1 text-brand-brown/60 hover:text-brand-yellow transition-colors">
-            <Home size={24} /><span className="text-[10px] font-bold uppercase">Início</span>
+        <nav className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl p-4 border-t border-brand-yellow/10 flex justify-around items-center z-50 md:hidden shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
+          <button 
+            onClick={handleBack} 
+            aria-label="Voltar para o início"
+            className="flex flex-col items-center gap-1.5 text-brand-brown/50 hover:text-brand-yellow transition-all active:scale-90"
+          >
+            <Home size={28} /><span className="text-[10px] font-bold uppercase tracking-widest">Início</span>
           </button>
           <div className="w-px h-8 bg-brand-yellow/10"></div>
-          <a href={WELLINGTON_WHATSAPP} target="_blank" className="flex flex-col items-center gap-1 text-brand-brown/60 hover:text-green-500 transition-colors">
-            <MessageSquare size={24} /><span className="text-[10px] font-bold uppercase">Ajuda</span>
+          <a 
+            href={WELLINGTON_WHATSAPP} 
+            target="_blank" 
+            aria-label="Pedir ajuda no WhatsApp"
+            className="flex flex-col items-center gap-1.5 text-brand-brown/50 hover:text-green-500 transition-all active:scale-90"
+          >
+            <MessageSquare size={28} /><span className="text-[10px] font-bold uppercase tracking-widest">Suporte</span>
           </a>
-        </div>
+        </nav>
       )}
     </div>
   );
