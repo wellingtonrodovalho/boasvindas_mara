@@ -4,17 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Ap Mara - Guia do Hóspede</title>
+    <title>Mara 410 - Guia do Hóspede</title>
     
     <!-- Meta Tags de Produção / SEO -->
-    <meta name="description" content="Guia completo para hóspedes do Ap Mara no Setor Bueno, Goiânia. Informações de check-in, wifi e guia local.">
+    <meta name="description" content="Guia completo para hóspedes do Mara 410 no Setor Bueno, Goiânia. Informações de check-in, wifi e guia local.">
     <meta name="theme-color" content="#5C4023">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     
     <!-- Open Graph / Redes Sociais -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Ap Mara - Guia do Hóspede">
+    <meta property="og:title" content="Mara 410 - Guia do Hóspede">
     <meta property="og:description" content="Tudo o que você precisa para uma estadia perfeita em Goiânia.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&q=80&w=1000">
 
@@ -44,6 +44,7 @@
                     animation: {
                         'slide-up': 'slideUp 0.5s ease-out forwards',
                         'fade-in': 'fadeIn 0.3s ease-out forwards',
+                        'bounce-x': 'bounceX 1s infinite',
                     },
                     keyframes: {
                         slideUp: {
@@ -53,6 +54,10 @@
                         fadeIn: {
                             '0%': { opacity: '0' },
                             '100%': { opacity: '1' },
+                        },
+                        bounceX: {
+                            '0%, 100%': { transform: 'translateX(0)' },
+                            '50%': { transform: 'translateX(5px)' },
                         }
                     }
                 }

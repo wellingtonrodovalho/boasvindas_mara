@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   MessageSquare, 
   ChevronRight, 
@@ -97,6 +97,10 @@ const App: React.FC = () => {
   const [activeGuideTab, setActiveGuideTab] = useState(HOUSE_GUIDE_CONTENT?.[0]?.id || 'wifi');
   const [activeLocalCategory, setActiveLocalCategory] = useState(LOCAL_GUIDE_CATEGORIES?.[0]?.id || 'restaurantes');
   const [copiedWifi, setCopiedWifi] = useState(false);
+  
+  // Refs para monitorar scroll e esconder a seta se necessário (opcional, mas bom para UX)
+  const guideNavRef = useRef<HTMLElement>(null);
+  const localNavRef = useRef<HTMLElement>(null);
 
   // Scroll to top quando troca de seção
   useEffect(() => {
@@ -108,10 +112,10 @@ const App: React.FC = () => {
   const renderHeader = () => (
     <header className="bg-white/95 backdrop-blur-md border-b border-brand-yellow/10 sticky top-0 z-50 py-3 px-4 shadow-sm">
       <div className="max-w-6xl mx-auto flex items-center justify-between w-full">
-        <div className="flex items-center gap-3 cursor-pointer select-none" onClick={handleBack} role="button" aria-label="Home Ap Mara">
-          <img src={LOGO_URL} alt="Logo Ap Mara" className="h-10 w-10 object-contain" />
+        <div className="flex items-center gap-3 cursor-pointer select-none" onClick={handleBack} role="button" aria-label="Home Mara 410">
+          <img src={LOGO_URL} alt="Logo Mara 410" className="h-10 w-10 object-contain" />
           <div>
-            <h1 className="font-serif text-brand-brown text-lg md:text-xl leading-tight font-bold">Ap Mara</h1>
+            <h1 className="font-serif text-brand-brown text-lg md:text-xl leading-tight font-bold">Mara 410</h1>
             <p className="text-[10px] md:text-xs text-brand-yellow font-bold uppercase tracking-widest">Guia Digital</p>
           </div>
         </div>
@@ -146,7 +150,7 @@ const App: React.FC = () => {
         <div className="absolute inset-0 bg-pattern opacity-10"></div>
         <div className="relative z-10 space-y-6">
           <div className="bg-white/10 p-5 rounded-3xl inline-block backdrop-blur-md shadow-inner border border-white/10">
-            <img src={LOGO_URL} alt="Bem-vindo ao Ap Mara" className="h-24 w-24 md:h-32 mx-auto drop-shadow-2xl" />
+            <img src={LOGO_URL} alt="Bem-vindo ao Mara 410" className="h-24 w-24 md:h-32 mx-auto drop-shadow-2xl" />
           </div>
           <div className="space-y-2">
             <h2 className="text-white text-4xl md:text-7xl font-serif leading-tight drop-shadow-lg font-bold">Seja bem-vindo!</h2>
@@ -165,7 +169,6 @@ const App: React.FC = () => {
             className="flex flex-col items-center justify-center p-6 bg-white border border-brand-yellow/5 rounded-3xl shadow-sm hover:shadow-2xl hover:border-brand-yellow/40 transition-all group aspect-square lg:aspect-auto lg:py-10"
           >
             <div className="w-12 h-12 md:w-14 md:h-14 bg-brand-lightYellow/50 rounded-2xl flex items-center justify-center text-brand-yellow mb-4 group-hover:scale-110 transition-transform group-hover:bg-brand-yellow group-hover:text-white">
-              {/* Fix: Added <any> to React.ReactElement cast to resolve 'size' prop type error */}
               {React.cloneElement(item.icon as React.ReactElement<any>, { size: 28 })}
             </div>
             <span className="text-xs md:text-sm font-bold text-brand-brown text-center leading-tight uppercase tracking-wider">
@@ -206,28 +209,42 @@ const App: React.FC = () => {
         onBack={handleBack}
       >
         <div className="flex flex-col gap-8">
-          {/* Tabs horizontais */}
-          <nav className="flex items-center gap-3 overflow-x-auto pb-6 scrollbar-hide no-scrollbar -mx-2 px-2" role="tablist">
-            {HOUSE_GUIDE_CONTENT.map((tab) => (
-              <button
-                key={tab.id}
-                role="tab"
-                aria-selected={activeGuideTab === tab.id}
-                onClick={() => setActiveGuideTab(tab.id)}
-                className={`flex flex-col items-center justify-center min-w-[110px] md:min-w-[150px] p-5 rounded-3xl border-2 transition-all shrink-0 select-none ${
-                  activeGuideTab === tab.id 
-                  ? 'bg-white border-brand-teal text-brand-teal shadow-xl ring-4 ring-brand-teal/5' 
-                  : 'bg-white/40 border-transparent text-gray-400 hover:border-gray-200'
-                }`}
-              >
-                <div className={`mb-2 transition-colors ${activeGuideTab === tab.id ? 'text-brand-teal' : 'text-gray-300'}`}>
-                  {/* Fix: Added <any> to React.ReactElement cast to resolve 'size' prop type error */}
-                  {React.cloneElement(tab.icon as React.ReactElement<any>, { size: 24 })}
-                </div>
-                <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest">{tab.label}</span>
-              </button>
-            ))}
-          </nav>
+          {/* Tabs horizontais com indicador visual aprimorado e grid no desktop */}
+          <div className="relative">
+            <nav 
+              ref={guideNavRef}
+              className="flex md:grid md:grid-cols-3 lg:grid-cols-6 items-center gap-3 overflow-x-auto md:overflow-x-visible pb-6 scrollbar-hide no-scrollbar -mx-4 px-4 md:mx-0 md:px-0" 
+              role="tablist"
+            >
+              {HOUSE_GUIDE_CONTENT.map((tab) => (
+                <button
+                  key={tab.id}
+                  role="tab"
+                  aria-selected={activeGuideTab === tab.id}
+                  onClick={() => setActiveGuideTab(tab.id)}
+                  className={`flex flex-col items-center justify-center min-w-[110px] md:min-w-0 p-5 rounded-3xl border-2 transition-all shrink-0 md:shrink select-none ${
+                    activeGuideTab === tab.id 
+                    ? 'bg-white border-brand-teal text-brand-teal shadow-xl ring-4 ring-brand-teal/5' 
+                    : 'bg-white/40 border-transparent text-gray-400 hover:border-gray-200'
+                  }`}
+                >
+                  <div className={`mb-2 transition-colors ${activeGuideTab === tab.id ? 'text-brand-teal' : 'text-gray-300'}`}>
+                    {React.cloneElement(tab.icon as React.ReactElement<any>, { size: 24 })}
+                  </div>
+                  <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-center">{tab.label}</span>
+                </button>
+              ))}
+              {/* Espaçador invisível para permitir o peeking no último item (mobile) */}
+              <div className="min-w-[20px] md:hidden"></div>
+            </nav>
+            
+            {/* Indicador de scroll lateral para Mobile apenas */}
+            <div className="absolute right-0 top-0 bottom-6 w-16 pointer-events-none md:hidden bg-gradient-to-l from-[#FDFCF7] to-transparent flex items-center justify-end pr-1">
+              <div className="bg-white/80 p-1 rounded-full shadow-sm">
+                <ChevronRight className="text-brand-yellow animate-bounce-x" size={24} />
+              </div>
+            </div>
+          </div>
 
           {/* Conteúdo da Tab */}
           <div className="bg-white rounded-[2.5rem] shadow-2xl border border-gray-100 overflow-hidden animate-slide-up">
@@ -235,7 +252,6 @@ const App: React.FC = () => {
             <div className="p-8 md:p-12 space-y-10">
               <header className="flex items-center gap-5">
                 <div className={`w-16 h-16 rounded-2xl flex items-center justify-center text-white shadow-xl ${activeContent.id === 'outros' ? 'bg-brand-teal' : 'bg-blue-600'}`}>
-                  {/* Fix: Added <any> to React.ReactElement cast to resolve 'size' prop type error */}
                   {React.cloneElement(activeContent.icon as React.ReactElement<any>, { size: 32 })}
                 </div>
                 <h3 className="text-3xl font-bold text-gray-800 font-serif">{activeContent.title}</h3>
@@ -306,25 +322,38 @@ const App: React.FC = () => {
     return (
       <SectionWrapper title="Guia Local" subtitle="Explore o melhor de Goiânia pertinho de você" onBack={handleBack}>
         <div className="flex flex-col gap-10 w-full">
-          {/* Seletor de Categorias Estilizado */}
-          <nav className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3" aria-label="Categorias de locais">
-            {LOCAL_GUIDE_CATEGORIES.map((cat) => (
-              <button 
-                key={cat.id} 
-                onClick={() => setActiveLocalCategory(cat.id)} 
-                aria-current={activeLocalCategory === cat.id}
-                className={`flex flex-col items-center justify-center p-5 rounded-3xl border-2 transition-all ${activeLocalCategory === cat.id ? 'bg-brand-lightYellow border-brand-yellow text-brand-brown shadow-xl scale-105 z-10 font-bold' : 'bg-white border-transparent text-gray-400 hover:border-brand-yellow/20 hover:text-brand-brown shadow-sm'}`}
-              >
-                <div className={`mb-3 ${activeLocalCategory === cat.id ? 'text-brand-yellow' : 'text-gray-300'}`}>
-                  {/* Fix: Added <any> to React.ReactElement cast to resolve 'size' prop type error */}
-                  {React.cloneElement(cat.icon as React.ReactElement<any>, { size: 24 })}
-                </div>
-                <span className="text-[10px] md:text-xs uppercase tracking-widest text-center">{cat.title}</span>
-              </button>
-            ))}
-          </nav>
+          {/* Seletor de Categorias: Carrossel no Mobile, Grid no Desktop */}
+          <div className="relative">
+            <nav 
+              ref={localNavRef}
+              className="flex md:grid md:grid-cols-4 lg:grid-cols-6 items-stretch gap-3 overflow-x-auto md:overflow-x-visible pb-6 scrollbar-hide no-scrollbar -mx-4 px-4 md:mx-0 md:px-0" 
+              aria-label="Categorias de locais"
+            >
+              {LOCAL_GUIDE_CATEGORIES.map((cat) => (
+                <button 
+                  key={cat.id} 
+                  onClick={() => setActiveLocalCategory(cat.id)} 
+                  aria-current={activeLocalCategory === cat.id}
+                  className={`flex flex-col items-center justify-center p-5 rounded-3xl border-2 transition-all min-w-[110px] md:min-w-0 ${activeLocalCategory === cat.id ? 'bg-brand-lightYellow border-brand-yellow text-brand-brown shadow-xl md:scale-105 z-10 font-bold' : 'bg-white border-transparent text-gray-400 hover:border-brand-yellow/20 hover:text-brand-brown shadow-sm'}`}
+                >
+                  <div className={`mb-3 ${activeLocalCategory === cat.id ? 'text-brand-yellow' : 'text-gray-300'}`}>
+                    {React.cloneElement(cat.icon as React.ReactElement<any>, { size: 24 })}
+                  </div>
+                  <span className="text-[10px] md:text-xs uppercase tracking-widest text-center leading-tight">{cat.title}</span>
+                </button>
+              ))}
+              <div className="min-w-[20px] md:hidden"></div>
+            </nav>
+            
+            {/* Indicador visual para Mobile apenas */}
+            <div className="absolute right-0 top-0 bottom-6 w-16 pointer-events-none md:hidden bg-gradient-to-l from-[#FDFCF7] to-transparent flex items-center justify-end pr-1">
+              <div className="bg-white/80 p-1 rounded-full shadow-sm">
+                <ChevronRight className="text-brand-yellow animate-bounce-x" size={24} />
+              </div>
+            </div>
+          </div>
 
-          {/* Listagem em 3 Colunas */}
+          {/* Listagem em Colunas */}
           <div className="space-y-8">
             <header className="flex items-center gap-4 border-l-8 border-brand-yellow pl-6 py-2">
                <h4 className="text-2xl font-bold text-brand-brown font-serif">{activeCategory.headerLabel}</h4>
@@ -344,7 +373,6 @@ const App: React.FC = () => {
                   <div className="space-y-4">
                     <header className="flex items-center justify-between">
                       <div className="bg-brand-lightYellow/50 p-4 rounded-2xl text-brand-yellow group-hover:bg-brand-yellow group-hover:text-white transition-all">
-                        {/* Fix: Added <any> to React.ReactElement cast to resolve 'size' prop type error */}
                         {React.cloneElement(activeCategory.icon as React.ReactElement<any>, { size: 24 })}
                       </div>
                       <ExternalLink size={20} className="text-gray-200 group-hover:text-brand-yellow transition-colors" />
@@ -412,7 +440,7 @@ const App: React.FC = () => {
     ];
 
     return (
-      <SectionWrapper title="Check-out" subtitle="Obrigado por escolher o Ap Mara" onBack={handleBack}>
+      <SectionWrapper title="Check-out" subtitle="Obrigado por escolher o Mara 410" onBack={handleBack}>
         <div className="flex flex-col gap-8 max-w-2xl mx-auto w-full animate-fade-in px-2 md:px-0">
           {/* Banner Horário */}
           <div className="bg-brand-teal rounded-3xl p-8 flex items-center gap-6 shadow-xl text-white border border-white/10">
