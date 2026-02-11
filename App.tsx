@@ -9,7 +9,7 @@ import {
   ExternalLink,
   Smartphone,
   Info,
-  Trash2,
+  Trash2, 
   Lock,
   Wind,
   Utensils,
@@ -69,7 +69,7 @@ const SectionWrapper: React.FC<{
     
     <div className="flex flex-col gap-1 mb-2">
       <div className="flex flex-col">
-        <h2 className="text-4xl font-bold text-brand-brown font-serif">{title}</h2>
+        <h2 className="text-4xl font-bold text-brand-brown font-serif tracking-tight">{title}</h2>
         <div className="h-1 w-24 bg-gradient-to-r from-[#0D9488] to-orange-500 mt-1 rounded-full"></div>
       </div>
       {subtitle && <p className="text-gray-500 font-medium mt-2">{subtitle}</p>}
@@ -434,12 +434,12 @@ const App: React.FC = () => {
         <div className="flex flex-col gap-6">
           <ul className="space-y-6">
             {EMERGENCY_CONTACTS.map((contact, idx) => (
-              <li key={idx} className="flex items-start gap-3 group">
-                <div className="w-1.5 h-1.5 rounded-full bg-brand-brown/40 mt-2.5 shrink-0 group-hover:bg-brand-yellow transition-colors"></div>
-                <p className="text-gray-600 text-lg leading-snug">
+              <li key={idx} className="flex items-start gap-4 group">
+                <div className="w-2 h-2 rounded-full bg-brand-brown/30 mt-2.5 shrink-0 group-hover:bg-brand-yellow transition-colors"></div>
+                <p className="text-gray-700 text-lg md:text-xl leading-snug">
                   {contact.label} –{' '}
                   <a 
-                    href={`tel:${contact.phone.replace(/\s+/g, '')}`} 
+                    href={`tel:${contact.phone.replace(/[^\d]/g, '')}`} 
                     className="font-bold text-brand-brown hover:text-brand-yellow transition-colors decoration-brand-yellow/30 underline underline-offset-4"
                   >
                     {contact.phone}
