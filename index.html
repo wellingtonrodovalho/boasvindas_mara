@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ap Mara - Guia de Boas-Vindas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KICA8Y2lyY2xlIGN4PSI1MCIgY3k9IjI4IiByPSIxNyIgZmlsbD0iI2YxYjMxYyIvPgogIDxjaXJjbGUgY3g9IjI0IiBjeT0iNTUiIHI9IjE0IiBmaWxsPSIjRjFCMzFDIi8+CiAgPGNpcmNsZSBjeD0iNzYiIGN5PSI1NSIgcj0iMTQiIGZpbGw9IiNGMUIzMUMiLz4KICA8cGF0aCBkPSJNNTAgODggVjQyIE01MCA3MiBMMjggNTkgTTUwIDcyIEw3MiA1OSIgc3Ryb2tlPSIjNUM0MDIzIiBzdHJva2Utd2lkdGg9IjYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4=">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            yellow: '#F1B31C',
+                            brown: '#5C4023',
+                            lightYellow: '#FEF9C3',
+                            darkBrown: '#3D2B17'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #FDFCF7;
+            margin: 0;
+            padding: 0;
+        }
+        .bg-pattern {
+            background-color: #FDFCF7;
+            background-image: radial-gradient(#F1B31C1A 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "lucide-react": "https://esm.sh/lucide-react@0.460.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/"
+  }
+}
+</script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
