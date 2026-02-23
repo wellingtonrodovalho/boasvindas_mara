@@ -41,6 +41,7 @@ import {
   Power,
   Phone
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 import { AppSection } from './types.ts';
 import { 
   LOGO_URL, 
@@ -59,7 +60,12 @@ const SectionWrapper: React.FC<{
   children: React.ReactNode; 
   onBack: () => void;
 }> = ({ title, subtitle, children, onBack }) => (
-  <div className="flex flex-col gap-6 pb-20 animate-fade-in max-w-6xl mx-auto w-full px-2 md:px-0">
+  <motion.div 
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -20 }}
+    className="flex flex-col gap-6 pb-20 max-w-6xl mx-auto w-full px-2 md:px-0"
+  >
     <button 
       onClick={onBack}
       aria-label="Voltar para o menu principal"
@@ -79,7 +85,7 @@ const SectionWrapper: React.FC<{
     <section className="w-full">
       {children}
     </section>
-  </div>
+  </motion.div>
 );
 
 const AmenityIcon: React.FC<{ name: string; className?: string }> = ({ name, className }) => {
@@ -712,6 +718,27 @@ const App: React.FC = () => {
           </a>
         </nav>
       )}
+
+      {/* Botão Flutuante (FAB) para Desktop e Mobile */}
+      <AnimatePresence>
+        {currentSection !== AppSection.HOME && (
+          <motion.button
+            initial={{ scale: 0, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0, opacity: 0, y: 20 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={handleBack}
+            className="fixed bottom-24 right-6 md:bottom-10 md:right-10 z-50 bg-brand-yellow text-brand-brown p-4 rounded-full shadow-2xl hover:bg-brand-brown hover:text-white transition-colors flex items-center justify-center group border-2 border-white/20"
+            title="Voltar ao Menu Principal"
+          >
+            <Home size={24} />
+            <span className="absolute right-full mr-4 bg-brand-brown text-white px-4 py-2 rounded-xl text-xs font-bold opacity-0 group-hover:opacity-100 transition-all whitespace-nowrap pointer-events-none shadow-xl translate-x-2 group-hover:translate-x-0">
+              Voltar ao Menu
+            </span>
+          </motion.button>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
