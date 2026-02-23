@@ -133,7 +133,7 @@ export const HOUSE_GUIDE_CONTENT = [
 
 export const APARTMENT_CONTENT = {
   address: "Rua T-47, 173, Apto 410, Bloco C, Setor Bueno, Goiânia-GO, CEP 74.210-180",
-  googleMapsUrl: "https://maps.app.goo.gl/1QMvzspPkke6XMBo8",
+  googleMapsUrl: "https://g.co/kgs/7UcCUNA",
   specs: {
     quartos: 2,
     hospedes: 6,

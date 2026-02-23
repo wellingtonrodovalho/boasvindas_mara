@@ -595,50 +595,126 @@ const App: React.FC = () => {
           <SectionWrapper title="Check-in" subtitle="Como entrar e se instalar com facilidade" onBack={handleBack}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div className="flex flex-col gap-10">
+                {/* Localização */}
                 <div className="bg-white rounded-[2rem] shadow-xl border border-gray-100 overflow-hidden h-fit">
                   <header className="bg-teal-50 p-6 px-10 flex items-center gap-4 border-b border-teal-100">
                     <MapPin className="text-brand-teal" size={24} />
                     <h3 className="font-bold text-gray-800 text-xl font-serif">Localização Exata</h3>
                   </header>
                   <div className="p-10 text-center space-y-6">
-                    <p className="text-brand-brown leading-relaxed font-bold text-2xl md:text-3xl">
-                      Rua T-47, 173, Apto 410<br/>Bloco C, Setor Bueno
+                    <p className="text-brand-brown leading-relaxed font-bold text-xl md:text-2xl">
+                      R. T-47, 173, Apto 410<br/>Bloco C - St. Bueno, Goiânia - GO
                     </p>
                     <a 
                       href={APARTMENT_CONTENT.googleMapsUrl} 
                       target="_blank" 
+                      rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 bg-brand-yellow text-white px-8 py-4 rounded-2xl font-extrabold shadow-lg hover:shadow-brand-yellow/20 transition-all"
                     >
-                      <MapPin size={20} /> Rotas do Waze/Maps
+                      <MapPin size={20} /> Abrir no Google Maps
                     </a>
                   </div>
                 </div>
-                <div className="bg-brand-lightYellow/50 border-4 border-brand-yellow p-10 rounded-[2rem] shadow-inner space-y-4">
-                  <h4 className="font-bold text-brand-brown text-3xl flex items-center gap-4 font-serif"><Lock size={32} className="text-brand-yellow" /> Senha da Porta</h4>
-                  <div className="bg-white p-6 rounded-2xl shadow-sm border border-brand-yellow/20">
-                    <p className="text-brand-brown/70 text-lg font-medium">Formato da senha:</p>
-                    <p className="text-2xl font-extrabold text-brand-brown mt-2">* + DDD + Telefone + #</p>
+
+                {/* Fechadura Digital */}
+                <div className="bg-brand-lightYellow/50 border-4 border-brand-yellow p-10 rounded-[2rem] shadow-inner space-y-6">
+                  <h4 className="font-bold text-brand-brown text-3xl flex items-center gap-4 font-serif"><Lock size={32} className="text-brand-yellow" /> Fechadura Digital</h4>
+                  
+                  <div className="bg-white p-6 rounded-2xl shadow-sm border border-brand-yellow/20 space-y-4">
+                    <div className="bg-red-50 p-4 rounded-xl border border-red-100">
+                      <p className="text-red-800 font-bold text-sm flex items-center gap-2">
+                        <AlertTriangle size={18} /> CUIDADO MUITO IMPORTANTE
+                      </p>
+                      <p className="text-red-700 text-sm mt-1">
+                        Digite a senha <strong>antes</strong> de colocar a mão na maçaneta. Se girar antes, a fechadura irá travar.
+                      </p>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <p className="text-brand-brown/70 text-sm font-bold uppercase tracking-widest">Ordem correta:</p>
+                      <div className="flex flex-col gap-2">
+                        <div className="flex items-center gap-3 text-brand-brown font-medium">
+                          <span className="w-6 h-6 rounded-full bg-brand-yellow flex items-center justify-center text-xs font-bold">1</span>
+                          Digite a senha
+                        </div>
+                        <div className="flex items-center gap-3 text-brand-brown font-medium">
+                          <span className="w-6 h-6 rounded-full bg-brand-yellow flex items-center justify-center text-xs font-bold">2</span>
+                          Aguarde o bip de liberação
+                        </div>
+                        <div className="flex items-center gap-3 text-brand-brown font-medium">
+                          <span className="w-6 h-6 rounded-full bg-brand-yellow flex items-center justify-center text-xs font-bold">3</span>
+                          Gire a maçaneta
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
+
+              {/* Passo a Passo */}
               <div className="bg-white rounded-[2rem] p-10 shadow-xl border border-gray-100">
                  <h3 className="font-bold text-3xl mb-10 font-serif border-b pb-6">Passo a Passo</h3>
-                 <ol className="space-y-10" role="list">
-                   <li className="flex gap-6 group">
-                    <span className="w-12 h-12 rounded-2xl bg-brand-yellow flex items-center justify-center font-black text-brand-brown text-xl shadow-lg shrink-0 group-hover:scale-110 transition-transform">1</span> 
-                    <div>
-                      <h4 className="font-bold text-xl mb-1">Portaria</h4>
-                      <p className="text-gray-500 text-lg">Identifique-se pelo interfone. A portaria é remota e solicitará seus dados.</p>
+                 <div className="space-y-12">
+                   {/* Passo 1 */}
+                   <div className="flex gap-6 group">
+                    <div className="flex flex-col items-center">
+                      <span className="w-12 h-12 rounded-2xl bg-brand-yellow flex items-center justify-center font-black text-brand-brown text-xl shadow-lg shrink-0 group-hover:scale-110 transition-transform">1</span>
+                      <div className="w-1 h-full bg-brand-yellow/20 mt-4 rounded-full"></div>
                     </div>
-                   </li>
-                   <li className="flex gap-6 group">
-                    <span className="w-12 h-12 rounded-2xl bg-brand-yellow flex items-center justify-center font-black text-brand-brown text-xl shadow-lg shrink-0 group-hover:scale-110 transition-transform">2</span> 
-                    <div>
-                      <h4 className="font-bold text-xl mb-1">Acesso ao Prédio</h4>
-                      <p className="text-gray-500 text-lg">Vá até o Bloco C e suba até o 4º andar no Apartamento 410.</p>
+                    <div className="space-y-4 pb-8">
+                      <div>
+                        <h4 className="font-bold text-xl mb-1">Acesso ao Condomínio</h4>
+                        <p className="text-gray-500 text-lg">Utilize o link da chave virtual enviado pelo anfitrião.</p>
+                      </div>
+                      
+                      <div className="bg-blue-50 p-5 rounded-2xl border border-blue-100 space-y-3">
+                        <p className="text-blue-800 text-sm font-medium">
+                          <strong>Importante:</strong> O sistema pedirá acesso ao GPS. Clique em <strong>"Permitir"</strong> para que a chave funcione.
+                        </p>
+                      </div>
+
+                      <div className="space-y-3">
+                        <div className="flex items-start gap-3">
+                          <div className="w-6 h-6 rounded-full bg-brand-teal/10 text-brand-teal flex items-center justify-center shrink-0 mt-1">
+                            <Check size={14} />
+                          </div>
+                          <p className="text-gray-600 text-sm">Destrave a <strong>PORTA SOCIAL - 01</strong>.</p>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <div className="w-6 h-6 rounded-full bg-brand-teal/10 text-brand-teal flex items-center justify-center shrink-0 mt-1">
+                            <Check size={14} />
+                          </div>
+                          <p className="text-gray-600 text-sm">Passe para a <strong>CLAUSURA - 02</strong> (só abre se a primeira estiver fechada).</p>
+                        </div>
+                      </div>
+                      
+                      <p className="text-xs text-gray-400 italic">Dica: Se precisar de ajuda, clique em "PORTARIA" no link da chave para falar com a portaria remota.</p>
                     </div>
-                   </li>
-                 </ol>
+                   </div>
+
+                   {/* Passo 2 */}
+                   <div className="flex gap-6 group">
+                    <div className="flex flex-col items-center">
+                      <span className="w-12 h-12 rounded-2xl bg-brand-yellow flex items-center justify-center font-black text-brand-brown text-xl shadow-lg shrink-0 group-hover:scale-110 transition-transform">2</span>
+                    </div>
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="font-bold text-xl mb-1">Chegando ao Apartamento</h4>
+                        <p className="text-gray-500 text-lg">Siga até o <strong>Bloco C</strong> (último bloco).</p>
+                      </div>
+                      <div className="bg-gray-50 p-5 rounded-2xl border border-gray-100 flex items-center gap-4">
+                        <div className="bg-white p-3 rounded-xl shadow-sm text-brand-brown">
+                          <LayoutGrid size={24} />
+                        </div>
+                        <p className="text-brand-brown font-medium">Elevador: Botão 4 (4º andar)</p>
+                      </div>
+                      <div className="bg-brand-brown text-white p-5 rounded-2xl shadow-lg flex items-center justify-between">
+                        <span className="font-bold uppercase tracking-widest text-xs opacity-70">Apartamento</span>
+                        <span className="text-3xl font-serif font-bold">410</span>
+                      </div>
+                    </div>
+                   </div>
+                 </div>
               </div>
             </div>
           </SectionWrapper>
