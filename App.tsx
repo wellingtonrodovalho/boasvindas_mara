@@ -631,6 +631,18 @@ const App: React.FC = () => {
                     </div>
                     
                     <div className="space-y-2">
+                      <p className="text-brand-brown/70 text-sm font-bold uppercase tracking-widest">Formato da Senha:</p>
+                      <div className="bg-brand-lightYellow/30 p-4 rounded-xl border border-brand-yellow/20">
+                        <p className="text-xl font-extrabold text-brand-brown tracking-widest text-center">
+                          * + DDD + 5 primeiros dígitos + #
+                        </p>
+                        <p className="text-[10px] text-gray-500 mt-2 text-center uppercase font-bold">
+                          Exemplo: 62 98545-1980 → <span className="text-brand-teal">*6298545#</span>
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-2">
                       <p className="text-brand-brown/70 text-sm font-bold uppercase tracking-widest">Ordem correta:</p>
                       <div className="flex flex-col gap-2">
                         <div className="flex items-center gap-3 text-brand-brown font-medium">
