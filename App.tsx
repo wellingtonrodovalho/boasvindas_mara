@@ -39,7 +39,9 @@ import {
   Heart,
   CheckCircle2,
   Power,
-  Phone
+  Phone,
+  Mail,
+  Globe
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { AppSection } from './types.ts';
@@ -97,6 +99,73 @@ const AmenityIcon: React.FC<{ name: string; className?: string }> = ({ name, cla
     default: return <Info className={className} size={20} aria-hidden="true" />;
   }
 };
+
+const ProfessionalFooter: React.FC = () => (
+  <footer className="bg-brand-brown text-white/80 py-16 px-6 mt-12 border-t border-white/10 relative z-10">
+    <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+      <div className="space-y-6">
+        <div className="flex items-center gap-3">
+          <div className="bg-brand-yellow p-2 rounded-lg">
+            <MapPin className="text-brand-brown" size={20} />
+          </div>
+          <h4 className="text-brand-yellow font-bold uppercase tracking-widest text-sm">Endereço do Imóvel</h4>
+        </div>
+        <p className="text-sm leading-relaxed opacity-90">
+          Rua T-47, 173, Apartamento 410, Bloco C, Setor Bueno, Goiânia/GO, CEP 74.210-180
+        </p>
+      </div>
+      
+      <div className="space-y-6">
+        <div className="flex items-center gap-3">
+          <div className="bg-brand-yellow p-2 rounded-lg">
+            <Smartphone className="text-brand-brown" size={20} />
+          </div>
+          <h4 className="text-brand-yellow font-bold uppercase tracking-widest text-sm">Corretor Responsável</h4>
+        </div>
+        <div className="space-y-2">
+          <p className="text-white font-bold text-lg">WELLINGTON RODOVALHO FONSECA</p>
+          <div className="grid grid-cols-1 gap-1 opacity-80">
+            <p className="text-xs flex items-center gap-2"><span className="font-bold text-brand-yellow">CAEPF:</span> 269.462.701/001-49</p>
+            <p className="text-xs flex items-center gap-2"><span className="font-bold text-brand-yellow">CRECI:</span> CRECI-GO 42695</p>
+            <p className="text-xs flex items-center gap-2"><span className="font-bold text-brand-yellow">CNAI:</span> 54826</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-6">
+        <div className="flex items-center gap-3">
+          <div className="bg-brand-yellow p-2 rounded-lg">
+            <Info className="text-brand-brown" size={20} />
+          </div>
+          <h4 className="text-brand-yellow font-bold uppercase tracking-widest text-sm">Canais de Atendimento</h4>
+        </div>
+        <div className="flex flex-col gap-4 text-sm">
+          <a href="https://www.alugagoias.com.br" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-brand-yellow transition-all group">
+            <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-brand-yellow group-hover:text-brand-brown transition-all">
+              <Globe size={16} />
+            </div>
+            www.alugagoias.com.br
+          </a>
+          <a href="https://wa.me/5562985451980" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-brand-yellow transition-all group">
+            <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-brand-yellow group-hover:text-brand-brown transition-all">
+              <MessageSquare size={16} />
+            </div>
+            (62) 98545-1980
+          </a>
+          <a href="mailto:contato@alugagoias.com.br" className="flex items-center gap-3 hover:text-brand-yellow transition-all group">
+            <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-brand-yellow group-hover:text-brand-brown transition-all">
+              <Mail size={16} />
+            </div>
+            contato@alugagoias.com.br
+          </a>
+        </div>
+      </div>
+    </div>
+    <div className="max-w-6xl mx-auto mt-16 pt-8 border-t border-white/5 text-center">
+      <p className="text-[10px] uppercase tracking-[0.4em] opacity-40">© {new Date().getFullYear()} Mara 410 • Gestão Profissional de Imóveis</p>
+    </div>
+  </footer>
+);
 
 const App: React.FC = () => {
   const [currentSection, setCurrentSection] = useState<AppSection>(AppSection.HOME);
@@ -784,6 +853,8 @@ const App: React.FC = () => {
       <main className="p-4 md:p-12 md:pt-16">
         {currentSection === AppSection.HOME ? renderHome() : renderSection()}
       </main>
+      
+      <ProfessionalFooter />
       
       {/* Tab bar inferior para mobile em seções internas */}
       {currentSection !== AppSection.HOME && (
