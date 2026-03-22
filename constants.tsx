@@ -31,7 +31,7 @@ import { AppSection, NavItem } from './types.ts';
 
 export const LOGO_URL = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48Y2lyY2xlIGN4PSIyNTYiIGN5PSIxNTAiIHI9IjEwMCIgZmlsbD0iI2YxYjMxYyIvPjxjaXJjbGUgY3g9IjEyMCIgY3k9IjI4MCIgcj0iMTAwIiBmaWxsPSIjZjFiMzFjIi8+PGNpcmNsZSBjeD0iMzkyIiBjeT0iMjgwIiByPSIxMDAiIGZpbGw9IiNmMWIzMWMiLz48cGF0aCBkPSJNMjU2IDQ2MCBWMjAwIE0yNTYgMzgwIEwxNDAgMjgwIE0yNTYgMzgwIEwzNzIgMjgwIiBzdHJva2U9IiM1YzQwMjMiIHN0cm9rZS13aWR0aD0iMzIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==";
 
-export const WELLINGTON_WHATSAPP = "https://wa.me/5562985451980"; 
+export const WELLINGTON_WHATSAPP = "https://wa.me/5562991514568"; 
 
 export const NAV_ITEMS: NavItem[] = [
   { id: AppSection.APARTAMENTO, label: 'Nosso Apartamento', icon: <Home size={20} /> },

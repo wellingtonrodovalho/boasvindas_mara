@@ -146,11 +146,11 @@ const ProfessionalFooter: React.FC = () => (
             </div>
             www.alugagoias.com.br
           </a>
-          <a href="https://wa.me/5562985451980" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-brand-yellow transition-all group">
+          <a href="https://wa.me/5562991514568" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-brand-yellow transition-all group">
             <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-brand-yellow group-hover:text-brand-brown transition-all">
               <MessageSquare size={16} />
             </div>
-            (62) 98545-1980
+            (62) 99151-4568
           </a>
           <a href="mailto:contato@alugagoias.com.br" className="flex items-center gap-3 hover:text-brand-yellow transition-all group">
             <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-brand-yellow group-hover:text-brand-brown transition-all">
@@ -706,7 +706,7 @@ const App: React.FC = () => {
                           * + DDD + 5 primeiros dígitos + #
                         </p>
                         <p className="text-[10px] text-gray-500 mt-2 text-center uppercase font-bold">
-                          Exemplo: 62 98545-1980 → <span className="text-brand-teal">*6298545#</span>
+                          Exemplo: 62 99151-4568 → <span className="text-brand-teal">*6299151#</span>
                         </p>
                       </div>
                     </div>
