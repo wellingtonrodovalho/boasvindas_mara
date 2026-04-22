@@ -197,7 +197,14 @@ const SearchOverlay: React.FC<{
       description: `Telefone: ${contact.phone}`,
       section: AppSection.EMERGENCIA,
       icon: <Phone size={16} />
-    }))
+    })),
+    // Link direto para senhas (Check-in)
+    {
+      title: 'Senhas de Acesso',
+      description: 'Como usar a fechadura digital e senhas',
+      section: AppSection.CHECKIN,
+      icon: <Lock size={16} />
+    }
   ];
 
   const handleSearch = (text: string) => {
@@ -277,7 +284,7 @@ const SearchOverlay: React.FC<{
             <p className="text-center text-white/40 py-10 font-medium">Nenhum resultado encontrado para "{query}"</p>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-10">
-              {['WiFi', 'Lixo', 'Café', 'Senhas'].map(suggestion => (
+              {['WiFi', 'Lixo', 'Café'].map(suggestion => (
                 <button
                   key={suggestion}
                   onClick={() => handleSearch(suggestion)}
@@ -460,7 +467,7 @@ const App: React.FC = () => {
             
             {/* Tags de sugestão */}
             <div className="flex flex-wrap justify-center gap-2 mt-4">
-              {['WiFi', 'Lixo', 'Café', 'Senhas'].map((tag) => (
+              {['WiFi', 'Lixo', 'Café'].map((tag) => (
                 <button 
                   key={tag}
                   onClick={() => setIsSearchOpen(true)}
