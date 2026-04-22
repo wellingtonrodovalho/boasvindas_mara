@@ -41,7 +41,9 @@ import {
   Power,
   Phone,
   Mail,
-  Globe
+  Globe,
+  Search,
+  X
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { AppSection } from './types.ts';
@@ -98,6 +100,198 @@ const AmenityIcon: React.FC<{ name: string; className?: string }> = ({ name, cla
     case 'wind': return <Wind className={className} size={20} aria-hidden="true" />;
     default: return <Info className={className} size={20} aria-hidden="true" />;
   }
+};
+
+interface SearchItem {
+  title: string;
+  description: string;
+  section: AppSection;
+  icon: React.ReactNode;
+  tabId?: string;
+}
+
+const SearchOverlay: React.FC<{
+  isOpen: boolean;
+  onClose: () => void;
+  onNavigate: (section: AppSection, tabId?: string) => void;
+}> = ({ isOpen, onClose, onNavigate }) => {
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState<SearchItem[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      setTimeout(() => inputRef.current?.focus(), 100);
+      setQuery('');
+      setResults([]);
+    }
+  }, [isOpen]);
+
+  const searchableContent: SearchItem[] = [
+    // Seções principais
+    ...NAV_ITEMS.map(item => ({
+      title: item.label,
+      description: `Ir para seção ${item.label}`,
+      section: item.id,
+      icon: item.icon
+    })),
+    // Guia da Casa
+    ...HOUSE_GUIDE_CONTENT.flatMap(guide => ([
+      {
+        title: guide.title,
+        description: guide.footer || 'Instruções e guias para este item',
+        section: AppSection.GUIA_CASA,
+        icon: guide.icon,
+        tabId: guide.id
+      },
+      ...(guide.fields || []).map(field => ({
+        title: `${guide.title}: ${field.label}`,
+        description: field.value,
+        section: AppSection.GUIA_CASA,
+        icon: guide.icon,
+        tabId: guide.id
+      })),
+      ...(guide.subCards || []).map(sub => ({
+        title: sub.title,
+        description: sub.description,
+        section: AppSection.GUIA_CASA,
+        icon: guide.icon,
+        tabId: guide.id
+      }))
+    ])),
+    // Guia Local
+    ...LOCAL_GUIDE_CATEGORIES.flatMap(cat => ([
+      {
+        title: cat.title,
+        description: cat.headerLabel,
+        section: AppSection.GUIA_LOCAL,
+        icon: cat.icon,
+        tabId: cat.id
+      },
+      ...(cat.places || []).map(place => ({
+        title: place.name,
+        description: (place as any).description || `Local em ${cat.title}`,
+        section: AppSection.GUIA_LOCAL,
+        icon: cat.icon,
+        tabId: cat.id
+      }))
+    ])),
+    // Apartamento Amenities
+    ...APARTMENT_CONTENT.amenities.flatMap(amenity => ([
+      {
+        title: amenity.title,
+        description: 'Detalhes do apartamento',
+        section: AppSection.APARTAMENTO,
+        icon: <Home size={16} />
+      },
+      ...(amenity.items || []).map(item => ({
+        title: typeof item === 'string' ? item : item.label,
+        description: typeof item === 'string' ? `Comodidade: ${amenity.title}` : item.value,
+        section: AppSection.APARTAMENTO,
+        icon: <Home size={16} />
+      }))
+    ])),
+    // Emergência
+    ...EMERGENCY_CONTACTS.map(contact => ({
+      title: contact.label,
+      description: `Telefone: ${contact.phone}`,
+      section: AppSection.EMERGENCIA,
+      icon: <Phone size={16} />
+    }))
+  ];
+
+  const handleSearch = (text: string) => {
+    setQuery(text);
+    if (text.trim().length < 2) {
+      setResults([]);
+      return;
+    }
+    const filtered = searchableContent.filter(item => 
+      item.title.toLowerCase().includes(text.toLowerCase()) || 
+      item.description.toLowerCase().includes(text.toLowerCase())
+    );
+    // Remover duplicatas baseadas no título
+    const unique = filtered.filter((v, i, a) => a.findIndex(t => (t.title === v.title)) === i);
+    setResults(unique.slice(0, 10));
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[100] bg-brand-brown/80 backdrop-blur-md p-4 md:p-10 flex flex-col items-center"
+    >
+      <button 
+        onClick={onClose}
+        className="absolute top-6 right-6 text-white/50 hover:text-white p-2"
+      >
+        <X size={32} />
+      </button>
+
+      <div className="w-full max-w-2xl mt-12 space-y-6">
+        <div className="text-center space-y-2 mb-8">
+          <h2 className="text-white text-3xl font-serif font-bold">Busca Mara 410</h2>
+          <p className="text-white/50">Encontre rapidamente qualquer informação no guia</p>
+        </div>
+
+        <div className="relative">
+          <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400" size={24} />
+          <input
+            ref={inputRef}
+            type="text"
+            placeholder="O que você está procurando? (ex: wifi, lixo, cafe...)"
+            value={query}
+            onChange={(e) => handleSearch(e.target.value)}
+            className="w-full bg-white rounded-3xl py-6 pl-16 pr-6 text-xl text-brand-brown focus:ring-4 focus:ring-brand-yellow/30 outline-none shadow-2xl"
+          />
+        </div>
+
+        <div className="space-y-3">
+          {results.length > 0 ? (
+            results.map((item, idx) => (
+              <motion.button
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: idx * 0.05 }}
+                key={idx}
+                onClick={() => {
+                  onNavigate(item.section, item.tabId);
+                  onClose();
+                }}
+                className="w-full bg-white/10 hover:bg-white/20 border border-white/10 p-5 rounded-2xl flex items-center gap-4 text-left transition-all group"
+              >
+                <div className="bg-brand-yellow text-brand-brown p-3 rounded-xl shadow-lg">
+                  {item.icon}
+                </div>
+                <div>
+                  <h5 className="text-white font-bold text-lg group-hover:text-brand-yellow transition-colors">{item.title}</h5>
+                  <p className="text-white/60 text-sm line-clamp-1">{item.description}</p>
+                </div>
+                <ChevronRight className="ml-auto text-white/20 group-hover:text-white transition-all group-hover:translate-x-1" size={20} />
+              </motion.button>
+            ))
+          ) : query.length >= 2 ? (
+            <p className="text-center text-white/40 py-10 font-medium">Nenhum resultado encontrado para "{query}"</p>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-10">
+              {['WiFi', 'Lixo', 'Café', 'Senhas'].map(suggestion => (
+                <button
+                  key={suggestion}
+                  onClick={() => handleSearch(suggestion)}
+                  className="bg-white/5 hover:bg-white/10 border border-white/5 py-3 px-4 rounded-xl text-white/70 text-sm font-bold transition-all"
+                >
+                  {suggestion}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  );
 };
 
 const ProfessionalFooter: React.FC = () => (
@@ -172,6 +366,7 @@ const App: React.FC = () => {
   const [activeGuideTab, setActiveGuideTab] = useState(HOUSE_GUIDE_CONTENT?.[0]?.id || 'wifi');
   const [activeLocalCategory, setActiveLocalCategory] = useState(LOCAL_GUIDE_CATEGORIES?.[0]?.id || 'restaurantes');
   const [copiedWifi, setCopiedWifi] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   
   // Refs para monitorar scroll e esconder a seta se necessário (opcional, mas bom para UX)
   const guideNavRef = useRef<HTMLElement>(null);
@@ -184,6 +379,15 @@ const App: React.FC = () => {
 
   const handleBack = () => setCurrentSection(AppSection.HOME);
 
+  const handleNavigate = (section: AppSection, tabId?: string) => {
+    setCurrentSection(section);
+    if (section === AppSection.GUIA_CASA && tabId) {
+      setActiveGuideTab(tabId);
+    } else if (section === AppSection.GUIA_LOCAL && tabId) {
+      setActiveLocalCategory(tabId);
+    }
+  };
+
   const renderHeader = () => (
     <header className="bg-white/95 backdrop-blur-md border-b border-brand-yellow/10 sticky top-0 z-50 py-3 px-4 shadow-sm">
       <div className="max-w-6xl mx-auto flex items-center justify-between w-full">
@@ -194,7 +398,15 @@ const App: React.FC = () => {
             <p className="text-[10px] md:text-xs text-brand-yellow font-bold uppercase tracking-widest">Guia Digital</p>
           </div>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 md:gap-4">
+          <button 
+            onClick={() => setIsSearchOpen(true)}
+            className="p-2 md:p-3 text-brand-brown hover:text-brand-yellow transition-colors"
+            aria-label="Pesquisar no guia"
+          >
+            <Search size={24} />
+          </button>
+          
           <a 
             href={WELLINGTON_WHATSAPP} 
             target="_blank" 
@@ -220,16 +432,44 @@ const App: React.FC = () => {
   const renderHome = () => (
     <div className="flex flex-col gap-6 animate-fade-in max-w-6xl mx-auto w-full">
       {/* Hero Section */}
-      <div className="relative h-64 md:h-96 w-full rounded-[2rem] overflow-hidden shadow-2xl mb-2 bg-brand-brown flex items-center justify-center text-center p-8">
+      <div className="relative h-fit w-full rounded-[2rem] overflow-hidden shadow-2xl mb-4 bg-brand-brown p-8 md:p-12">
         <div className="absolute inset-0 bg-gradient-to-br from-brand-brown via-brand-darkBrown to-brand-brown opacity-95"></div>
         <div className="absolute inset-0 bg-pattern opacity-10"></div>
-        <div className="relative z-10 space-y-6">
-          <div className="bg-white/10 p-5 rounded-3xl inline-block backdrop-blur-md shadow-inner border border-white/10">
-            <img src={LOGO_URL} alt="Bem-vindo ao Mara 410" className="h-24 w-24 md:h-32 mx-auto drop-shadow-2xl" />
+        
+        {/* Conteúdo Centralizado */}
+        <div className="relative z-10 flex flex-col items-center justify-center text-center">
+          <div className="bg-white/10 p-4 rounded-2xl inline-block backdrop-blur-md shadow-inner border border-white/10 mb-6">
+            <img src={LOGO_URL} alt="Bem-vindo ao Mara 410" className="h-20 w-20 md:h-24 mx-auto drop-shadow-2xl" />
           </div>
-          <div className="space-y-2">
-            <h2 className="text-white text-4xl md:text-7xl font-serif leading-tight drop-shadow-lg font-bold">Seja bem-vindo!</h2>
-            <p className="text-brand-yellow text-xl md:text-3xl font-medium italic opacity-90">Sua melhor estadia no Setor Bueno.</p>
+          <div className="space-y-1 mb-8">
+            <h2 className="text-white text-3xl md:text-5xl font-serif leading-tight drop-shadow-lg font-bold">Seja bem-vindo!</h2>
+            <p className="text-brand-yellow text-lg md:text-2xl font-medium italic opacity-90">Sua melhor estadia no Setor Bueno.</p>
+          </div>
+
+          {/* Search Bar Centralizada no Conteúdo */}
+          <div className="w-full max-w-2xl px-2">
+            <div className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-2xl p-1.5 border border-white/20 transition-all shadow-2xl">
+              <button 
+                onClick={() => setIsSearchOpen(true)}
+                className="w-full bg-white rounded-xl py-4 px-6 flex items-center gap-4 text-brand-brown/50 transition-all group"
+              >
+                <Search size={22} className="text-brand-yellow group-hover:scale-110 transition-transform" />
+                <span className="text-base md:text-lg font-bold">O que você precisa saber hoje?</span>
+              </button>
+            </div>
+            
+            {/* Tags de sugestão */}
+            <div className="flex flex-wrap justify-center gap-2 mt-4">
+              {['WiFi', 'Lixo', 'Café', 'Senhas'].map((tag) => (
+                <button 
+                  key={tag}
+                  onClick={() => setIsSearchOpen(true)}
+                  className="bg-white/5 hover:bg-white/10 text-white/40 hover:text-white/80 text-[9px] uppercase tracking-widest font-black px-3 py-1 rounded-full border border-white/5 transition-all"
+                >
+                  #{tag}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -855,6 +1095,16 @@ const App: React.FC = () => {
       </main>
       
       <ProfessionalFooter />
+      
+      <AnimatePresence>
+        {isSearchOpen && (
+          <SearchOverlay 
+            isOpen={isSearchOpen} 
+            onClose={() => setIsSearchOpen(false)} 
+            onNavigate={handleNavigate}
+          />
+        )}
+      </AnimatePresence>
       
       {/* Tab bar inferior para mobile em seções internas */}
       {currentSection !== AppSection.HOME && (
