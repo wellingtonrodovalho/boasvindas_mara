@@ -475,18 +475,18 @@ const App: React.FC = () => {
       </div>
 
       {/* Grid de Navegação Principal */}
-      <nav className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4">
+      <nav className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
         {NAV_ITEMS.map((item) => (
           <button
             key={item.id}
             onClick={() => setCurrentSection(item.id)}
             aria-label={`Abrir seção: ${item.label}`}
-            className="flex flex-col items-center justify-center p-6 bg-white border border-brand-yellow/5 rounded-3xl shadow-sm hover:shadow-2xl hover:border-brand-yellow/40 transition-all group aspect-square lg:aspect-auto lg:py-10"
+            className="flex flex-col items-center justify-center p-4 bg-white border border-brand-yellow/10 rounded-2xl shadow-sm hover:shadow-xl hover:border-brand-yellow/30 transition-all group lg:py-6"
           >
-            <div className="w-12 h-12 md:w-14 md:h-14 bg-brand-lightYellow/50 rounded-2xl flex items-center justify-center text-brand-yellow mb-4 group-hover:scale-110 transition-transform group-hover:bg-brand-yellow group-hover:text-white">
-              {React.cloneElement(item.icon as React.ReactElement<any>, { size: 28 })}
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-brand-lightYellow/30 rounded-xl flex items-center justify-center text-brand-yellow mb-3 group-hover:scale-105 transition-transform group-hover:bg-brand-yellow group-hover:text-white">
+              {React.cloneElement(item.icon as React.ReactElement<any>, { size: 22 })}
             </div>
-            <span className="text-xs md:text-sm font-bold text-brand-brown text-center leading-tight uppercase tracking-wider">
+            <span className="text-[10px] md:text-xs font-bold text-brand-brown text-center leading-tight uppercase tracking-widest px-1">
               {item.label}
             </span>
           </button>
@@ -537,9 +537,9 @@ const App: React.FC = () => {
                   role="tab"
                   aria-selected={activeGuideTab === tab.id}
                   onClick={() => setActiveGuideTab(tab.id)}
-                  className={`flex flex-col items-center justify-center min-w-[110px] md:min-w-0 p-5 rounded-3xl border-2 transition-all shrink-0 md:shrink select-none ${
+                  className={`flex flex-col items-center justify-center min-w-[100px] md:min-w-0 p-4 rounded-2xl border transition-all shrink-0 md:shrink select-none ${
                     activeGuideTab === tab.id 
-                    ? 'bg-white border-brand-teal text-brand-teal shadow-xl ring-4 ring-brand-teal/5' 
+                    ? 'bg-white border-brand-teal text-brand-teal shadow-lg ring-2 ring-brand-teal/5' 
                     : 'bg-white/40 border-transparent text-gray-400 hover:border-gray-200'
                   }`}
                 >
@@ -649,12 +649,12 @@ const App: React.FC = () => {
                   key={cat.id} 
                   onClick={() => setActiveLocalCategory(cat.id)} 
                   aria-current={activeLocalCategory === cat.id}
-                  className={`flex flex-col items-center justify-center p-5 rounded-3xl border-2 transition-all min-w-[110px] md:min-w-0 ${activeLocalCategory === cat.id ? 'bg-brand-lightYellow border-brand-yellow text-brand-brown shadow-xl md:scale-105 z-10 font-bold' : 'bg-white border-transparent text-gray-400 hover:border-brand-yellow/20 hover:text-brand-brown shadow-sm'}`}
+                  className={`flex flex-col items-center justify-center p-4 rounded-2xl border transition-all min-w-[100px] md:min-w-0 ${activeLocalCategory === cat.id ? 'bg-brand-lightYellow/50 border-brand-yellow text-brand-brown shadow-lg z-10 font-bold ring-2 ring-brand-yellow/5' : 'bg-white border-transparent text-gray-400 hover:border-brand-yellow/20 hover:text-brand-brown shadow-sm'}`}
                 >
-                  <div className={`mb-3 ${activeLocalCategory === cat.id ? 'text-brand-yellow' : 'text-gray-300'}`}>
-                    {React.cloneElement(cat.icon as React.ReactElement<any>, { size: 24 })}
+                  <div className={`mb-2 ${activeLocalCategory === cat.id ? 'text-brand-yellow' : 'text-gray-300'}`}>
+                    {React.cloneElement(cat.icon as React.ReactElement<any>, { size: 20 })}
                   </div>
-                  <span className="text-[10px] md:text-xs uppercase tracking-widest text-center leading-tight">{cat.title}</span>
+                  <span className="text-[10px] md:text-[11px] uppercase tracking-widest text-center leading-tight font-bold">{cat.title}</span>
                 </button>
               ))}
               <div className="min-w-[20px] md:hidden"></div>
