@@ -32,6 +32,7 @@ import { AppSection, NavItem } from './types.ts';
 export const LOGO_URL = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48Y2lyY2xlIGN4PSIyNTYiIGN5PSIxNTAiIHI9IjEwMCIgZmlsbD0iI2YxYjMxYyIvPjxjaXJjbGUgY3g9IjEyMCIgY3k9IjI4MCIgcj0iMTAwIiBmaWxsPSIjZjFiMzFjIi8+PGNpcmNsZSBjeD0iMzkyIiBjeT0iMjgwIiByPSIxMDAiIGZpbGw9IiNmMWIzMWMiLz48cGF0aCBkPSJNMjU2IDQ2MCBWMjAwIE0yNTYgMzgwIEwxNDAgMjgwIE0yNTYgMzgwIEwzNzIgMjgwIiBzdHJva2U9IiM1YzQwMjMiIHN0cm9rZS13aWR0aD0iMzIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==";
 
 export const WELLINGTON_WHATSAPP = "https://wa.me/5562991514568"; 
+export const GOOGLE_REVIEW_URL = "https://g.page/r/CY7WZ6hqY7-XEBM/review"; 
 
 export const NAV_ITEMS: NavItem[] = [
   { id: AppSection.APARTAMENTO, label: 'Nosso Apartamento', icon: <Home size={20} /> },
@@ -142,7 +143,7 @@ export const APARTMENT_CONTENT = {
   },
   description: "Apartamento Mara no Setor Bueno, bem confortável, charmoso com um toque diferenciado com tábuas corridas, excelente localização e vizinhança. Ideal para famílias, grupos de amigos e casais. O condomínio Mara está localizado no cruzamento das ruas T-27 e T-47 ao lado da CREMEGO.",
   wifi: {
-    name: "LIVETIM_A610_5G",
+    name: "LIVE TIM_A610_5G",
     pass: "pmadj76ter"
   },
   amenities: [
@@ -182,8 +183,8 @@ export const APARTMENT_CONTENT = {
       color: "purple",
       items: [
         "Ar condicionado",
-        "Dois banheiros completos com box",
-        "Ferro e mesa de passar"
+        "Dois banheiros completos (um com box e outro com cortina de plástico)",
+        "Vaporizador e mesa de passar (guardados no guarda-roupas da suíte de casal)"
       ]
     }
   ]

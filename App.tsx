@@ -7,6 +7,7 @@ import {
   Wifi, 
   MapPin, 
   ExternalLink,
+  LogOut,
   Smartphone,
   Info,
   Trash2, 
@@ -43,9 +44,11 @@ import {
   Mail,
   Globe,
   Search,
+  Star,
   X
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { QRCodeSVG } from 'qrcode.react';
 import { AppSection } from './types.ts';
 import { 
   LOGO_URL, 
@@ -53,6 +56,7 @@ import {
   APARTMENT_CONTENT, 
   LOCAL_GUIDE_CATEGORIES, 
   WELLINGTON_WHATSAPP,
+  GOOGLE_REVIEW_URL,
   HOUSE_GUIDE_CONTENT,
   EMERGENCY_CONTACTS
 } from './constants.tsx';
@@ -500,6 +504,37 @@ const App: React.FC = () => {
         ))}
       </nav>
 
+      {/* Quick Check-out & Evaluation */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <button 
+          onClick={() => setCurrentSection(AppSection.CHECKOUT)}
+          className="bg-white border border-brand-yellow/10 p-6 rounded-[2rem] flex items-center gap-6 group hover:shadow-xl transition-all text-left"
+        >
+          <div className="bg-brand-lightYellow text-brand-yellow p-4 rounded-2xl group-hover:bg-brand-yellow group-hover:text-white transition-all">
+            <LogOut size={24} />
+          </div>
+          <div>
+            <h4 className="text-brand-brown font-bold text-xl">Vai sair?</h4>
+            <p className="text-gray-500 text-sm italic">Clique aqui para ver o checklist de checkout</p>
+          </div>
+        </button>
+
+        <a 
+          href={GOOGLE_REVIEW_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-brand-teal text-white p-6 rounded-[2rem] flex items-center gap-6 group shadow-lg hover:shadow-brand-teal/20 transition-all text-left border border-white/5"
+        >
+          <div className="bg-white/20 p-4 rounded-2xl backdrop-blur-md group-hover:bg-brand-yellow group-hover:text-brand-brown transition-all text-brand-yellow">
+            <Star size={24} fill="currentColor" />
+          </div>
+          <div>
+            <h4 className="font-bold text-xl tracking-tight">Avalie sua estadia</h4>
+            <p className="text-white/60 text-sm">Gostou do Mara 410? Deixe um comentário!</p>
+          </div>
+        </a>
+      </div>
+
       {/* Endereço Rápido */}
       <footer className="mt-4 p-8 bg-brand-brown text-white rounded-[2rem] shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6 border border-white/5">
         <div className="flex-1 space-y-3">
@@ -611,16 +646,37 @@ const App: React.FC = () => {
                                 setCopiedWifi(true); 
                                 setTimeout(() => setCopiedWifi(false), 2000); 
                               }} 
-                              aria-label="Copiar senha do Wifi"
+                              aria-label={`Copiar ${field.label}`}
                               className="bg-brand-lightYellow text-brand-yellow px-6 py-3 rounded-2xl text-sm font-bold flex items-center gap-2 hover:bg-brand-yellow hover:text-white transition-all active:scale-95 shadow-sm"
                             >
-                              {copiedWifi ? <><Check size={18} /> Copiado</> : <><Copy size={18} /> Copiar Senha</>}
+                              {copiedWifi ? <><Check size={18} /> Copiado</> : <><Copy size={18} /> Copiar</>}
                             </button>
                           )}
                         </div>
                       </div>
                     </div>
                   ))}
+
+                  {/* QR Code de Wi-Fi */}
+                  {activeContent.id === 'wifi' && (
+                    <div className="mt-4 p-8 bg-white rounded-3xl border-2 border-brand-lightYellow flex flex-col items-center gap-6 shadow-inner">
+                      <div className="text-center space-y-1">
+                        <h4 className="font-bold text-brand-brown text-xl">Conexão Automática</h4>
+                        <p className="text-gray-500 text-sm">Aponte a câmera para conectar instantaneamente</p>
+                      </div>
+                      <div className="p-4 bg-white rounded-2xl shadow-md border border-gray-100">
+                        <QRCodeSVG 
+                          value={`WIFI:T:WPA;S:${APARTMENT_CONTENT.wifi.name};P:${APARTMENT_CONTENT.wifi.pass};;`}
+                          size={180}
+                          level="H"
+                          includeMargin={false}
+                        />
+                      </div>
+                      <div className="flex items-center gap-2 text-[10px] font-bold text-brand-yellow uppercase tracking-widest bg-brand-lightYellow/30 px-4 py-2 rounded-full">
+                         <Wifi size={14} /> WiFi Protegido
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
               
@@ -809,10 +865,31 @@ const App: React.FC = () => {
             </p>
           </div>
 
-          <div className="bg-brand-teal rounded-[2.5rem] p-10 text-center text-white shadow-2xl mt-4 border border-white/10">
-             <Heart size={40} className="mx-auto mb-4 text-brand-yellow animate-pulse" />
-             <h4 className="text-3xl font-serif font-bold mb-2">Foi um prazer receber você!</h4>
-             <p className="text-white/80 text-lg font-medium">Até a próxima estadia 💚</p>
+          <div className="bg-brand-teal rounded-[2.5rem] p-10 text-center text-white shadow-2xl mt-4 border border-white/10 group overflow-hidden relative">
+             <div className="absolute inset-0 bg-pattern opacity-5 group-hover:scale-110 transition-transform"></div>
+             <div className="relative z-10 flex flex-col items-center">
+               <Heart size={40} className="mb-4 text-brand-yellow animate-pulse" />
+               <h4 className="text-3xl font-serif font-bold mb-2">Foi um prazer receber você!</h4>
+               <p className="text-white/80 text-lg font-medium mb-8">Até a próxima estadia 💚</p>
+               
+               <div className="bg-white/10 backdrop-blur-md p-8 rounded-3xl border border-white/20 w-full max-w-md">
+                 <div className="flex justify-center gap-1 mb-4 text-brand-yellow">
+                    {[1, 2, 3, 4, 5].map(i => <Star key={i} size={24} fill="currentColor" />)}
+                 </div>
+                 <h5 className="text-xl font-bold mb-3">Gostou da experiência?</h5>
+                 <p className="text-white/60 text-sm mb-6 leading-relaxed">
+                   Sua avaliação no Google é extremamente importante para nós e ajuda outros hóspedes!
+                 </p>
+                 <a 
+                   href={GOOGLE_REVIEW_URL} 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   className="inline-flex items-center gap-3 bg-brand-yellow text-brand-brown px-8 py-4 rounded-2xl font-black text-lg shadow-xl hover:bg-white hover:text-brand-brown transition-all active:scale-95 w-full justify-center group/btn"
+                 >
+                   <Star size={20} className="group-hover/btn:rotate-12 transition-transform" /> AVALIAR NO GOOGLE
+                 </a>
+               </div>
+             </div>
           </div>
         </div>
       </SectionWrapper>
@@ -992,12 +1069,12 @@ const App: React.FC = () => {
                     <div className="space-y-4 pb-8">
                       <div>
                         <h4 className="font-bold text-xl mb-1">Acesso ao Condomínio</h4>
-                        <p className="text-gray-500 text-lg">Utilize o link da chave virtual enviado pelo anfitrião.</p>
+                        <p className="text-gray-500 text-lg">Apresente-se no interfone da portaria principal.</p>
                       </div>
                       
                       <div className="bg-blue-50 p-5 rounded-2xl border border-blue-100 space-y-3">
                         <p className="text-blue-800 text-sm font-medium">
-                          <strong>Importante:</strong> O sistema pedirá acesso ao GPS. Clique em <strong>"Permitir"</strong> para que a chave funcione.
+                          <strong>Portaria Remota:</strong> Identifique-se pelo interfone e informe que é hóspede do apartamento <strong>410 - Bloco C</strong>.
                         </p>
                       </div>
 
@@ -1006,17 +1083,11 @@ const App: React.FC = () => {
                           <div className="w-6 h-6 rounded-full bg-brand-teal/10 text-brand-teal flex items-center justify-center shrink-0 mt-1">
                             <Check size={14} />
                           </div>
-                          <p className="text-gray-600 text-sm">Destrave a <strong>PORTA SOCIAL - 01</strong>.</p>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <div className="w-6 h-6 rounded-full bg-brand-teal/10 text-brand-teal flex items-center justify-center shrink-0 mt-1">
-                            <Check size={14} />
-                          </div>
-                          <p className="text-gray-600 text-sm">Passe para a <strong>CLAUSURA - 02</strong> (só abre se a primeira estiver fechada).</p>
+                          <p className="text-gray-600 text-sm">A portaria liberará o acesso de <strong>ambas as portas</strong> (Social e Clausura).</p>
                         </div>
                       </div>
                       
-                      <p className="text-xs text-gray-400 italic">Dica: Se precisar de ajuda, clique em "PORTARIA" no link da chave para falar com a portaria remota.</p>
+                      <p className="text-xs text-gray-400 italic">Dica: Aguarde a confirmação da portaria remota para que liberem as travas eletrônicas.</p>
                     </div>
                    </div>
 
@@ -1028,17 +1099,29 @@ const App: React.FC = () => {
                     <div className="space-y-4">
                       <div>
                         <h4 className="font-bold text-xl mb-1">Chegando ao Apartamento</h4>
-                        <p className="text-gray-500 text-lg">Siga até o <strong>Bloco C</strong> (último bloco).</p>
+                        <p className="text-gray-500 text-lg">Considere que o <strong>Bloco A</strong> é o mais próximo da portaria.</p>
                       </div>
-                      <div className="bg-gray-50 p-5 rounded-2xl border border-gray-100 flex items-center gap-4">
-                        <div className="bg-white p-3 rounded-xl shadow-sm text-brand-brown">
-                          <LayoutGrid size={24} />
+
+                      <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 space-y-3">
+                        <p className="text-gray-600 text-sm">
+                          Siga pelo corredor principal até o <strong>último bloco (Bloco C)</strong>.
+                        </p>
+                        <div className="flex items-center gap-3 text-brand-brown">
+                          <div className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center shrink-0">
+                            <LayoutGrid size={16} />
+                          </div>
+                          <p className="text-sm font-medium">O elevador fica à <strong>esquerda</strong>.</p>
                         </div>
-                        <p className="text-brand-brown font-medium">Elevador: Botão 4 (4º andar)</p>
                       </div>
+
                       <div className="bg-brand-brown text-white p-5 rounded-2xl shadow-lg flex items-center justify-between">
-                        <span className="font-bold uppercase tracking-widest text-xs opacity-70">Apartamento</span>
-                        <span className="text-3xl font-serif font-bold">410</span>
+                        <div className="flex flex-col">
+                          <span className="font-bold uppercase tracking-widest text-[10px] opacity-70">Andar / Apartamento</span>
+                          <span className="text-2xl font-serif font-bold">4º Andar • 410</span>
+                        </div>
+                        <div className="bg-white/10 p-3 rounded-xl">
+                          <Key size={24} />
+                        </div>
                       </div>
                     </div>
                    </div>
