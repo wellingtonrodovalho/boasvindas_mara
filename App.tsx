@@ -596,7 +596,7 @@ const App: React.FC = () => {
             </nav>
             
             {/* Indicador de scroll lateral para Mobile apenas */}
-            <div className="absolute right-0 top-0 bottom-6 w-16 pointer-events-none md:hidden bg-gradient-to-l from-[#FDFCF7] to-transparent flex items-center justify-end pr-1">
+            <div className="absolute right-0 top-0 bottom-6 w-16 pointer-events-none md:hidden bg-gradient-to-l from-[#F8FAFC] to-transparent flex items-center justify-end pr-1">
               <div className="bg-white/80 p-1 rounded-full shadow-sm">
                 <ChevronRight className="text-brand-yellow animate-bounce-x" size={24} />
               </div>
@@ -724,7 +724,7 @@ const App: React.FC = () => {
             </nav>
             
             {/* Indicador visual para Mobile apenas */}
-            <div className="absolute right-0 top-0 bottom-6 w-16 pointer-events-none md:hidden bg-gradient-to-l from-[#FDFCF7] to-transparent flex items-center justify-end pr-1">
+            <div className="absolute right-0 top-0 bottom-6 w-16 pointer-events-none md:hidden bg-gradient-to-l from-[#F8FAFC] to-transparent flex items-center justify-end pr-1">
               <div className="bg-white/80 p-1 rounded-full shadow-sm">
                 <ChevronRight className="text-brand-yellow animate-bounce-x" size={24} />
               </div>
