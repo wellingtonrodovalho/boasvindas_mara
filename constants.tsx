@@ -25,7 +25,8 @@ import {
   Clock,
   Calendar,
   Stethoscope,
-  Pill
+  Pill,
+  Sparkles
 } from 'lucide-react';
 import { AppSection, NavItem } from './types.ts';
 
@@ -215,6 +216,11 @@ export const LOCAL_GUIDE_CATEGORIES = [
     places: [
       { name: "Engenho Restaurante", description: "Cozinha típica regional goiana.", url: "https://g.page/Engenho_Restaurante_Go?share" },
       { name: "Dolcci Empório", description: "Gastronomia refinada e vinhos.", url: "https://g.page/dolcciemporio?share" },
+      { name: "Churrascaria Gramado", description: "Tradicional rodízio de carnes nobres e buffet variado.", url: "https://maps.app.goo.gl/srbC369XfiG7PDWi7" },
+      { name: "JP Steak House", description: "Rodízio premium de alto padrão e carta de vinhos especial.", url: "https://maps.app.goo.gl/42oF6gpXRfvoZpx77" },
+      { name: "Churrascaria Nativas Grill", description: "Churrasco premium, buffet de sushis e frutos do mar.", url: "https://maps.app.goo.gl/gcs1Loqim9HueSMs5" },
+      { name: "Buenos Restaurante", description: "Cozinha acolhedora e pratos finos no coração do Setor Bueno.", url: "https://maps.app.goo.gl/6zjPqVnxKhyr4VzK7" },
+      { name: "Costelaria Rocha", description: "Excelente restaurante de costela assada lentamente e carnes nobres grelhadas.", url: "https://maps.app.goo.gl/bJ2CoeHgZZSsiD528" }
     ]
   },
   {
@@ -230,7 +236,9 @@ export const LOCAL_GUIDE_CATEGORIES = [
       { name: "Lanchonete Videira", description: "Lanches rápidos e sucos naturais.", url: "https://goo.gl/maps/NwUyi3hLST4YVAT48" },
       { name: "Bob's", description: "Hambúrgueres e milkshakes.", url: "https://goo.gl/maps/c6UDsbcAmvRvCtzB8" },
       { name: "Habib's", description: "Esfihas e comida árabe.", url: "https://goo.gl/maps/a24558XwQDegoe8m9" },
-      { name: "D'Esfihas Oeste", description: "Variedade em esfihas abertas.", url: "https://g.page/desfihasoeste?share" }
+      { name: "D'Esfihas Oeste", description: "Variedade em esfihas abertas.", url: "https://g.page/desfihasoeste?share" },
+      { name: "Malbec Burger e Lazer", description: "Hambúrgueres gourmet e excelente infraestrutura de lazer.", url: "https://maps.app.goo.gl/mLVdYi1sYvU88Tj78" },
+      { name: "Território La Pizza", description: "Pizzas artesanais deliciosas e de massas crocantes.", url: "https://maps.app.goo.gl/aWu6HKWjLg11mmmJ8" }
     ]
   },
   {
@@ -320,6 +328,17 @@ export const LOCAL_GUIDE_CATEGORIES = [
       { name: "Feira do Moreira", description: "Roupas e lanches (Domingos de manhã).", url: "https://g.co/kgs/jY84xD" },
       { name: "Feira da Lua", description: "Aos sábados a partir das 15h.", url: "https://goo.gl/maps/5Ky9Z6VL7mK2yfZJ8" },
       { name: "Feira do Sol", description: "Aos domingos a partir das 15h.", url: "https://goo.gl/maps/qWCjm34MBKZMUQw29" }
+    ]
+  },
+  {
+    id: 'servicos',
+    title: "Serviços",
+    headerLabel: "Serviços e Praticidades",
+    icon: <Sparkles size={20} />,
+    places: [
+      { name: "Clean Lavanderia", description: "Serviços profissionais e rápidos de lavagem e secagem de roupas.", url: "https://maps.app.goo.gl/LohDq5rmX9wnFpWf8" },
+      { name: "HotBelle Salão de Beleza", description: "Manicure, cabelo e tratamentos de bem-estar com facilidade.", url: "https://maps.app.goo.gl/NSJm2ewCXo1YtnAe8" },
+      { name: "Beleza no Olhar Micropigmentação", description: "Especialistas qualificados em cílios, sobrancelhas e micropigmentação estética.", url: "https://maps.app.goo.gl/ccfv89EZEsvmjLwo9" }
     ]
   }
 ];
