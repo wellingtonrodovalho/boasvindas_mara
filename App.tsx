@@ -38,6 +38,7 @@ import {
   Pill,
   Key,
   Heart,
+  Briefcase,
   CheckCircle2,
   Power,
   Phone,
@@ -808,8 +809,16 @@ const App: React.FC = () => {
         border: "border-purple-500"
       },
       {
+        title: "Objetos pessoais",
+        desc: "Antes de sair, verifique se não está esquecendo nada. Despesas de envio para devolução podem ser cobradas.",
+        icon: <Briefcase size={24} />,
+        color: "text-amber-500",
+        bg: "bg-amber-500",
+        border: "border-amber-500"
+      },
+      {
         title: "Devolva as chaves",
-        desc: "Deixe as tags e o controle remoto na caixa de correspondência 410 no térreo",
+        desc: "Se estiver com veículo próprio, deixe as tags e o controle na caixa de correspondência 410 no térreo. Se não, basta deixá-los no porta-chaves no apartamento.",
         icon: <Key size={24} />,
         color: "text-pink-500",
         bg: "bg-pink-500",
