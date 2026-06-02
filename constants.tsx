@@ -275,7 +275,8 @@ export const LOCAL_GUIDE_CATEGORIES = [
     icon: <Pill size={20} />,
     places: [
       { name: "Drogaria Medfácil", description: "Farmácia 24h próxima.", url: "https://goo.gl/maps/uMLAuayib4opigMW8" },
-      { name: "Drogaria Santa Marta", description: "Rede tradicional com variedade.", url: "https://goo.gl/maps/mx6Hnt2WgduYN4Yk7" }
+      { name: "Drogaria Santa Marta", description: "Rede tradicional com variedade.", url: "https://goo.gl/maps/mx6Hnt2WgduYN4Yk7" },
+      { name: "Drogasil", description: "Uma das maiores redes de farmácias do Brasil, com medicamentos, higiene e cosméticos.", url: "https://maps.app.goo.gl/Ftp2hLP9A5zU6fyLA" }
     ]
   },
   {
@@ -284,7 +285,8 @@ export const LOCAL_GUIDE_CATEGORIES = [
     headerLabel: "Emergência Médica",
     icon: <Stethoscope size={20} />,
     places: [
-      { name: "Hospital Neurológico", description: "Referência em pronto atendimento.", url: "https://goo.gl/maps/1zA43E2KE1YCJXKG8" }
+      { name: "Hospital Neurológico", description: "Referência em pronto atendimento.", url: "https://goo.gl/maps/1zA43E2KE1YCJXKG8" },
+      { name: "Hospital São Domingos", description: "Atendimento de saúde completo, consultas e pronto-socorro estruturado.", url: "https://maps.app.goo.gl/jjuTME1nKSEBYkGk6" }
     ]
   },
   {
