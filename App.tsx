@@ -486,24 +486,6 @@ const App: React.FC = () => {
         </div>
       </div>
 
-      {/* Grid de Navegação Principal */}
-      <nav className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
-        {NAV_ITEMS.map((item) => (
-          <button
-            key={item.id}
-            onClick={() => setCurrentSection(item.id)}
-            aria-label={`Abrir seção: ${item.label}`}
-            className="flex flex-col items-center justify-center p-3 md:p-4 bg-white border border-brand-yellow/10 rounded-xl shadow-sm hover:shadow"
-          >
-            <div className="w-8 h-8 md:w-10 md:h-10 bg-brand-lightYellow/30 rounded-lg flex items-center justify-center text-brand-yellow mb-2">
-              {React.cloneElement(item.icon as React.ReactElement<any>, { size: 18 })}
-            </div>
-            <span className="text-[10px] md:text-xs font-bold text-brand-brown text-center leading-tight uppercase tracking-widest px-1">
-              {item.label}
-            </span>
-          </button>
-        ))}
-      </nav>
 
       {/* Quick Check-out & Evaluation */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1259,8 +1241,44 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen w-full font-sans pb-10">
       {renderHeader()}
-      <main className="p-4 md:p-12 md:pt-16">
-        {currentSection === AppSection.HOME ? renderHome() : renderSection()}
+      <main className="p-4 md:p-12 md:pt-16 max-w-6xl mx-auto w-full flex flex-col gap-6">
+        
+        {/*Persistent Navigation Cards Grid */}
+        <nav className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-7 gap-3 w-full animate-fade-in" aria-label="Menu Principal">
+          {NAV_ITEMS.map((item) => {
+            const isActive = currentSection === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => setCurrentSection(item.id)}
+                aria-label={`Abrir seção: ${item.label}`}
+                className={`flex flex-col items-center justify-center p-3 md:p-4 rounded-xl transition-all ${
+                  isActive 
+                    ? 'bg-brand-lightYellow/35 border-2 border-brand-yellow shadow-md scale-[1.02]' 
+                    : 'bg-white border border-brand-yellow/10 hover:border-brand-yellow/30 shadow-sm hover:shadow'
+                }`}
+              >
+                <div className={`w-8 h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center mb-2 transition-all ${
+                  isActive 
+                    ? 'bg-brand-yellow text-white shadow-sm' 
+                    : 'bg-brand-lightYellow/30 text-brand-yellow'
+                }`}>
+                  {React.cloneElement(item.icon as React.ReactElement<any>, { size: 18 })}
+                </div>
+                <span className={`text-[10px] md:text-xs font-bold text-center leading-tight uppercase tracking-widest px-1 ${
+                  isActive ? 'text-brand-brown font-black' : 'text-brand-brown'
+                }`}>
+                  {item.label}
+                </span>
+              </button>
+            );
+          })}
+        </nav>
+
+        {/* Dynamic Section Content */}
+        <div className="w-full">
+          {currentSection === AppSection.HOME ? renderHome() : renderSection()}
+        </div>
       </main>
       
       <ProfessionalFooter />
