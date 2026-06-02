@@ -265,7 +265,7 @@ export const LOCAL_GUIDE_CATEGORIES = [
     headerLabel: "Pães e Cafés da Manhã",
     icon: <Coffee size={20} />,
     places: [
-      { name: "Ricco Panificadora", description: "Padaria artesanal com buffet de café.", url: "https://g.page/ricco-panificadora-padaria?share" }
+      { name: "Empório Pães e Sabores", description: "Empório completo com pães frescos, quitandas e ótimas opções para café da manhã.", url: "https://maps.app.goo.gl/DgtUH6Pc3nZ9JfQv9" }
     ]
   },
   {
@@ -338,7 +338,9 @@ export const LOCAL_GUIDE_CATEGORIES = [
     places: [
       { name: "Clean Lavanderia", description: "Serviços profissionais e rápidos de lavagem e secagem de roupas.", url: "https://maps.app.goo.gl/LohDq5rmX9wnFpWf8" },
       { name: "HotBelle Salão de Beleza", description: "Manicure, cabelo e tratamentos de bem-estar com facilidade.", url: "https://maps.app.goo.gl/NSJm2ewCXo1YtnAe8" },
-      { name: "Beleza no Olhar Micropigmentação", description: "Especialistas qualificados em cílios, sobrancelhas e micropigmentação estética.", url: "https://maps.app.goo.gl/ccfv89EZEsvmjLwo9" }
+      { name: "Beleza no Olhar Micropigmentação", description: "Especialistas qualificados em cílios, sobrancelhas e micropigmentação estética.", url: "https://maps.app.goo.gl/ccfv89EZEsvmjLwo9" },
+      { name: "Tânia Mello Centro de Beleza", description: "Centro de beleza completo com diversos procedimentos estéticos e profissionais experientes.", url: "https://maps.app.goo.gl/A5V94TLjVp2gA1o9A" },
+      { name: "Studio Re Farias", description: "Studio altamente avaliado especializado em design de sobrancelhas, cílios e estética facial.", url: "https://maps.app.goo.gl/5QQ7NQ96nKUDdbNP9" }
     ]
   }
 ];
