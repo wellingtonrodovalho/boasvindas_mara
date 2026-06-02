@@ -286,7 +286,8 @@ export const LOCAL_GUIDE_CATEGORIES = [
     icon: <Stethoscope size={20} />,
     places: [
       { name: "Hospital Neurológico", description: "Referência em pronto atendimento.", url: "https://goo.gl/maps/1zA43E2KE1YCJXKG8" },
-      { name: "Hospital São Domingos", description: "Atendimento de saúde completo, consultas e pronto-socorro estruturado.", url: "https://maps.app.goo.gl/jjuTME1nKSEBYkGk6" }
+      { name: "Hospital São Domingos", description: "Atendimento de saúde completo, consultas e pronto-socorro estruturado.", url: "https://maps.app.goo.gl/jjuTME1nKSEBYkGk6" },
+      { name: "Hospital Samaritano de Goiânia", description: "Hospital geral com pronto atendimento e especialidades médicas variadas.", url: "https://maps.app.goo.gl/qbj8b16PsEKp8Jnt6" }
     ]
   },
   {
