@@ -1206,38 +1206,128 @@ const App: React.FC = () => {
       case AppSection.GUIA_LOCAL: return renderGuiaLocal();
       case AppSection.REGRAS: 
         return (
-          <SectionWrapper title="Regras da Casa" subtitle="Para uma convivência harmoniosa" onBack={handleBack}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="bg-red-50 border-4 border-red-100 p-10 rounded-[2.5rem] text-center space-y-6 shadow-sm">
-                <div className="bg-red-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto shadow-xl">
-                  <AlertTriangle className="text-white" size={40} />
+          <SectionWrapper title="Regras da Casa" subtitle="Para uma convivência harmoniosa e tranquila" onBack={handleBack}>
+            <div className="space-y-8 animate-fade-in max-w-5xl mx-auto w-full">
+              {/* Header Banner */}
+              <div className="bg-brand-brown text-white p-6 md:p-8 rounded-[2rem] flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg border border-brand-yellow/10">
+                <div className="space-y-2 text-center md:text-left">
+                  <h3 className="text-xl md:text-2xl font-black tracking-tight font-serif text-brand-lightYellow">📝 REGRAS E INFORMAÇÕES IMPORTANTES</h3>
+                  <p className="text-white/80 text-sm font-medium">Por favor, leia com carinho para garantir uma estadia inesquecível de forma super tranquila! ✨</p>
                 </div>
-                <div className="space-y-2">
-                  <h3 className="text-3xl font-bold text-red-800 font-serif">Lei do Silêncio</h3>
-                  <p className="text-red-600 text-2xl font-black">22:00 às 08:00</p>
+                <div className="flex gap-3 shrink-0">
+                  <div className="bg-white/10 px-4 py-3 rounded-xl border border-white/20 text-center backdrop-blur-sm shadow-inner">
+                    <span className="block text-[9px] text-brand-lightYellow font-extrabold uppercase tracking-widest mb-1">🛎️ Check-in</span>
+                    <span className="text-base font-black">a partir das 14h</span>
+                  </div>
+                  <div className="bg-white/10 px-4 py-3 rounded-xl border border-white/20 text-center backdrop-blur-sm shadow-inner">
+                    <span className="block text-[9px] text-brand-lightYellow font-extrabold uppercase tracking-widest mb-1">🚪 Checkout</span>
+                    <span className="text-base font-black">até as 11h</span>
+                  </div>
                 </div>
-                <p className="text-red-700/70 text-sm font-medium">Multas aplicadas pelo condomínio são de responsabilidade do hóspede.</p>
               </div>
-              <div className="bg-white p-10 rounded-[2.5rem] border border-gray-100 shadow-xl space-y-8">
-                <h4 className="text-2xl font-bold font-serif mb-4">Outras Normas</h4>
-                <div className="flex items-center gap-5 group">
-                  <div className="bg-gray-100 p-4 rounded-2xl text-gray-500 group-hover:bg-red-50 group-hover:text-red-500 transition-all">
-                    <Wind size={24} />
+
+              {/* Main Rules Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6">
+                
+                {/* 1. Entregas */}
+                <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all flex items-start gap-4 hover:border-brand-yellow/20">
+                  <div className="text-3xl p-3 bg-brand-lightYellow/30 rounded-xl shrink-0">📦</div>
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-brand-brown text-base uppercase tracking-wider text-[11px]">ENTREGAS</h4>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      Entregadores e correios não têm acesso ao apartamento. Por favor, lembre-se de descer e receber os itens diretamente na portaria. 🛎️
+                    </p>
                   </div>
-                  <span className="text-lg font-bold text-gray-700 uppercase tracking-wide">Proibido fumar.</span>
                 </div>
-                <div className="flex items-center gap-5 group">
-                  <div className="bg-gray-100 p-4 rounded-2xl text-gray-500 group-hover:bg-blue-50 group-hover:text-blue-500 transition-all">
-                    <Home size={24} />
+
+                {/* 2. Lixo */}
+                <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all flex items-start gap-4 hover:border-brand-yellow/20">
+                  <div className="text-3xl p-3 bg-green-50 rounded-xl shrink-0">🗑️</div>
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-brand-brown text-base uppercase tracking-wider text-[11px]">LIXO E DESCARTES</h4>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      Não acumule lixo no apartamento. Acondicione-o sempre em sacolas plásticas e faça a sua parte depositando-as nas lixeiras localizadas no térreo (são aquelas que ficam logo atrás do elevador). ♻️
+                    </p>
                   </div>
-                  <span className="text-lg font-bold text-gray-700 uppercase tracking-wide">Janelas fechadas ao sair.</span>
                 </div>
-                <div className="flex items-center gap-5 group">
-                  <div className="bg-gray-100 p-4 rounded-2xl text-gray-500 group-hover:bg-teal-50 group-hover:text-teal-500 transition-all">
-                    <Lock size={24} />
+
+                {/* 3. Fumo */}
+                <div className="bg-white p-6 rounded-2xl border border-red-100 bg-red-50/5 shadow-sm hover:shadow-md transition-all flex items-start gap-4 hover:border-red-200">
+                  <div className="text-3xl p-3 bg-red-50 rounded-xl shrink-0">🚭</div>
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-red-800 text-base uppercase tracking-wider text-[11px]">FUMO (100% LIVRE)</h4>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      Este é um ambiente 100% livre de fumaça. Não é permitido fumar no apartamento em hipótese alguma. Agradecemos por manter o cheirinho agradável do apê! 🌬️
+                    </p>
                   </div>
-                  <span className="text-lg font-bold text-gray-700 uppercase tracking-wide">Segurança em 1º lugar.</span>
                 </div>
+
+                {/* 4. Animais de Estimação */}
+                <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all flex items-start gap-4 hover:border-brand-yellow/20">
+                  <div className="text-3xl p-3 bg-amber-50 rounded-xl shrink-0">🚫🐾</div>
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-brand-brown text-base uppercase tracking-wider text-[11px]">ANIMAIS DE ESTIMAÇÃO</h4>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      Embora a gente ame muito os bichinhos de estimação, informamos que não é permitido hospedá-los neste imóvel. 🐶🐱
+                    </p>
+                  </div>
+                </div>
+
+                {/* 5. Festas e Eventos */}
+                <div className="bg-white p-6 rounded-2xl border border-red-100 bg-red-50/5 shadow-sm hover:shadow-md transition-all flex items-start gap-4 hover:border-red-200">
+                  <div className="text-3xl p-3 bg-pink-50 rounded-xl shrink-0">🚫🎉</div>
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-red-800 text-base uppercase tracking-wider text-[11px]">FESTAS E EVENTOS</h4>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      Não são permitidas comemorações, festas ou eventos. Nosso ambiente é estritamente residencial e totalmente voltado ao descanso e sossego de todos. 🤫💤
+                    </p>
+                  </div>
+                </div>
+
+                {/* 6. Lei do Silêncio */}
+                <div className="bg-white p-6 rounded-2xl border border-yellow-100 bg-yellow-50/5 shadow-sm hover:shadow-md transition-all flex items-start gap-4 hover:border-yellow-200">
+                  <div className="text-3xl p-3 bg-yellow-50 rounded-xl shrink-0">🤫</div>
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-brand-brown text-base uppercase tracking-wider text-[11px]">LEI DO SILÊNCIO (22h às 08h)</h4>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      Pedimos muito cuidado com barulhos excessivos entre as <strong>22:00 e 08:00</strong>. Multas aplicadas pelo condomínio por infração das regras de ruído são de inteira responsabilidade do hóspede. 💤
+                    </p>
+                  </div>
+                </div>
+
+                {/* 7. Acesso ao Condomínio */}
+                <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all flex items-start gap-4 hover:border-brand-yellow/20">
+                  <div className="text-3xl p-3 bg-blue-50 rounded-xl shrink-0">🪪</div>
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-brand-brown text-base uppercase tracking-wider text-[11px]">ACESSO AO CONDOMÍNIO</h4>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      Segurança em primeiro lugar! Apenas as pessoas autorizadas previamente pelo(a) anfitrião(ã) terão acesso liberado no prédio. 🛡️
+                    </p>
+                  </div>
+                </div>
+
+                {/* 8. Limpeza ao Sair */}
+                <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all flex items-start gap-4 hover:border-brand-yellow/20">
+                  <div className="text-3xl p-3 bg-teal-50 rounded-xl shrink-0">🧹</div>
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-brand-brown text-base uppercase tracking-wider text-[11px]">LIMPEZA AO SAIR</h4>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      O apartamento é entregue a você totalmente limpo e higienizado. Solicitamos que ele seja devolvido nas mesmas condições de zelo ao final da sua estadia. ✨
+                    </p>
+                  </div>
+                </div>
+
+                {/* 9. Limpeza Extra (Opcional) */}
+                <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all flex items-start gap-4 md:col-span-2 hover:border-brand-yellow/20">
+                  <div className="text-3xl p-3 bg-purple-50 rounded-xl shrink-0">🧺</div>
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-brand-brown text-base uppercase tracking-wider text-[11px]">LIMPEZA EXTRA (OPCIONAL)</h4>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      Para estadias superiores a 7 dias, pode ser solicitada uma limpeza adicional com a troca completa de roupas de cama, banho e rosto. O valor desse serviço é de <strong className="text-purple-700">R$ 170,00</strong>, cobrado apenas quando solicitado. 🧼
+                    </p>
+                  </div>
+                </div>
+
               </div>
             </div>
           </SectionWrapper>
