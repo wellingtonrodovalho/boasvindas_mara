@@ -898,27 +898,32 @@ const App: React.FC = () => {
 
   const renderEmergencia = () => (
     <SectionWrapper title="EMERGÊNCIAS" subtitle="Contatos úteis e suporte imediato" onBack={handleBack}>
-      <div className="bg-white rounded-xl p-5 md:p-8 shadow-xl border border-brand-yellow/5 animate-fade-in max-w-xl mx-auto w-full">
+      <div className="bg-white rounded-xl p-5 md:p-8 shadow-xl border border-brand-yellow/5 animate-fade-in max-w-5xl mx-auto w-full">
         <div className="flex flex-col gap-6">
-          <ul className="space-y-4" aria-label="Lista de telefones de emergência">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" aria-label="Lista de telefones de emergência">
             {EMERGENCY_CONTACTS.map((contact, idx) => (
-              <li key={idx} className="flex items-center gap-4 group border-b border-gray-100 pb-4 last:border-0">
-                <div className="w-10 h-10 rounded-xl bg-brand-lightYellow flex items-center justify-center text-brand-yellow shrink-0 group-hover:bg-brand-yellow group-hover:text-white transition-all">
-                  <Phone size={18} />
+              <div 
+                key={idx} 
+                className="bg-gray-50/50 hover:bg-white p-4 rounded-xl border border-gray-100 flex items-start gap-3 group transition-all hover:shadow-md"
+              >
+                <div className="w-10 h-10 rounded-xl bg-brand-lightYellow flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform text-xl">
+                  {contact.emoji}
                 </div>
-                <div className="flex-1">
-                  <p className="text-gray-400 font-bold text-[9px] uppercase tracking-widest mb-0.5">{contact.label}</p>
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-400 font-bold text-[9px] uppercase tracking-widest mb-0.5 truncate" title={contact.label}>
+                    {contact.label}
+                  </p>
                   <a 
                     href={`tel:${contact.phone.replace(/[^\d]/g, '')}`} 
-                    className="text-lg md:text-xl font-bold text-brand-brown hover:text-brand-yellow transition-all flex items-center gap-2"
+                    className="text-base font-bold text-brand-brown hover:text-brand-yellow transition-all flex items-center gap-1.5"
                   >
                     {contact.phone}
-                    <ChevronRight size={18} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1.5 transition-all" />
+                    <ChevronRight size={14} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-brand-yellow" />
                   </a>
                 </div>
-              </li>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
         
         <div className="mt-8 pt-6 border-t border-brand-yellow/10 flex flex-col md:flex-row items-center justify-between gap-4">

@@ -194,17 +194,17 @@ export const APARTMENT_CONTENT = {
 };
 
 export const EMERGENCY_CONTACTS = [
-  { label: "Polícia Militar do Estado de Goiás", phone: "190" },
-  { label: "Serviço de Atendimento Móvel de Urgência – SAMU", phone: "192" },
-  { label: "Corpo de Bombeiros", phone: "193" },
-  { label: "Polícia Federal", phone: "194" },
-  { label: "Polícia Civil", phone: "197" },
-  { label: "Guarda Municipal", phone: "153" },
-  { label: "Hospital Estadual de Urgências de Goiás", phone: "62 3201-4455" },
-  { label: "DEAM – Delegacia Especializada no Atendimento à Mulher", phone: "62 3201-2801" },
-  { label: "DEAI – Delegacia do Idoso", phone: "62 3201-1501" },
-  { label: "Ministério Público do Estado de Goiás", phone: "62 3243-8000" },
-  { label: "Ministério Público Federal", phone: "62 3243-5400" },
+  { label: "Polícia Militar do Estado de Goiás", phone: "190", emoji: "👮‍♂️" },
+  { label: "Serviço de Atendimento Móvel de Urgência – SAMU", phone: "192", emoji: "🚑" },
+  { label: "Corpo de Bombeiros", phone: "193", emoji: "🚒" },
+  { label: "Polícia Federal", phone: "194", emoji: "🛡️" },
+  { label: "Polícia Civil", phone: "197", emoji: "🚔" },
+  { label: "Guarda Municipal", phone: "153", emoji: "🏙️" },
+  { label: "Hospital Estadual de Urgências de Goiás", phone: "62 3201-4455", emoji: "🏥" },
+  { label: "DEAM – Delegacia Especializada no Atendimento à Mulher", phone: "62 3201-2801", emoji: "👩" },
+  { label: "DEAI – Delegacia do Idoso", phone: "62 3201-1501", emoji: "👴" },
+  { label: "Ministério Público do Estado de Goiás", phone: "62 3243-8000", emoji: "⚖️" },
+  { label: "Ministério Público Federal", phone: "62 3243-5400", emoji: "🏛️" },
 ];
 
 export const LOCAL_GUIDE_CATEGORIES = [
