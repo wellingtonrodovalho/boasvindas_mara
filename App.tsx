@@ -1022,6 +1022,15 @@ const App: React.FC = () => {
                         Digite a senha <strong>antes</strong> de colocar a mão na maçaneta. Se girar antes, a fechadura irá travar.
                       </p>
                     </div>
+
+                    <div className="bg-brand-teal/10 p-4 rounded-xl border border-brand-teal/20">
+                      <p className="text-brand-teal font-bold text-sm flex items-center gap-2">
+                        ✨ ALTERNATIVA RÁPIDA: TAG QUADRADA
+                      </p>
+                      <p className="text-gray-600 text-sm mt-1">
+                        Você também pode abrir a porta encostando a <strong>Tag Quadrada</strong> diretamente na fechadura.
+                      </p>
+                    </div>
                     
                     <div className="space-y-2">
                       <p className="text-brand-brown/70 text-sm font-bold uppercase tracking-widest">Formato da Senha:</p>
@@ -1051,6 +1060,62 @@ const App: React.FC = () => {
                           Gire a maçaneta
                         </div>
                       </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Chaves, Tags e Controles de Acesso */}
+                <div className="bg-white rounded-[2rem] p-10 shadow-xl border border-gray-100 space-y-6">
+                  <h4 className="font-bold text-brand-brown text-3xl flex items-center gap-4 font-serif">
+                    <Smartphone size={32} className="text-brand-teal" /> Chaves e Controles
+                  </h4>
+                  <p className="text-gray-600 text-sm">
+                    Utilize os dispositivos físicos que estão no porta-chaves do apartamento para facilitar o seu acesso:
+                  </p>
+
+                  <div className="space-y-4">
+                    {/* Controle Remoto */}
+                    <div className="p-5 rounded-2xl bg-gray-50 border border-gray-100 space-y-3 hover:shadow-md transition-all">
+                      <h5 className="font-bold text-brand-brown text-lg flex items-center gap-2">
+                        🎮 Controle Remoto (Garagem)
+                      </h5>
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        Abre os portões de veículos do condomínio:
+                      </p>
+                      <ul className="text-sm text-gray-600 space-y-1 pl-4 list-disc">
+                        <li><strong>Primeiro Botão:</strong> Abre o portão de entrada (Rua T-47)</li>
+                        <li><strong>Segundo Botão:</strong> Abre o portão de saída (Rua T-27)</li>
+                      </ul>
+                    </div>
+
+                    {/* Tag Quadrada */}
+                    <div className="p-5 rounded-2xl bg-gray-50 border border-gray-100 space-y-2 hover:shadow-md transition-all">
+                      <h5 className="font-bold text-brand-brown text-lg flex items-center gap-2">
+                        🔲 Tag Quadrada
+                      </h5>
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        Abre a <strong>fechadura digital</strong> do apartamento.
+                      </p>
+                    </div>
+
+                    {/* Tags Redondas */}
+                    <div className="p-5 rounded-2xl bg-gray-50 border border-gray-100 space-y-3 hover:shadow-md transition-all">
+                      <h5 className="font-bold text-brand-brown text-lg flex items-center gap-2">
+                        🔵 Tags Redondas (Portas Sociais)
+                      </h5>
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        Para abrir as portas sociais do condomínio:
+                      </p>
+                      <ul className="text-sm text-gray-600 space-y-2">
+                        <li className="flex items-center gap-2">
+                          <span className="w-3.5 h-3.5 rounded-full bg-blue-500 shrink-0 shadow-inner"></span>
+                          <span><strong>Azul:</strong> Encoste na caixinha preta abaixo do interfone.</span>
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <span className="w-3.5 h-3.5 rounded-full bg-gray-400 shrink-0 shadow-inner"></span>
+                          <span><strong>Cinza:</strong> Encoste direto no próprio interfone.</span>
+                        </li>
+                      </ul>
                     </div>
                   </div>
                 </div>

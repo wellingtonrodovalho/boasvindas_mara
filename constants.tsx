@@ -95,11 +95,13 @@ export const HOUSE_GUIDE_CONTENT = [
     icon: <Car size={20} />,
     title: 'Acesso e Estacionamento',
     fields: [
-      { label: 'Vaga de Garagem', value: 'Vaga Nº 19 no fundo do condomínio (tem uma condensadora de ar).' },
-      { label: 'Portões Veículos', value: 'Controle no porta chaves: Botão Superior (Entrada) / Botão Inferior (Saída).' },
-      { label: 'Pedestres', value: 'Utilize a tag que está no porta chaves na entrada.' }
+      { label: 'Vaga de Garagem', value: 'Siga pela rua interna até os fundos do condomínio. Vaga 19 (ao lado da condensadora de ar-condicionado)' },
+      { label: 'Controle Remoto (Garagem)', value: 'Primeiro botão abre o portão de entrada (Rua T-47) e o segundo abre o portão de saída (Rua T-27).' },
+      { label: 'Tag Quadrada', value: 'Abre a fechadura digital do apartamento.' },
+      { label: 'Tag Azul (Redonda)', value: 'Portas sociais do condomínio: Encoste na caixinha preta abaixo do interfone.' },
+      { label: 'Tag Cinza (Redonda)', value: 'Portas sociais do condomínio: Encoste direto no próprio interfone.' }
     ],
-    footer: 'Mantenha o controle e a tag sempre com você ao sair.'
+    footer: 'Mantenha o controle e as tags sempre com você ao sair.'
   },
   {
     id: 'outros',
