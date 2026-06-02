@@ -443,39 +443,39 @@ const App: React.FC = () => {
   const renderHome = () => (
     <div className="flex flex-col gap-6 animate-fade-in max-w-6xl mx-auto w-full">
       {/* Hero Section */}
-      <div className="relative h-fit w-full rounded-[2rem] overflow-hidden shadow-2xl mb-4 bg-brand-brown p-8 md:p-12">
+      <div className="relative h-fit w-full rounded-2xl overflow-hidden shadow-xl mb-4 bg-brand-brown p-6 md:p-8">
         <div className="absolute inset-0 bg-gradient-to-br from-brand-brown via-brand-darkBrown to-brand-brown opacity-95"></div>
         <div className="absolute inset-0 bg-pattern opacity-10"></div>
         
         {/* Conteúdo Centralizado */}
         <div className="relative z-10 flex flex-col items-center justify-center text-center">
-          <div className="bg-white/10 p-4 rounded-2xl inline-block backdrop-blur-md shadow-inner border border-white/10 mb-6">
-            <img src={LOGO_URL} alt="Bem-vindo ao Mara 410" className="h-20 w-20 md:h-24 mx-auto drop-shadow-2xl" />
+          <div className="bg-white/10 p-3 rounded-2xl inline-block backdrop-blur-md shadow-inner border border-white/10 mb-4">
+            <img src={LOGO_URL} alt="Bem-vindo ao Mara 410" className="h-16 w-16 md:h-20 mx-auto drop-shadow-2xl" />
           </div>
-          <div className="space-y-1 mb-8">
-            <h2 className="text-white text-3xl md:text-5xl font-serif leading-tight drop-shadow-lg font-bold">Seja bem-vindo!</h2>
-            <p className="text-brand-yellow text-lg md:text-2xl font-medium italic opacity-90">Sua melhor estadia no Setor Bueno.</p>
+          <div className="space-y-1 mb-6">
+            <h2 className="text-white text-2xl md:text-3xl font-serif leading-tight drop-shadow-lg font-bold">Seja bem-vindo!</h2>
+            <p className="text-brand-yellow text-base md:text-lg font-medium italic opacity-90">Sua melhor estadia no Setor Bueno.</p>
           </div>
 
           {/* Search Bar Centralizada no Conteúdo */}
-          <div className="w-full max-w-2xl px-2">
-            <div className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-2xl p-1.5 border border-white/20 transition-all shadow-2xl">
+          <div className="w-full max-w-xl px-2">
+            <div className="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-xl p-1 border border-white/20 transition-all shadow-xl">
               <button 
                 onClick={() => setIsSearchOpen(true)}
-                className="w-full bg-white rounded-xl py-4 px-6 flex items-center gap-4 text-brand-brown/50 transition-all group"
+                className="w-full bg-white rounded-lg py-3 px-4 flex items-center gap-3 text-brand-brown/50 transition-all group"
               >
-                <Search size={22} className="text-brand-yellow group-hover:scale-110 transition-transform" />
-                <span className="text-base md:text-lg font-bold">O que você precisa saber hoje?</span>
+                <Search size={20} className="text-brand-yellow group-hover:scale-110 transition-transform" />
+                <span className="text-sm md:text-base font-bold">O que você precisa saber hoje?</span>
               </button>
             </div>
             
             {/* Tags de sugestão */}
-            <div className="flex flex-wrap justify-center gap-2 mt-4">
+            <div className="flex flex-wrap justify-center gap-2 mt-3">
               {['WiFi', 'Lixo', 'Café'].map((tag) => (
                 <button 
                   key={tag}
                   onClick={() => setIsSearchOpen(true)}
-                  className="bg-white/5 hover:bg-white/10 text-white/40 hover:text-white/80 text-[9px] uppercase tracking-widest font-black px-3 py-1 rounded-full border border-white/5 transition-all"
+                  className="bg-white/5 hover:bg-white/10 text-white/40 hover:text-white/80 text-[9px] uppercase tracking-widest font-black px-2.5 py-1 rounded-full border border-white/5 transition-all"
                 >
                   #{tag}
                 </button>
@@ -492,10 +492,10 @@ const App: React.FC = () => {
             key={item.id}
             onClick={() => setCurrentSection(item.id)}
             aria-label={`Abrir seção: ${item.label}`}
-            className="flex flex-col items-center justify-center p-4 bg-white border border-brand-yellow/10 rounded-2xl shadow-sm hover:shadow-xl hover:border-brand-yellow/30 transition-all group lg:py-6"
+            className="flex flex-col items-center justify-center p-3 md:p-4 bg-white border border-brand-yellow/10 rounded-xl shadow-sm hover:shadow"
           >
-            <div className="w-10 h-10 md:w-12 md:h-12 bg-brand-lightYellow/30 rounded-xl flex items-center justify-center text-brand-yellow mb-3 group-hover:scale-105 transition-transform group-hover:bg-brand-yellow group-hover:text-white">
-              {React.cloneElement(item.icon as React.ReactElement<any>, { size: 22 })}
+            <div className="w-8 h-8 md:w-10 md:h-10 bg-brand-lightYellow/30 rounded-lg flex items-center justify-center text-brand-yellow mb-2">
+              {React.cloneElement(item.icon as React.ReactElement<any>, { size: 18 })}
             </div>
             <span className="text-[10px] md:text-xs font-bold text-brand-brown text-center leading-tight uppercase tracking-widest px-1">
               {item.label}
@@ -508,14 +508,14 @@ const App: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <button 
           onClick={() => setCurrentSection(AppSection.CHECKOUT)}
-          className="bg-white border border-brand-yellow/10 p-6 rounded-[2rem] flex items-center gap-6 group hover:shadow-xl transition-all text-left"
+          className="bg-white border border-brand-yellow/10 p-5 rounded-2xl flex items-center gap-5 group hover:shadow-lg transition-all text-left"
         >
-          <div className="bg-brand-lightYellow text-brand-yellow p-4 rounded-2xl group-hover:bg-brand-yellow group-hover:text-white transition-all">
-            <LogOut size={24} />
+          <div className="bg-brand-lightYellow text-brand-yellow p-3.5 rounded-xl group-hover:bg-brand-yellow group-hover:text-white transition-all">
+            <LogOut size={22} />
           </div>
           <div>
-            <h4 className="text-brand-brown font-bold text-xl">Vai sair?</h4>
-            <p className="text-gray-500 text-sm italic">Clique aqui para ver o checklist de checkout</p>
+            <h4 className="text-brand-brown font-bold text-lg">Vai sair?</h4>
+            <p className="text-gray-500 text-xs italic">Clique aqui para ver o checklist de checkout</p>
           </div>
         </button>
 
@@ -523,34 +523,34 @@ const App: React.FC = () => {
           href={GOOGLE_REVIEW_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-brand-teal text-white p-6 rounded-[2rem] flex items-center gap-6 group shadow-lg hover:shadow-brand-teal/20 transition-all text-left border border-white/5"
+          className="bg-brand-teal text-white p-5 rounded-2xl flex items-center gap-5 group shadow-md hover:shadow-brand-teal/20 transition-all text-left border border-white/5"
         >
-          <div className="bg-white/20 p-4 rounded-2xl backdrop-blur-md group-hover:bg-brand-yellow group-hover:text-brand-brown transition-all text-brand-yellow">
-            <Star size={24} fill="currentColor" />
+          <div className="bg-white/20 p-3.5 rounded-xl backdrop-blur-md group-hover:bg-brand-yellow group-hover:text-brand-brown transition-all text-brand-yellow">
+            <Star size={22} fill="currentColor" />
           </div>
           <div>
-            <h4 className="font-bold text-xl tracking-tight">Avalie sua estadia</h4>
-            <p className="text-white/60 text-sm">Gostou do Mara 410? Deixe um comentário!</p>
+            <h4 className="font-bold text-lg tracking-tight">Avalie sua estadia</h4>
+            <p className="text-white/60 text-xs">Gostou do Mara 410? Deixe um comentário!</p>
           </div>
         </a>
       </div>
 
       {/* Endereço Rápido */}
-      <footer className="mt-4 p-8 bg-brand-brown text-white rounded-[2rem] shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6 border border-white/5">
-        <div className="flex-1 space-y-3">
-          <h3 className="text-brand-yellow font-bold flex items-center gap-3 text-xl uppercase tracking-widest">
-            <MapPin size={24} /> Onde estamos
+      <footer className="mt-4 p-6 bg-brand-brown text-white rounded-2xl shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-5 border border-white/5">
+        <div className="flex-1 space-y-2">
+          <h3 className="text-brand-yellow font-bold flex items-center gap-2 text-lg uppercase tracking-widest">
+            <MapPin size={22} /> Onde estamos
           </h3>
-          <p className="text-lg md:text-xl opacity-90 leading-relaxed font-medium">{APARTMENT_CONTENT.address}</p>
+          <p className="text-base md:text-lg opacity-90 leading-relaxed font-medium">{APARTMENT_CONTENT.address}</p>
         </div>
         <div className="flex gap-3">
            <a 
             href={APARTMENT_CONTENT.googleMapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-white text-brand-brown px-8 py-4 rounded-2xl text-base font-bold flex items-center gap-2 hover:bg-brand-yellow hover:text-white transition-all shadow-lg active:scale-95"
+            className="bg-white text-brand-brown px-6 py-3 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-brand-yellow hover:text-white transition-all shadow-md active:scale-95"
           >
-            <ExternalLink size={20} /> Abrir no Mapa
+            <ExternalLink size={18} /> Abrir no Mapa
           </a>
         </div>
       </footer>
@@ -604,39 +604,39 @@ const App: React.FC = () => {
           </div>
 
           {/* Conteúdo da Tab */}
-          <div className="bg-white rounded-[2.5rem] shadow-2xl border border-gray-100 overflow-hidden animate-slide-up">
-            <div className={`h-3 w-full ${activeContent.id === 'outros' ? 'bg-brand-teal' : 'bg-blue-600'}`} />
-            <div className="p-8 md:p-12 space-y-10">
-              <header className="flex items-center gap-5">
-                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center text-white shadow-xl ${activeContent.id === 'outros' ? 'bg-brand-teal' : 'bg-blue-600'}`}>
-                  {React.cloneElement(activeContent.icon as React.ReactElement<any>, { size: 32 })}
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden animate-slide-up">
+            <div className={`h-2.5 w-full ${activeContent.id === 'outros' ? 'bg-brand-teal' : 'bg-blue-600'}`} />
+            <div className="p-5 md:p-8 space-y-6">
+              <header className="flex items-center gap-4">
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-md ${activeContent.id === 'outros' ? 'bg-brand-teal' : 'bg-blue-600'}`}>
+                  {React.cloneElement(activeContent.icon as React.ReactElement<any>, { size: 24 })}
                 </div>
-                <h3 className="text-3xl font-bold text-gray-800 font-serif">{activeContent.title}</h3>
+                <h3 className="text-2xl font-bold text-gray-800 font-serif">{activeContent.title}</h3>
               </header>
 
               {(activeContent as any).isSpecial ? (
-                <div className="grid grid-cols-1 gap-6">
+                <div className="grid grid-cols-1 gap-4">
                   {(activeContent as any).subCards?.map((sub: any, sIdx: number) => (
-                    <div key={sIdx} className={`p-8 rounded-3xl border-2 ${sub.variant === 'red' ? 'bg-red-50 border-red-100' : 'bg-teal-50/50 border-teal-100'}`}>
-                      <h4 className={`text-xl font-bold flex items-center gap-3 mb-3 ${sub.variant === 'red' ? 'text-red-800' : 'text-brand-teal'}`}>
-                        <span className="text-2xl">{sub.icon}</span> {sub.title}
+                    <div key={sIdx} className={`p-5 rounded-2xl border-2 ${sub.variant === 'red' ? 'bg-red-50 border-red-100' : 'bg-teal-50/50 border-teal-100'}`}>
+                      <h4 className={`text-lg font-bold flex items-center gap-2 mb-2 ${sub.variant === 'red' ? 'text-red-800' : 'text-brand-teal'}`}>
+                        <span className="text-xl">{sub.icon}</span> {sub.title}
                       </h4>
-                      <p className={`text-lg leading-relaxed ${sub.variant === 'red' ? 'text-red-700' : 'text-gray-600'}`}>{sub.description}</p>
-                      {sub.extra && <p className="mt-4 p-3 bg-white/60 rounded-xl text-sm font-bold text-gray-700 border border-black/5">{sub.extra}</p>}
+                      <p className={`text-sm md:text-base leading-relaxed ${sub.variant === 'red' ? 'text-red-700' : 'text-gray-600'}`}>{sub.description}</p>
+                      {sub.extra && <p className="mt-3 p-2.5 bg-white/60 rounded-lg text-xs font-bold text-gray-700 border border-black/5">{sub.extra}</p>}
                     </div>
                   ))}
                 </div>
               ) : (
-                <div className="grid grid-cols-1 gap-6">
+                <div className="grid grid-cols-1 gap-4">
                   {activeContent.fields.map((field, idx) => (
-                    <div key={idx} className="bg-gray-50/50 p-8 rounded-3xl border border-gray-100 group transition-all hover:bg-white hover:shadow-lg">
-                      <p className="text-gray-400 font-bold text-xs uppercase tracking-widest mb-3">{field.label}</p>
-                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                        <p className="text-brand-brown text-xl md:text-2xl font-bold tracking-tight">{field.value}</p>
-                        <div className="flex gap-3">
+                    <div key={idx} className="bg-gray-50/50 p-5 rounded-2xl border border-gray-100 group transition-all hover:bg-white hover:shadow-md">
+                      <p className="text-gray-400 font-bold text-[10px] uppercase tracking-widest mb-1.5">{field.label}</p>
+                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <p className="text-brand-brown text-base md:text-lg font-bold tracking-tight">{field.value}</p>
+                        <div className="flex gap-2 shrink-0">
                           {(field as any).url && (
-                            <a href={(field as any).url} target="_blank" rel="noopener noreferrer" className="bg-blue-600 text-white px-6 py-3 rounded-2xl text-sm font-bold flex items-center gap-2 shadow-lg hover:bg-blue-700 transition-all active:scale-95">
-                              <ExternalLink size={18} /> Ver Vídeo Tutorial
+                            <a href={(field as any).url} target="_blank" rel="noopener noreferrer" className="bg-blue-600 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-md hover:bg-blue-700 transition-all active:scale-95">
+                              <ExternalLink size={16} /> Ver Vídeo
                             </a>
                           )}
                           {activeContent.id === 'wifi' && (
@@ -647,9 +647,9 @@ const App: React.FC = () => {
                                 setTimeout(() => setCopiedWifi(false), 2000); 
                               }} 
                               aria-label={`Copiar ${field.label}`}
-                              className="bg-brand-lightYellow text-brand-yellow px-6 py-3 rounded-2xl text-sm font-bold flex items-center gap-2 hover:bg-brand-yellow hover:text-white transition-all active:scale-95 shadow-sm"
+                              className="bg-brand-lightYellow text-brand-yellow px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 hover:bg-brand-yellow hover:text-white transition-all active:scale-95 shadow-sm"
                             >
-                              {copiedWifi ? <><Check size={18} /> Copiado</> : <><Copy size={18} /> Copiar</>}
+                              {copiedWifi ? <><Check size={16} /> Copiado</> : <><Copy size={16} /> Copiar</>}
                             </button>
                           )}
                         </div>
@@ -659,33 +659,33 @@ const App: React.FC = () => {
 
                   {/* QR Code de Wi-Fi */}
                   {activeContent.id === 'wifi' && (
-                    <div className="mt-4 p-8 bg-white rounded-3xl border-2 border-brand-lightYellow flex flex-col items-center gap-6 shadow-inner">
+                    <div className="mt-2 p-6 bg-white rounded-2xl border-2 border-brand-lightYellow flex flex-col items-center gap-4 shadow-inner">
                       <div className="text-center space-y-1">
-                        <h4 className="font-bold text-brand-brown text-xl">Conexão Automática</h4>
-                        <p className="text-gray-500 text-sm">Aponte a câmera para conectar instantaneamente</p>
+                        <h4 className="font-bold text-brand-brown text-lg">Conexão Automática</h4>
+                        <p className="text-gray-500 text-xs">Aponte a câmera para conectar instantaneamente</p>
                       </div>
-                      <div className="p-4 bg-white rounded-2xl shadow-md border border-gray-100">
+                      <div className="p-3 bg-white rounded-xl shadow-md border border-gray-100">
                         <QRCodeSVG 
                           value={`WIFI:T:WPA;S:${APARTMENT_CONTENT.wifi.name};P:${APARTMENT_CONTENT.wifi.pass};;`}
-                          size={180}
+                          size={150}
                           level="H"
                           includeMargin={false}
                         />
                       </div>
-                      <div className="flex items-center gap-2 text-[10px] font-bold text-brand-yellow uppercase tracking-widest bg-brand-lightYellow/30 px-4 py-2 rounded-full">
-                         <Wifi size={14} /> WiFi Protegido
+                      <div className="flex items-center gap-2 text-[10px] font-bold text-brand-yellow uppercase tracking-widest bg-brand-lightYellow/30 px-3 py-1.5 rounded-full">
+                         <Wifi size={12} /> WiFi Protegido
                       </div>
                     </div>
                   )}
                 </div>
               )}
               
-              <footer className="flex items-start gap-4 pt-6 text-gray-500 border-t border-gray-100 bg-gray-50/30 -mx-8 -mb-8 p-8 md:-mx-12 md:-mb-12 md:p-12">
-                <div className="bg-brand-yellow/10 p-3 rounded-full text-brand-yellow">
-                  <Lightbulb size={24} className="shrink-0" />
+              <footer className="flex items-start gap-3 pt-4 text-gray-500 border-t border-gray-100 bg-gray-50/30 -mx-5 -mb-5 p-5 md:-mx-8 md:-mb-8 md:p-6 pb-6">
+                <div className="bg-brand-yellow/10 p-2.5 rounded-full text-brand-yellow">
+                  <Lightbulb size={20} className="shrink-0" />
                 </div>
                 <div>
-                  <p className="text-base font-medium italic leading-relaxed text-gray-600">{activeContent.footer}</p>
+                  <p className="text-sm font-medium italic leading-relaxed text-gray-650">{activeContent.footer}</p>
                 </div>
               </footer>
             </div>
@@ -732,13 +732,13 @@ const App: React.FC = () => {
           </div>
 
           {/* Listagem em Colunas */}
-          <div className="space-y-8">
-            <header className="flex items-center gap-4 border-l-8 border-brand-yellow pl-6 py-2">
-               <h4 className="text-2xl font-bold text-brand-brown font-serif">{activeCategory.headerLabel}</h4>
+          <div className="space-y-6">
+            <header className="flex items-center gap-4 border-l-4 border-brand-yellow pl-4 py-1.5">
+               <h4 className="text-xl md:text-2xl font-bold text-brand-brown font-serif">{activeCategory.headerLabel}</h4>
                <span className="bg-brand-yellow text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-tighter shadow-sm">{activeCategory.places.length} locais</span>
             </header>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-slide-up">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 animate-slide-up">
               {activeCategory.places.map((place, idx) => (
                 <a 
                   key={idx} 
@@ -746,23 +746,23 @@ const App: React.FC = () => {
                   target="_blank" 
                   rel="noopener noreferrer" 
                   aria-label={`Ver ${place.name} no Google Maps`}
-                  className="group bg-white rounded-[2rem] p-8 border border-gray-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all flex flex-col justify-between"
+                  className="group bg-white rounded-xl p-4 md:p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
                 >
-                  <div className="space-y-4">
+                  <div className="space-y-3">
                     <header className="flex items-center justify-between">
-                      <div className="bg-brand-lightYellow/50 p-4 rounded-2xl text-brand-yellow group-hover:bg-brand-yellow group-hover:text-white transition-all">
-                        {React.cloneElement(activeCategory.icon as React.ReactElement<any>, { size: 24 })}
+                      <div className="bg-brand-lightYellow/50 p-2.5 rounded-lg text-brand-yellow group-hover:bg-brand-yellow group-hover:text-white transition-all">
+                        {React.cloneElement(activeCategory.icon as React.ReactElement<any>, { size: 18 })}
                       </div>
-                      <ExternalLink size={20} className="text-gray-200 group-hover:text-brand-yellow transition-colors" />
+                      <ExternalLink size={16} className="text-gray-200 group-hover:text-brand-yellow transition-colors" />
                     </header>
-                    <div className="space-y-2">
-                      <h5 className="font-bold text-brand-brown text-xl leading-tight group-hover:text-brand-yellow transition-colors">{place.name}</h5>
-                      <p className="text-gray-500 text-sm leading-relaxed line-clamp-2">{(place as any).description}</p>
+                    <div className="space-y-1">
+                      <h5 className="font-bold text-brand-brown text-base md:text-lg leading-snug group-hover:text-brand-yellow transition-colors">{place.name}</h5>
+                      <p className="text-gray-500 text-xs md:text-sm leading-relaxed line-clamp-2">{(place as any).description}</p>
                     </div>
                   </div>
-                  <footer className="mt-8 pt-5 border-t border-gray-50 flex items-center justify-between">
-                    <span className="text-[10px] font-extrabold text-brand-yellow uppercase tracking-[0.2em]">Traçar Rota</span>
-                    <ChevronRight size={18} className="text-brand-yellow group-hover:translate-x-2 transition-transform" />
+                  <footer className="mt-4 pt-3 border-t border-gray-50 flex items-center justify-between">
+                    <span className="text-[10px] font-extrabold text-brand-yellow uppercase tracking-[0.15em]">Traçar Rota</span>
+                    <ChevronRight size={16} className="text-brand-yellow group-hover:translate-x-1.5 transition-transform" />
                   </footer>
                 </a>
               ))}
@@ -819,74 +819,74 @@ const App: React.FC = () => {
 
     return (
       <SectionWrapper title="Check-out" subtitle="Obrigado por escolher o Mara 410" onBack={handleBack}>
-        <div className="flex flex-col gap-8 max-w-2xl mx-auto w-full animate-fade-in px-2 md:px-0">
+        <div className="flex flex-col gap-5 max-w-xl mx-auto w-full animate-fade-in px-2 md:px-0">
           {/* Banner Horário */}
-          <div className="bg-brand-teal rounded-3xl p-8 flex items-center gap-6 shadow-xl text-white border border-white/10">
-            <div className="bg-white/20 p-5 rounded-2xl backdrop-blur-md shadow-inner">
-              <Clock size={48} />
+          <div className="bg-brand-teal rounded-xl p-5 flex items-center gap-4 shadow-md text-white border border-white/5">
+            <div className="bg-white/20 p-3 rounded-xl backdrop-blur-md shadow-inner">
+              <Clock size={32} />
             </div>
-            <div className="space-y-1">
-              <h3 className="text-4xl font-bold font-serif tracking-tight">Até às 11:00</h3>
-              <p className="text-white/80 font-bold uppercase tracking-widest text-xs">Horário máximo de saída</p>
+            <div className="space-y-0.5">
+              <h3 className="text-2xl md:text-3xl font-bold font-serif tracking-tight">Até às 11:00</h3>
+              <p className="text-white/80 font-bold uppercase tracking-widest text-[10px]">Horário máximo de saída</p>
             </div>
           </div>
 
-          <div className="bg-white/60 rounded-3xl p-8 shadow-sm border border-brand-yellow/10 text-center italic text-lg leading-relaxed text-gray-700">
+          <div className="bg-white rounded-xl p-5 shadow-sm border border-brand-yellow/10 text-center italic text-base leading-relaxed text-gray-750">
             "Esperamos que sua estadia tenha sido incrível! 🏠"
           </div>
 
-          <div className="flex flex-col gap-5" role="list">
+          <div className="flex flex-col gap-4" role="list">
             {checklist.map((item, idx) => (
               <div 
                 key={idx} 
                 role="listitem"
-                className={`bg-white rounded-[2rem] border-t-8 ${item.border} shadow-lg p-6 flex items-center justify-between group transition-all hover:-translate-y-1`}
+                className={`bg-white rounded-xl border-t-4 ${item.border} shadow-sm p-4 flex items-center justify-between group transition-all hover:shadow`}
               >
-                <div className="flex items-center gap-6">
-                  <div className={`${item.bg} text-white p-4 rounded-2xl shadow-lg group-hover:rotate-6 transition-transform`}>
-                    {item.icon}
+                <div className="flex items-center gap-4">
+                  <div className={`${item.bg} text-white p-3 rounded-xl shadow-md group-hover:rotate-6 transition-transform shrink-0`}>
+                    {React.cloneElement(item.icon as React.ReactElement<any>, { size: 20 })}
                   </div>
                   <div>
-                    <h4 className="font-bold text-brand-brown text-xl">{item.title}</h4>
-                    <p className="text-gray-500 text-base">{item.desc}</p>
+                    <h4 className="font-bold text-brand-brown text-base">{item.title}</h4>
+                    <p className="text-gray-500 text-xs md:text-sm">{item.desc}</p>
                   </div>
                 </div>
                 <div className="text-gray-100 hidden sm:block">
-                   <CheckCircle2 size={32} />
+                   <CheckCircle2 size={24} />
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="bg-orange-50 rounded-3xl p-8 border border-orange-100 shadow-sm">
-            <h5 className="text-orange-800 font-extrabold text-xs uppercase tracking-[0.25em] mb-3">Compromisso com Limpeza</h5>
-            <p className="text-orange-700/80 text-lg leading-relaxed font-medium">
+          <div className="bg-orange-50 rounded-xl p-5 border border-orange-100 shadow-sm">
+            <h5 className="text-orange-850 font-extrabold text-[10px] uppercase tracking-[0.2em] mb-1.5">Compromisso com Limpeza</h5>
+            <p className="text-orange-700/85 text-sm leading-relaxed font-semibold">
               Sua avaliação de limpeza é fundamental para nós. Solicitamos cordialmente que deixe o apartamento organizado para facilitar a próxima higienização.
             </p>
           </div>
 
-          <div className="bg-brand-teal rounded-[2.5rem] p-10 text-center text-white shadow-2xl mt-4 border border-white/10 group overflow-hidden relative">
+          <div className="bg-brand-teal rounded-xl p-6 text-center text-white shadow-xl mt-2 border border-white/5 group overflow-hidden relative">
              <div className="absolute inset-0 bg-pattern opacity-5 group-hover:scale-110 transition-transform"></div>
              <div className="relative z-10 flex flex-col items-center">
-               <Heart size={40} className="mb-4 text-brand-yellow animate-pulse" />
-               <h4 className="text-3xl font-serif font-bold mb-2">Foi um prazer receber você!</h4>
-               <p className="text-white/80 text-lg font-medium mb-8">Até a próxima estadia 💚</p>
+               <Heart size={32} className="mb-3 text-brand-yellow animate-pulse" />
+               <h4 className="text-2xl font-serif font-bold mb-1">Foi um prazer receber você!</h4>
+               <p className="text-white/80 text-base font-semibold mb-6">Até a próxima estadia 💚</p>
                
-               <div className="bg-white/10 backdrop-blur-md p-8 rounded-3xl border border-white/20 w-full max-w-md">
-                 <div className="flex justify-center gap-1 mb-4 text-brand-yellow">
-                    {[1, 2, 3, 4, 5].map(i => <Star key={i} size={24} fill="currentColor" />)}
+               <div className="bg-white/10 backdrop-blur-md p-5 rounded-xl border border-white/25 w-full max-w-sm">
+                 <div className="flex justify-center gap-1 mb-3 text-brand-yellow">
+                    {[1, 2, 3, 4, 5].map(i => <Star key={i} size={20} fill="currentColor" />)}
                  </div>
-                 <h5 className="text-xl font-bold mb-3">Gostou da experiência?</h5>
-                 <p className="text-white/60 text-sm mb-6 leading-relaxed">
+                 <h5 className="text-lg font-bold mb-2">Gostou da experiência?</h5>
+                 <p className="text-white/60 text-xs mb-4 leading-relaxed">
                    Sua avaliação no Google é extremamente importante para nós e ajuda outros hóspedes!
                  </p>
                  <a 
                    href={GOOGLE_REVIEW_URL} 
                    target="_blank" 
                    rel="noopener noreferrer"
-                   className="inline-flex items-center gap-3 bg-brand-yellow text-brand-brown px-8 py-4 rounded-2xl font-black text-lg shadow-xl hover:bg-white hover:text-brand-brown transition-all active:scale-95 w-full justify-center group/btn"
+                   className="inline-flex items-center gap-2 bg-brand-yellow text-brand-brown px-6 py-3 rounded-xl font-black text-sm shadow-md hover:bg-white hover:text-brand-brown transition-all active:scale-95 w-full justify-center group/btn"
                  >
-                   <Star size={20} className="group-hover/btn:rotate-12 transition-transform" /> AVALIAR NO GOOGLE
+                   <Star size={18} className="group-hover/btn:rotate-12 transition-transform" /> AVALIAR NO GOOGLE
                  </a>
                </div>
              </div>
@@ -898,22 +898,22 @@ const App: React.FC = () => {
 
   const renderEmergencia = () => (
     <SectionWrapper title="EMERGÊNCIAS" subtitle="Contatos úteis e suporte imediato" onBack={handleBack}>
-      <div className="bg-white rounded-[2.5rem] p-8 md:p-14 shadow-2xl border border-brand-yellow/5 animate-fade-in max-w-3xl mx-auto w-full">
-        <div className="flex flex-col gap-10">
-          <ul className="space-y-8" aria-label="Lista de telefones de emergência">
+      <div className="bg-white rounded-xl p-5 md:p-8 shadow-xl border border-brand-yellow/5 animate-fade-in max-w-xl mx-auto w-full">
+        <div className="flex flex-col gap-6">
+          <ul className="space-y-4" aria-label="Lista de telefones de emergência">
             {EMERGENCY_CONTACTS.map((contact, idx) => (
-              <li key={idx} className="flex items-center gap-5 group border-b border-gray-50 pb-6 last:border-0">
-                <div className="w-12 h-12 rounded-2xl bg-brand-lightYellow flex items-center justify-center text-brand-yellow shrink-0 group-hover:bg-brand-yellow group-hover:text-white transition-all">
-                  <Phone size={24} />
+              <li key={idx} className="flex items-center gap-4 group border-b border-gray-100 pb-4 last:border-0">
+                <div className="w-10 h-10 rounded-xl bg-brand-lightYellow flex items-center justify-center text-brand-yellow shrink-0 group-hover:bg-brand-yellow group-hover:text-white transition-all">
+                  <Phone size={18} />
                 </div>
                 <div className="flex-1">
-                  <p className="text-gray-400 font-bold text-[10px] uppercase tracking-widest mb-1">{contact.label}</p>
+                  <p className="text-gray-400 font-bold text-[9px] uppercase tracking-widest mb-0.5">{contact.label}</p>
                   <a 
                     href={`tel:${contact.phone.replace(/[^\d]/g, '')}`} 
-                    className="text-2xl md:text-3xl font-bold text-brand-brown hover:text-brand-yellow transition-all flex items-center gap-3 decoration-brand-yellow/30 underline underline-offset-8"
+                    className="text-lg md:text-xl font-bold text-brand-brown hover:text-brand-yellow transition-all flex items-center gap-2"
                   >
                     {contact.phone}
-                    <ChevronRight size={24} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all" />
+                    <ChevronRight size={18} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1.5 transition-all" />
                   </a>
                 </div>
               </li>
@@ -921,19 +921,19 @@ const App: React.FC = () => {
           </ul>
         </div>
         
-        <div className="mt-14 pt-10 border-t border-brand-yellow/10 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="mt-8 pt-6 border-t border-brand-yellow/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-center md:text-left">
-            <h4 className="font-bold text-brand-brown text-2xl mb-2 font-serif">Algum problema no Ap?</h4>
-            <p className="text-gray-500 font-medium">Estamos prontos para ajudar a qualquer hora.</p>
+            <h4 className="font-bold text-brand-brown text-lg font-serif">Algum problema no Ap?</h4>
+            <p className="text-gray-500 font-medium text-xs">Estamos prontos para ajudar a qualquer hora.</p>
           </div>
           <a 
             href={WELLINGTON_WHATSAPP} 
             target="_blank" 
             rel="noopener noreferrer"
             aria-label="Pedir ajuda no WhatsApp"
-            className="inline-flex items-center gap-4 bg-green-500 hover:bg-green-600 text-white px-10 py-5 rounded-3xl font-extrabold text-xl shadow-xl hover:shadow-green-500/30 transition-all active:scale-95"
+            className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-xl font-bold text-sm shadow-md hover:shadow-green-500/20 transition-all active:scale-95"
           >
-            <MessageSquare size={28} /> Suporte via WhatsApp
+            <MessageSquare size={18} /> Suporte via WhatsApp
           </a>
         </div>
       </div>
