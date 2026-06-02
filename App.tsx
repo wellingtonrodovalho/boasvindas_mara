@@ -515,7 +515,7 @@ const App: React.FC = () => {
             <LogOut size={22} />
           </div>
           <div>
-            <h4 className="text-brand-brown font-bold text-lg">Vai sair?</h4>
+            <h4 className="text-brand-brown font-bold text-lg">Já está indo embora?</h4>
             <p className="text-gray-500 text-xs italic">Clique aqui para ver o checklist de checkout</p>
           </div>
         </button>
