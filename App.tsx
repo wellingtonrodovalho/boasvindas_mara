@@ -4,6 +4,7 @@ import {
   MessageSquare, 
   ChevronRight, 
   ArrowLeft, 
+  ArrowUp,
   Wifi, 
   MapPin, 
   ExternalLink,
@@ -379,10 +380,20 @@ const App: React.FC = () => {
   const [activeLocalCategory, setActiveLocalCategory] = useState(LOCAL_GUIDE_CATEGORIES?.[0]?.id || 'restaurantes');
   const [copiedWifi, setCopiedWifi] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
   
   // Refs para monitorar scroll e esconder a seta se necessário (opcional, mas bom para UX)
   const guideNavRef = useRef<HTMLElement>(null);
   const localNavRef = useRef<HTMLElement>(null);
+
+  // Monitorar scroll para mostrar e ocultar o botão de ir para o topo
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 200);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Scroll to top quando troca de seção
   useEffect(() => {
@@ -1297,11 +1308,11 @@ const App: React.FC = () => {
       {currentSection !== AppSection.HOME && (
         <nav className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl p-4 border-t border-brand-yellow/10 flex justify-around items-center z-50 md:hidden shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
           <button 
-            onClick={handleBack} 
-            aria-label="Voltar para o início"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
+            aria-label="Ir para o topo"
             className="flex flex-col items-center gap-1.5 text-brand-brown/50 hover:text-brand-yellow transition-all active:scale-90"
           >
-            <Home size={28} /><span className="text-[10px] font-bold uppercase tracking-widest">Início</span>
+            <ArrowUp size={28} /><span className="text-[10px] font-bold uppercase tracking-widest">Topo</span>
           </button>
           <div className="w-px h-8 bg-brand-yellow/10"></div>
           <a 
@@ -1315,22 +1326,22 @@ const App: React.FC = () => {
         </nav>
       )}
 
-      {/* Botão Flutuante (FAB) para Desktop e Mobile */}
+      {/* Botão Flutuante (FAB) para ir ao topo */}
       <AnimatePresence>
-        {currentSection !== AppSection.HOME && (
+        {showScrollTop && (
           <motion.button
             initial={{ scale: 0, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0, opacity: 0, y: 20 }}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            onClick={handleBack}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="fixed bottom-24 right-6 md:bottom-10 md:right-10 z-50 bg-brand-yellow text-brand-brown p-4 rounded-full shadow-2xl hover:bg-brand-brown hover:text-white transition-colors flex items-center justify-center group border-2 border-white/20"
-            title="Voltar ao Menu Principal"
+            title="Ir para o topo"
           >
-            <Home size={24} />
+            <ArrowUp size={24} />
             <span className="absolute right-full mr-4 bg-brand-brown text-white px-4 py-2 rounded-xl text-xs font-bold opacity-0 group-hover:opacity-100 transition-all whitespace-nowrap pointer-events-none shadow-xl translate-x-2 group-hover:translate-x-0">
-              Voltar ao Menu
+              Ir para o topo
             </span>
           </motion.button>
         )}
