@@ -87,7 +87,7 @@ const SectionWrapper: React.FC<{
     <div className="flex flex-col gap-1 mb-2">
       <header className="flex flex-col">
         <h2 className="text-3xl md:text-4xl font-bold text-brand-brown font-serif tracking-tight">{title}</h2>
-        <div className="h-1 w-24 bg-gradient-to-r from-brand-teal to-orange-500 mt-1 rounded-full"></div>
+        <div className="h-1 w-24 bg-gradient-to-r from-brand-teal to-brand-terracotta mt-1 rounded-full"></div>
       </header>
       {subtitle && <p className="text-gray-500 font-medium mt-2">{subtitle}</p>}
     </div>
@@ -379,6 +379,73 @@ const App: React.FC = () => {
   const [activeGuideTab, setActiveGuideTab] = useState(HOUSE_GUIDE_CONTENT?.[0]?.id || 'wifi');
   const [activeLocalCategory, setActiveLocalCategory] = useState(LOCAL_GUIDE_CATEGORIES?.[0]?.id || 'restaurantes');
   const [copiedWifi, setCopiedWifi] = useState(false);
+  const [copiedSSID, setCopiedSSID] = useState(false);
+  const [copiedPass, setCopiedPass] = useState(false);
+  const [showWifiHelp, setShowWifiHelp] = useState(false);
+  
+  const handleDownloadMobileConfig = () => {
+    const ssidName = "LIVE TIM_A610_5G";
+    const ssidPass = "pmadj76ter";
+    const uuid1 = "9CFBE163-7CE9-4322-861c-8cb060ec" + Math.floor(1000 + Math.random() * 9000);
+    const uuid2 = "5F7C733B-8C42-4235-9CE8-1E4E5983" + Math.floor(1000 + Math.random() * 9000);
+    
+    const plistXml = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.9.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadDisplayName</key>
+    <string>Wi-Fi Mara 410</string>
+    <key>PayloadIdentifier</key>
+    <string>com.mara410.wifi</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadUUID</key>
+    <string>${uuid1}</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>AutoJoin</key>
+            <true/>
+            <key>EncryptionType</key>
+            <string>WPA</string>
+            <key>HIDDEN_NETWORK</key>
+            <false/>
+            <key>PayloadDescription</key>
+            <string>Configura o Wi-Fi do Apartamento Mara 410 automaticamente.</string>
+            <key>PayloadDisplayName</key>
+            <string>Wi-Fi Mara 410</string>
+            <key>PayloadIdentifier</key>
+            <string>com.mara410.wifi.credential</string>
+            <key>PayloadType</key>
+            <string>com.apple.wifi.managed</string>
+            <key>PayloadUUID</key>
+            <string>${uuid2}</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>SSID_STR</key>
+            <string>${ssidName}</string>
+            <key>Password</key>
+            <string>${ssidPass}</string>
+        </dict>
+    </array>
+</dict>
+</plist>`;
+
+    const blob = new Blob([plistXml], { type: 'application/x-apple-aspen-config' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'mara410_wifi.mobileconfig';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   
@@ -637,13 +704,21 @@ const App: React.FC = () => {
                             <button 
                               onClick={() => { 
                                 navigator.clipboard.writeText(field.value); 
-                                setCopiedWifi(true); 
-                                setTimeout(() => setCopiedWifi(false), 2000); 
+                                if (field.label.includes('Rede')) {
+                                  setCopiedSSID(true);
+                                  setTimeout(() => setCopiedSSID(false), 2000);
+                                } else {
+                                  setCopiedPass(true);
+                                  setTimeout(() => setCopiedPass(false), 2000);
+                                }
                               }} 
                               aria-label={`Copiar ${field.label}`}
                               className="bg-brand-lightYellow text-brand-yellow px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 hover:bg-brand-yellow hover:text-white transition-all active:scale-95 shadow-sm"
                             >
-                              {copiedWifi ? <><Check size={16} /> Copiado</> : <><Copy size={16} /> Copiar</>}
+                              {field.label.includes('Rede') 
+                                ? (copiedSSID ? <><Check size={16} /> Copiado</> : <><Copy size={16} /> Copiar Nome</>)
+                                : (copiedPass ? <><Check size={16} /> Copiado</> : <><Copy size={16} /> Copiar Senha</>)
+                              }
                             </button>
                           )}
                         </div>
@@ -651,23 +726,55 @@ const App: React.FC = () => {
                     </div>
                   ))}
 
-                  {/* QR Code de Wi-Fi */}
+                  {/* QR Code de Wi-Fi com Conexão Automática */}
                   {activeContent.id === 'wifi' && (
-                    <div className="mt-2 p-6 bg-white rounded-2xl border-2 border-brand-lightYellow flex flex-col items-center gap-4 shadow-inner">
+                    <div className="mt-2 p-6 bg-white rounded-2xl border-2 border-brand-lightYellow flex flex-col items-center gap-5 shadow-inner">
                       <div className="text-center space-y-1">
-                        <h4 className="font-bold text-brand-brown text-lg">Conexão Automática</h4>
-                        <p className="text-gray-500 text-xs">Aponte a câmera para conectar instantaneamente</p>
+                        <h4 className="font-bold text-brand-brown text-lg">⚡ Conexão Direta e Automática</h4>
+                        <p className="text-gray-500 text-xs">Conecte de forma simples em qualquer dispositivo:</p>
                       </div>
-                      <div className="p-3 bg-white rounded-xl shadow-md border border-gray-100">
-                        <QRCodeSVG 
-                          value={`WIFI:T:WPA;S:${APARTMENT_CONTENT.wifi.name};P:${APARTMENT_CONTENT.wifi.pass};;`}
-                          size={150}
-                          level="H"
-                          includeMargin={false}
-                        />
+
+                      {/* Botões de Ação Rápida */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-md">
+                        {/* Botão Apple / iOS */}
+                        <button 
+                          onClick={handleDownloadMobileConfig}
+                          className="bg-brand-yellow text-white px-5 py-3.5 rounded-xl text-xs font-black flex items-center justify-center gap-2 shadow-md hover:bg-brand-yellow/90 transition-all active:scale-95 border border-brand-yellow/10"
+                        >
+                          <Smartphone size={16} /> Instalar no iPhone/Apple 
+                        </button>
+
+                        {/* Botão Android / QR Code Toggle */}
+                        <button 
+                          onClick={() => setShowWifiHelp(!showWifiHelp)}
+                          className="bg-brand-lightYellow text-brand-yellow px-5 py-3.5 rounded-xl text-xs font-black flex items-center justify-center gap-2 shadow-sm hover:bg-brand-yellow hover:text-white transition-all active:scale-95"
+                        >
+                          <Wifi size={16} /> QR Code e Instruções 📲
+                        </button>
                       </div>
+
+                      {/* Seção Expansível de Ajuda / QR Code */}
+                      <div className="w-full flex flex-col items-center gap-4 pt-4 border-t border-brand-lightYellow/65 animate-fade-in">
+                        <div className="p-3 bg-white rounded-xl shadow-md border border-gray-100">
+                          <QRCodeSVG 
+                            value={`WIFI:T:WPA;S:${APARTMENT_CONTENT.wifi.name};P:${APARTMENT_CONTENT.wifi.pass};;`}
+                            size={160}
+                            level="H"
+                            includeMargin={false}
+                          />
+                        </div>
+                        <div className="text-center max-w-sm space-y-2.5">
+                          <p className="text-[11px] font-semibold text-gray-500 leading-normal">
+                            📱 <strong>No Android ou Outros:</strong> Aponte a câmera do seu celular para o QR Code acima para conectar instantaneamente! 📸
+                          </p>
+                          <p className="text-[11px] font-semibold text-gray-500 leading-normal">
+                             <strong>No iPhone (iOS):</strong> Clique no botão <strong>"Instalar no iPhone"</strong> acima, baixe o perfil de rede, vá em <em>Ajustes &gt; Perfil Baixado</em> e autorize a instalação. Ele conectará num piscar de olhos! ⚡
+                          </p>
+                        </div>
+                      </div>
+
                       <div className="flex items-center gap-2 text-[10px] font-bold text-brand-yellow uppercase tracking-widest bg-brand-lightYellow/30 px-3 py-1.5 rounded-full">
-                         <Wifi size={12} /> WiFi Protegido
+                         <Wifi size={12} /> WiFi Seguro • Mara 410
                       </div>
                     </div>
                   )}
@@ -1252,10 +1359,10 @@ const App: React.FC = () => {
                 </div>
 
                 {/* 3. Fumo */}
-                <div className="bg-white p-6 rounded-2xl border border-red-100 bg-red-50/5 shadow-sm hover:shadow-md transition-all flex items-start gap-4 hover:border-red-200">
-                  <div className="text-3xl p-3 bg-red-50 rounded-xl shrink-0">🚭</div>
+                <div className="bg-white p-6 rounded-2xl border border-brand-bordo/10 bg-brand-bordo/5 shadow-sm hover:shadow-md transition-all flex items-start gap-4 hover:border-brand-bordo/35">
+                  <div className="text-3xl p-3 bg-brand-bordo/5 rounded-xl shrink-0">🚭</div>
                   <div className="space-y-1">
-                    <h4 className="font-bold text-red-800 text-base uppercase tracking-wider text-[11px]">FUMO (100% LIVRE)</h4>
+                    <h4 className="font-bold text-brand-bordo text-base uppercase tracking-wider text-[11px]">FUMO (100% LIVRE)</h4>
                     <p className="text-gray-600 text-sm leading-relaxed">
                       Este é um ambiente 100% livre de fumaça. Não é permitido fumar no apartamento em hipótese alguma. Agradecemos por manter o cheirinho agradável do apê! 🌬️
                     </p>
@@ -1274,10 +1381,10 @@ const App: React.FC = () => {
                 </div>
 
                 {/* 5. Festas e Eventos */}
-                <div className="bg-white p-6 rounded-2xl border border-red-100 bg-red-50/5 shadow-sm hover:shadow-md transition-all flex items-start gap-4 hover:border-red-200">
-                  <div className="text-3xl p-3 bg-pink-50 rounded-xl shrink-0">🚫🎉</div>
+                <div className="bg-white p-6 rounded-2xl border border-brand-bordo/10 bg-brand-bordo/5 shadow-sm hover:shadow-md transition-all flex items-start gap-4 hover:border-brand-bordo/35">
+                  <div className="text-3xl p-3 bg-brand-bordo/5 rounded-xl shrink-0">🚫🎉</div>
                   <div className="space-y-1">
-                    <h4 className="font-bold text-red-800 text-base uppercase tracking-wider text-[11px]">FESTAS E EVENTOS</h4>
+                    <h4 className="font-bold text-brand-bordo text-base uppercase tracking-wider text-[11px]">FESTAS E EVENTOS</h4>
                     <p className="text-gray-600 text-sm leading-relaxed">
                       Não são permitidas comemorações, festas ou eventos. Nosso ambiente é estritamente residencial e totalmente voltado ao descanso e sossego de todos. 🤫💤
                     </p>
