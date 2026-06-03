@@ -221,7 +221,9 @@ export const LOCAL_GUIDE_CATEGORIES = [
       { name: "Churrascaria Nativas Grill", description: "Churrasco premium, buffet de sushis e frutos do mar.", url: "https://maps.app.goo.gl/gcs1Loqim9HueSMs5" },
       { name: "Buenos Restaurante", description: "Cozinha acolhedora e pratos finos no coração do Setor Bueno.", url: "https://maps.app.goo.gl/6zjPqVnxKhyr4VzK7" },
       { name: "Costelaria Rocha", description: "Excelente restaurante de costela assada lentamente e carnes nobres grelhadas.", url: "https://maps.app.goo.gl/bJ2CoeHgZZSsiD528" },
-      { name: "Empório Cristal Gastronomia", description: "Empório requintado, padaria, restaurante e vinhos com ótimas opções gastronômicas.", url: "https://maps.app.goo.gl/oLife6Pj3wux4UJg9" }
+      { name: "Empório Cristal Gastronomia", description: "Empório requintado, padaria, restaurante e vinhos com ótimas opções gastronômicas.", url: "https://maps.app.goo.gl/oLife6Pj3wux4UJg9" },
+      { name: "Sushi Rão Goiânia", description: "Excelente culinária japonesa, sushis frescos, combinados e peças artesanais saborosas.", url: "https://maps.app.goo.gl/N1YPKMZhfREdinBc8" },
+      { name: "Kyoto Japanese Fusion", description: "Culinária japonesa contemporânea com fusion de sabores, combinados sofisticados e pratos artesanais excelentes.", url: "https://maps.app.goo.gl/NTC1jjsCjzoEjK826" }
     ]
   },
   {
