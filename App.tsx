@@ -877,6 +877,14 @@ const App: React.FC = () => {
   const renderCheckout = () => {
     const checklist = [
       {
+        title: "Objetos pessoais",
+        desc: "Antes de sair, verifique se não está esquecendo nada. Despesas de envio para devolução podem ser cobradas.",
+        icon: <Briefcase size={24} />,
+        color: "text-amber-500",
+        bg: "bg-amber-500",
+        border: "border-amber-500"
+      },
+      {
         title: "Recolha as toalhas usadas",
         desc: "Por gentileza, deixar as toalhas estendidas",
         icon: <CheckCircle2 size={24} />,
@@ -909,14 +917,6 @@ const App: React.FC = () => {
         border: "border-purple-500"
       },
       {
-        title: "Objetos pessoais",
-        desc: "Antes de sair, verifique se não está esquecendo nada. Despesas de envio para devolução podem ser cobradas.",
-        icon: <Briefcase size={24} />,
-        color: "text-amber-500",
-        bg: "bg-amber-500",
-        border: "border-amber-500"
-      },
-      {
         title: "Devolva as chaves",
         desc: "Se estiver com veículo próprio, deixe as tags e o controle na caixa de correspondência 410 no térreo. Se não, basta deixá-los no porta-chaves no apartamento.",
         icon: <Key size={24} />,
@@ -928,7 +928,7 @@ const App: React.FC = () => {
 
     return (
       <SectionWrapper title="Check-out" subtitle="Obrigado por escolher o Mara 410" onBack={handleBack}>
-        <div className="flex flex-col gap-5 max-w-xl mx-auto w-full animate-fade-in px-2 md:px-0">
+        <div className="flex flex-col gap-5 max-w-3xl mx-auto w-full animate-fade-in px-2 md:px-0">
           {/* Banner Horário */}
           <div className="bg-brand-teal rounded-xl p-5 flex items-center gap-4 shadow-md text-white border border-white/5">
             <div className="bg-white/20 p-3 rounded-xl backdrop-blur-md shadow-inner">
@@ -944,23 +944,23 @@ const App: React.FC = () => {
             "Esperamos que sua estadia tenha sido incrível! 🏠"
           </div>
 
-          <div className="flex flex-col gap-4" role="list">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4" role="list">
             {checklist.map((item, idx) => (
               <div 
                 key={idx} 
                 role="listitem"
-                className={`bg-white rounded-xl border-t-4 ${item.border} shadow-sm p-4 flex items-center justify-between group transition-all hover:shadow`}
+                className={`bg-white rounded-xl border-t-4 ${item.border} shadow-sm p-4 flex items-start justify-between gap-4 group transition-all hover:shadow hover:scale-[1.01]`}
               >
-                <div className="flex items-center gap-4">
+                <div className="flex items-start gap-4">
                   <div className={`${item.bg} text-white p-3 rounded-xl shadow-md group-hover:rotate-6 transition-transform shrink-0`}>
                     {React.cloneElement(item.icon as React.ReactElement<any>, { size: 20 })}
                   </div>
-                  <div>
-                    <h4 className="font-bold text-brand-brown text-base">{item.title}</h4>
-                    <p className="text-gray-500 text-xs md:text-sm">{item.desc}</p>
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-brand-brown text-base leading-snug">{item.title}</h4>
+                    <p className="text-gray-500 text-xs md:text-sm leading-relaxed">{item.desc}</p>
                   </div>
                 </div>
-                <div className="text-gray-100 hidden sm:block">
+                <div className="text-gray-200 shrink-0 self-center hidden sm:block">
                    <CheckCircle2 size={24} />
                 </div>
               </div>
