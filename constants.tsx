@@ -220,7 +220,8 @@ export const LOCAL_GUIDE_CATEGORIES = [
       { name: "JP Steak House", description: "Rodízio premium de alto padrão e carta de vinhos especial.", url: "https://maps.app.goo.gl/42oF6gpXRfvoZpx77" },
       { name: "Churrascaria Nativas Grill", description: "Churrasco premium, buffet de sushis e frutos do mar.", url: "https://maps.app.goo.gl/gcs1Loqim9HueSMs5" },
       { name: "Buenos Restaurante", description: "Cozinha acolhedora e pratos finos no coração do Setor Bueno.", url: "https://maps.app.goo.gl/6zjPqVnxKhyr4VzK7" },
-      { name: "Costelaria Rocha", description: "Excelente restaurante de costela assada lentamente e carnes nobres grelhadas.", url: "https://maps.app.goo.gl/bJ2CoeHgZZSsiD528" }
+      { name: "Costelaria Rocha", description: "Excelente restaurante de costela assada lentamente e carnes nobres grelhadas.", url: "https://maps.app.goo.gl/bJ2CoeHgZZSsiD528" },
+      { name: "Empório Cristal Gastronomia", description: "Empório requintado, padaria, restaurante e vinhos com ótimas opções gastronômicas.", url: "https://maps.app.goo.gl/oLife6Pj3wux4UJg9" }
     ]
   },
   {
